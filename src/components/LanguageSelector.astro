@@ -13,13 +13,23 @@ const t = useTranslations(lang);
 
 // URLs para cada idioma
 const getLanguageUrl = (targetLang: Language) => {
-  // Remove prefixo de idioma atual se existir
-  const currentPath = Astro.url.pathname.replace(/^\/(en|es)\//, '/');
-  // Garante que começa com /
-  const normalizedPath = currentPath.startsWith('/')
-    ? currentPath
-    : `/${currentPath}`;
-  return getLocalizedUrl(normalizedPath, targetLang);
+  // Remove prefixo de idioma atual se existir (en ou es)
+  let currentPath = Astro.url.pathname;
+
+  // Remove prefixo de idioma se existir
+  if (currentPath.startsWith('/en/') || currentPath.startsWith('/es/')) {
+    currentPath = currentPath.replace(/^\/(en|es)/, '');
+  }
+
+  // Se estiver na raiz após remover prefixo, garante que é '/'
+  if (currentPath === '' || currentPath === '/') {
+    currentPath = '/';
+  } else if (!currentPath.startsWith('/')) {
+    // Garante que começa com /
+    currentPath = `/${currentPath}`;
+  }
+
+  return getLocalizedUrl(currentPath, targetLang);
 };
 ---
 
