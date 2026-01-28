@@ -58,8 +58,8 @@
   backdrop-filter: blur(10px) saturate(180%);
   -webkit-backdrop-filter: blur(10px) saturate(180%); /* Safari */
 
-  /* Border sutil */
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  /* Sem border no estado glass - não faz sentido dividir quando está sobre hero */
+  border-bottom: none;
 
   /* Sombra sutil */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -69,7 +69,7 @@
     background 0.3s ease,
     backdrop-filter 0.3s ease,
     box-shadow 0.3s ease,
-    border-color 0.3s ease,
+    border-bottom 0.3s ease,
     opacity 0.3s ease,
     visibility 0.3s ease;
 }
@@ -89,8 +89,8 @@
   /* Sombra mais pronunciada */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 
-  /* Border mais visível */
-  border-bottom-color: rgba(255, 255, 255, 0.15);
+  /* Border aparece apenas quando opaco - faz sentido dividir do conteúdo */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 /* ========================================
