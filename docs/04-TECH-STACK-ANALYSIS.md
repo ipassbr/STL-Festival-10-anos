@@ -287,7 +287,7 @@ const lineup = [
 
 <!-- HTML direto, sem JSX -->
 <section>
-  {lineup.map(artist => 
+  {lineup.map(artist =>
     <div>{artist.name}</div>
   )}
 </section>
@@ -900,9 +900,9 @@ const y = useTransform(scrollYProgress, [0, 1], [0, 100])
 <script>
   import gsap from 'gsap'
   import ScrollTrigger from 'gsap/ScrollTrigger'
-  
+
   gsap.registerPlugin(ScrollTrigger)
-  
+
   // Animações globais
   gsap.from('.fade-in', { opacity: 0, y: 50 })
 </script>
@@ -1020,8 +1020,8 @@ export const staggerContainer = {
 
 export const scaleIn = {
   hidden: { scale: 0.8, opacity: 0 },
-  show: { 
-    scale: 1, 
+  show: {
+    scale: 1,
     opacity: 1,
     transition: { type: 'spring', bounce: 0.4 }
   }
@@ -1279,21 +1279,21 @@ https://res.cloudinary.com/{cloud_name}/image/upload/
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "jsx": "react-jsx",
     "jsxImportSource": "react",
-    
+
     // Strict Type-Checking
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true,
-    
+
     // Module Resolution
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "noEmit": true,
-    
+
     // Path Aliases
     "baseUrl": ".",
     "paths": {
@@ -1436,7 +1436,7 @@ export interface AnimationConfig {
   stagger?: number
 }
 
-export type AnimationVariant = 
+export type AnimationVariant =
   | 'fadeInUp'
   | 'fadeInDown'
   | 'scaleIn'
@@ -1589,8 +1589,8 @@ export const animations: AnimationVariants = {
   },
   scaleIn: {
     hidden: { scale: 0.8, opacity: 0 },
-    show: { 
-      scale: 1, 
+    show: {
+      scale: 1,
       opacity: 1,
       transition: { type: 'spring', bounce: 0.4 }
     }
@@ -1736,6 +1736,6 @@ export const ArtistCard: React.FC<ArtistCardProps> = ({ artist, index }) => {
 
 ---
 
-**Versão:** 1.0  
-**Data:** 26 de Janeiro de 2026  
+**Versão:** 1.0
+**Data:** 26 de Janeiro de 2026
 **Decisão:** ✅ **ASTRO** aprovado para desenvolvimento

@@ -410,6 +410,6 @@ module.exports = {
 
 ---
 
-**Documento Oficial | Última Atualização:** 26 de Janeiro de 2026  
-**Status:** ✅ Validado e Aprovado pelo Cliente  
+**Documento Oficial | Última Atualização:** 26 de Janeiro de 2026
+**Status:** ✅ Validado e Aprovado pelo Cliente
 **Fonte:** Paleta fornecida pelo cliente STL Festival

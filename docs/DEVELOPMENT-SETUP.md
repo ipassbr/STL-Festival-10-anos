@@ -1,8 +1,8 @@
 # 🛠️ Development Setup
 ## STL Festival - Ambiente de Desenvolvimento
 
-**Versão:** 1.0  
-**Data:** 28 de Janeiro de 2026  
+**Versão:** 1.0
+**Data:** 28 de Janeiro de 2026
 **Status:** ✅ Aprovado
 
 ---
@@ -568,6 +568,6 @@ npm run type-check
 
 ---
 
-**Versão:** 1.0  
-**Última atualização:** 28 de Janeiro de 2026  
+**Versão:** 1.0
+**Última atualização:** 28 de Janeiro de 2026
 **Mantido por:** Equipe STL Festival

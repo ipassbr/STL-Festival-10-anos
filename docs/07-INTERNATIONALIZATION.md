@@ -26,7 +26,7 @@ Implementar **site multilíngue completo** para:
 **Prioridade:** 🔴 **CRÍTICA**
 
 ### 2. Inglês (EN) - Internacional
-**Público:** 
+**Público:**
 - Turistas internacionais
 - Público de países de língua inglesa
 - Língua franca global
@@ -255,7 +255,7 @@ const currentLang = getLangFromUrl(Astro.url);
 
 <div class="language-selector">
   {Object.entries(languages).map(([lang, name]) => (
-    <a 
+    <a
       href={lang === 'pt-BR' ? '/' : `/${lang}`}
       class:list={['lang-btn', { active: currentLang === lang }]}
       hreflang={lang}
@@ -311,7 +311,7 @@ const currentPath = Astro.url.pathname;
   <link rel="alternate" hreflang="en" href={`https://stlfestival.com.br/en${currentPath}`} />
   <link rel="alternate" hreflang="es" href={`https://stlfestival.com.br/es${currentPath}`} />
   <link rel="alternate" hreflang="x-default" href={`https://stlfestival.com.br${currentPath}`} />
-  
+
   <!-- Language meta -->
   <meta property="og:locale" content={currentLang} />
   <meta property="og:locale:alternate" content="pt_BR" />
@@ -327,7 +327,7 @@ const currentPath = Astro.url.pathname;
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
+
   <!-- Página principal PT-BR -->
   <url>
     <loc>https://stlfestival.com.br/</loc>
@@ -335,7 +335,7 @@ const currentPath = Astro.url.pathname;
     <xhtml:link rel="alternate" hreflang="en" href="https://stlfestival.com.br/en/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://stlfestival.com.br/es/" />
   </url>
-  
+
   <!-- Página principal EN -->
   <url>
     <loc>https://stlfestival.com.br/en/</loc>
@@ -343,7 +343,7 @@ const currentPath = Astro.url.pathname;
     <xhtml:link rel="alternate" hreflang="en" href="https://stlfestival.com.br/en/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://stlfestival.com.br/es/" />
   </url>
-  
+
   <!-- Página principal ES -->
   <url>
     <loc>https://stlfestival.com.br/es/</loc>
@@ -351,7 +351,7 @@ const currentPath = Astro.url.pathname;
     <xhtml:link rel="alternate" hreflang="en" href="https://stlfestival.com.br/en/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://stlfestival.com.br/es/" />
   </url>
-  
+
 </urlset>
 ```
 
@@ -477,7 +477,7 @@ const currentPath = Astro.url.pathname;
 
 ### ARIA Labels Traduzidos
 ```astro
-<button 
+<button
   aria-label={t('languageSelector.ariaLabel')}
   aria-expanded={isOpen}
 >

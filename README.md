@@ -14,7 +14,7 @@ Landing page oficial para celebração dos 10 anos do **STL Festival**.
 
 Landing page moderna e performática para o **STL Festival**, evento que celebra sua 10ª edição reunindo música, cultura e diversidade.
 
-**Data do Evento:** 06 de Junho de 2026  
+**Data do Evento:** 06 de Junho de 2026
 **Local:** [A definir]
 
 ### ✨ Destaques

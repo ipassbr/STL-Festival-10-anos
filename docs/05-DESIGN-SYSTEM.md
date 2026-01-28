@@ -31,7 +31,7 @@ O Design System do STL Festival é construído sobre a identidade vibrante e ene
 --stl-green-light: #009966;     /* Variação mais clara */
 --stl-green-dark: #004d33;      /* Variação mais escura */
 ```
-**Uso:** Elementos de natureza, CTAs secundários, backgrounds de destaque  
+**Uso:** Elementos de natureza, CTAs secundários, backgrounds de destaque
 **Descrição:** Verde profundo que representa a conexão com a natureza
 
 #### Vermelho-Alaranjado (Accent)
@@ -40,7 +40,7 @@ O Design System do STL Festival é construído sobre a identidade vibrante e ene
 --stl-red-light: #ff7052;       /* Variação mais clara */
 --stl-red-dark: #e63d1f;        /* Variação mais escura */
 ```
-**Uso:** CTAs principais, destaques importantes, elementos de ação  
+**Uso:** CTAs principais, destaques importantes, elementos de ação
 **Descrição:** Cor de energia e urgência
 
 #### Laranja Intenso (Accent)
@@ -49,7 +49,7 @@ O Design System do STL Festival é construído sobre a identidade vibrante e ene
 --stl-orange-light: #ffb34d;    /* Variação mais clara */
 --stl-orange-dark: #e68a1f;     /* Variação mais escura */
 ```
-**Uso:** Acentos, badges, elementos decorativos, hover states  
+**Uso:** Acentos, badges, elementos decorativos, hover states
 **Descrição:** Laranja vibrante que transmite energia
 
 #### Azul Teal (Secondary)
@@ -58,7 +58,7 @@ O Design System do STL Festival é construído sobre a identidade vibrante e ene
 --stl-teal-light: #009bb8;      /* Variação mais clara */
 --stl-teal-dark: #005f77;       /* Variação mais escura */
 ```
-**Uso:** Links, elementos informativos, backgrounds alternativos  
+**Uso:** Links, elementos informativos, backgrounds alternativos
 **Descrição:** Azul-verde que adiciona sofisticação
 
 #### Creme Claro (Neutral Light)
@@ -67,7 +67,7 @@ O Design System do STL Festival é construído sobre a identidade vibrante e ene
 --stl-cream-light: #fffef0;     /* Variação mais clara */
 --stl-cream-dark: #f5f2c8;      /* Variação mais escura */
 ```
-**Uso:** Backgrounds claros, cards, seções alternadas  
+**Uso:** Backgrounds claros, cards, seções alternadas
 **Descrição:** Creme suave para contraste suave
 
 #### Azul Índigo (Dark)
@@ -76,7 +76,7 @@ O Design System do STL Festival é construído sobre a identidade vibrante e ene
 --stl-indigo-light: #2d2499;    /* Variação mais clara */
 --stl-indigo-dark: #15115a;     /* Variação mais escura */
 ```
-**Uso:** Backgrounds escuros, footers, textos sobre cores claras, hero sections  
+**Uso:** Backgrounds escuros, footers, textos sobre cores claras, hero sections
 **Descrição:** Índigo profundo que transmite sofisticação
 
 ### Cores Neutras
@@ -217,8 +217,8 @@ O Design System do STL Festival é construído sobre a identidade vibrante e ene
 **Fallback:** System fonts para performance
 
 ```css
---font-system: -apple-system, BlinkMacSystemFont, 
-               'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, 
+--font-system: -apple-system, BlinkMacSystemFont,
+               'Segoe UI', Roboto, Oxygen-Sans, Ubuntu,
                Cantarell, 'Helvetica Neue', sans-serif;
 ```
 
@@ -428,13 +428,13 @@ O Design System do STL Festival é construído sobre a identidade vibrante e ene
 
 ```css
 --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
---shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 
+--shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1),
              0 1px 2px -1px rgb(0 0 0 / 0.1);
---shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 
+--shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1),
              0 2px 4px -2px rgb(0 0 0 / 0.1);
---shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 
+--shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1),
              0 4px 6px -4px rgb(0 0 0 / 0.1);
---shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 
+--shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1),
              0 8px 10px -6px rgb(0 0 0 / 0.1);
 --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
 
@@ -872,77 +872,77 @@ O Design System do STL Festival é construído sobre a identidade vibrante e ene
 
 :root {
   /* ========== CORES OFICIAIS STL FESTIVAL ========== */
-  
+
   /* Verde Profundo (Primary) */
   --stl-green: #006a47;
   --stl-green-light: #009966;
   --stl-green-dark: #004d33;
-  
+
   /* Vermelho-Alaranjado (Accent) */
   --stl-red: #ff4d2d;
   --stl-red-light: #ff7052;
   --stl-red-dark: #e63d1f;
-  
+
   /* Laranja Intenso (Accent) */
   --stl-orange: #ff9d28;
   --stl-orange-light: #ffb34d;
   --stl-orange-dark: #e68a1f;
-  
+
   /* Azul Teal (Secondary) */
   --stl-teal: #007b9a;
   --stl-teal-light: #009bb8;
   --stl-teal-dark: #005f77;
-  
+
   /* Creme Claro (Neutral Light) */
   --stl-cream: #fefbdf;
   --stl-cream-light: #fffef0;
   --stl-cream-dark: #f5f2c8;
-  
+
   /* Azul Índigo (Dark) */
   --stl-indigo: #1e1876;
   --stl-indigo-light: #2d2499;
   --stl-indigo-dark: #15115a;
-  
+
   /* Grayscale */
   --stl-white: #FFFFFF;
   --stl-gray-50: #FAFAFA;
   --stl-gray-100: #F5F5F5;
   --stl-gray-900: #212121;
   --stl-black: #000000;
-  
+
   /* ========== TIPOGRAFIA ========== */
-  
+
   --font-display: 'Jairo', -apple-system, sans-serif;
   --font-decorative: 'Superbusy Activity', cursive;
   --font-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  
+
   --font-size-display: clamp(3rem, 8vw, 6rem);
   --font-size-h1: clamp(2.5rem, 6vw, 4rem);
   --font-size-h2: clamp(2rem, 5vw, 3rem);
   --font-size-base: 1rem;
-  
+
   /* ========== ESPAÇAMENTO ========== */
-  
+
   --spacing-4: 1rem;
   --spacing-6: 1.5rem;
   --spacing-8: 2rem;
   --spacing-12: 3rem;
   --spacing-16: 4rem;
-  
+
   /* ========== ANIMAÇÕES ========== */
-  
+
   --duration-normal: 300ms;
   --ease-out: cubic-bezier(0, 0, 0.2, 1);
-  
+
   /* ========== SOMBRAS ========== */
-  
+
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
   --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
   --shadow-red: 0 10px 25px -5px rgba(255, 77, 45, 0.4);
   --shadow-green: 0 10px 25px -5px rgba(0, 106, 71, 0.4);
-  
+
   /* ========== BORDER RADIUS ========== */
-  
+
   --radius-xl: 1rem;
   --radius-2xl: 1.5rem;
   --radius-full: 9999px;
@@ -1056,6 +1056,6 @@ O Design System do STL Festival é construído sobre a identidade vibrante e ene
 
 ---
 
-**Versão:** 1.0  
-**Status:** ✅ Aprovado para implementação  
+**Versão:** 1.0
+**Status:** ✅ Aprovado para implementação
 **Baseado em:** Assets existentes do STL Festival

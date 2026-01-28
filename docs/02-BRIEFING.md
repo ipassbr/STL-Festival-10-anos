@@ -36,7 +36,7 @@ Um marco histórico celebrando uma década de música, cultura e comunidade.
 - **Ocasião:** Feriado prolongado de Corpus Christi
 - **Local:** "Montanha mágica" (local característico)
 - **Endereço Físico:** STL Valley, São Thomé das Letras, MG
-- **Geolocalização:** 
+- **Geolocalização:**
   - Latitude: -21.6894421
   - Longitude: -45.0072492
   - Google Maps: [STL Valley](https://www.google.com/maps/place/STL+Valley/@-21.6901028,-45.0080687,18z)

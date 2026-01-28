@@ -189,7 +189,7 @@
 - Pista (Inteira, Meia, Solidário): NÃO informado
 - Camarote (Inteira, Meia): NÃO informado
 - Camarote Premium (Inteira, Meia): NÃO informado
-- **Ação:** Ficará apenas no iPass. 
+- **Ação:** Ficará apenas no iPass.
 
 ⚠️ **URL do iPass:**
 - URL específica para compra: NÃO informada
@@ -2452,7 +2452,7 @@ Mobile vs Desktop
 - ⚠️ Traduções (EN, ES) podem atrasar
 - ⚠️ Animações podem ser time-consuming
 
-**Avaliação:** 🟡 **Realista SE:** 
+**Avaliação:** 🟡 **Realista SE:**
 - Assets disponíveis em 1 semana
 - Traduções prontas em paralelo
 - 3 semanas é seguro (2 semanas é apertado)
@@ -2993,7 +2993,7 @@ docs/development-plans/
 
 ⚠️ **Os planos de desenvolvimento detalhados serão criados DURANTE a implementação**, não antes de iniciar.
 
-**Razão:** 
+**Razão:**
 - Permite ajustes baseados em aprendizados
 - Evita over-planning
 - Foco em entregar valor iterativamente
@@ -3035,9 +3035,9 @@ A documentação está em excelente estado e cobre todos os aspectos necessário
 
 ---
 
-**Relatório Gerado em:** 28 de Janeiro de 2026  
-**Documentos Analisados:** 8 (Índice, Vision, Briefing, PRD, Tech Stack, Design System, i18n, Paleta de Cores)  
-**Total de Páginas Analisadas:** ~5.000 linhas de documentação  
+**Relatório Gerado em:** 28 de Janeiro de 2026
+**Documentos Analisados:** 8 (Índice, Vision, Briefing, PRD, Tech Stack, Design System, i18n, Paleta de Cores)
+**Total de Páginas Analisadas:** ~5.000 linhas de documentação
 **Tempo de Análise:** Completa e Detalhada
 
 **Próximo Passo:** Revisão com stakeholders + Ajustes + Inicialização do projeto Astro 🚀
