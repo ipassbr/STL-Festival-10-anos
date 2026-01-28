@@ -174,6 +174,33 @@ Garante que TODOS os padrões documentados sejam automaticamente seguidos durant
 
 ---
 
+### 10. Development Setup 🛠️ NOVO
+**Arquivo:** [`DEVELOPMENT-SETUP.md`](./DEVELOPMENT-SETUP.md)
+
+**O que contém:**
+- Guia completo de configuração do ambiente de desenvolvimento
+- Setup de **ESLint** (TypeScript, React, Astro, Acessibilidade)
+- Setup de **Prettier** (formatação automática com plugins)
+- Setup de **Husky** (Git hooks: pre-commit e pre-push)
+- Configuração de **lint-staged** (validação apenas dos arquivos modificados)
+- Scripts npm disponíveis
+- Convenções de código e nomenclatura
+- Troubleshooting comum
+- Checklist de setup completo
+
+**Por que é importante:**
+Garante que todos os desenvolvedores tenham o mesmo ambiente configurado, com qualidade de código garantida automaticamente. Pre-commit hooks impedem commits com erros, mantendo a qualidade do código desde o início.
+
+**Ferramentas Configuradas:**
+- ✅ ESLint 9+ (flat config) com suporte a Astro, TypeScript e React
+- ✅ Prettier 3+ com plugins para Astro e Tailwind CSS
+- ✅ Husky 9+ com hooks de pre-commit e pre-push
+- ✅ lint-staged para performance otimizada
+- ✅ EditorConfig para consistência entre editores
+- ✅ Git attributes para line endings consistentes
+
+---
+
 ## 🎯 Resumo Executivo
 
 ### O Que Temos Até Agora?
