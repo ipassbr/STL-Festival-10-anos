@@ -620,15 +620,16 @@ stl-festival-ld/
 
 #### Core
 - **Astro 5.x** - Framework principal
-- **TypeScript (strict mode)** - Type safety completo
+- **TypeScript (básico)** - Type safety e melhor DX
 - **Node 20+** - Runtime
 
 #### TypeScript Configuration
-- **Modo:** `strict: true` (máxima segurança)
+- **Modo:** Configuração básica (type safety sem complexidade excessiva)
 - **Target:** `ES2022` (recursos modernos)
 - **JSX:** `react-jsx` (React 19 automático)
 - **Paths:** Aliases configurados (`@/*`, `@components/*`)
 - **Types:** Astro + React + Framer Motion
+- **Nota:** Uso básico de TypeScript para ajudar no desenvolvimento, sem configuração strict excessiva
 
 #### Styling
 - **Tailwind CSS** - Utility-first (recomendado)
@@ -1136,7 +1137,7 @@ export const Preloader = ({ isLoading }: { isLoading: boolean }) => {
 **Stack Completo:**
 ```
 Frontend: Astro 5.x + React 19
-Linguagem: TypeScript (strict mode)
+Linguagem: TypeScript (básico)
 Styling: Tailwind CSS
 Animações: Framer Motion
 Assets: Cloudinary (CDN + Otimização)
@@ -1147,11 +1148,11 @@ Analytics: Google Analytics 4
 **Justificativa em 5 pontos:**
 1. 🚀 **Performance** - LCP < 1.5s = Mais conversões
 2. 🔍 **SEO** - HTML puro = Melhor ranking
-3. 📘 **Type Safety** - TypeScript strict = Menos bugs
+3. 📘 **Type Safety** - TypeScript básico = Menos bugs e melhor DX
 4. 🎨 **Animações** - Framer Motion 38% menor que GSAP
 5. ⚡ **Velocidade** - Lançar rápido = Capturar vendas antecipadas
 
-**Próximo passo:** Inicializar projeto Astro com TypeScript strict + Configurar Framer Motion + Cloudinary
+**Próximo passo:** Inicializar projeto Astro com TypeScript básico + Configurar Framer Motion + Cloudinary
 
 ---
 

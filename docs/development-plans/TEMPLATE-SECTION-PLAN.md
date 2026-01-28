@@ -92,8 +92,10 @@
 - [ ] [Componente específico 3]
 
 ### Componentes React (Interativos)
-- [ ] [Componente interativo 1] - `client:load` / `client:visible`
-- [ ] [Componente interativo 2] - `client:load` / `client:visible`
+- [ ] [Componente interativo 1] - `client:load` / `client:visible` (TypeScript)
+- [ ] [Componente interativo 2] - `client:load` / `client:visible` (TypeScript)
+
+**Nota Técnica:** Todos os componentes React serão desenvolvidos em **TypeScript** (básico) para type safety e melhor DX.
 
 ---
 

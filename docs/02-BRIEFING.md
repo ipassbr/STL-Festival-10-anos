@@ -274,16 +274,19 @@ Um marco histórico celebrando uma década de música, cultura e comunidade.
 
 ## 🔧 Requisitos Técnicos
 
-### Stack Tecnológico (A definir)
-**Opções em análise:**
-- **Astro** (preferência inicial - performance, content-focused)
-- **React** (alternativa - interatividade, ecosystem)
+### Stack Tecnológico
+**Decisão:**
+- **Astro 5.x** - Framework principal (performance, content-focused)
+- **React 19** - Componentes interativos (onde necessário)
+- **TypeScript** - Linguagem de programação (básico, para type safety)
+- **Tailwind CSS** - Styling (utility-first)
 
 **Decisão baseada em:**
 - Performance (Core Web Vitals)
 - Facilidade de atualização de conteúdo
 - Animações e interatividade necessárias
 - SEO requirements
+- Type safety e melhor DX (TypeScript)
 
 ### Requisitos de Performance
 - Lighthouse Score: 90+ em todas as métricas

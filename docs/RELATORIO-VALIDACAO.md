@@ -1023,7 +1023,7 @@
 
 ```
 Frontend: Astro 5.x + React 19 (componentes interativos)
-Linguagem: TypeScript (strict mode)
+Linguagem: TypeScript (básico)
 Styling: Tailwind CSS
 Animações: Framer Motion
 Assets: Cloudinary (CDN + Otimização)
@@ -1034,7 +1034,7 @@ Analytics: Google Analytics 4 (via Partytown)
 **Justificativa em 5 Pontos (Tech Stack linhas 1147-1153):**
 1. 🚀 **Performance** - LCP < 1.5s = Mais conversões
 2. 🔍 **SEO** - HTML puro = Melhor ranking
-3. 📘 **Type Safety** - TypeScript strict = Menos bugs
+3. 📘 **Type Safety** - TypeScript básico = Menos bugs e melhor DX
 4. 🎨 **Animações** - Framer Motion 38% menor que GSAP
 5. ⚡ **Velocidade** - Lançar rápido = Capturar vendas antecipadas
 

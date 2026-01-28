@@ -92,6 +92,7 @@ Uma **landing page de alta performance e design excepcional** que funcione como 
 - Animações e transições que transmitem energia
 - Mobile-first e totalmente responsivo
 - Performance otimizada (Core Web Vitals)
+- TypeScript para type safety e melhor experiência de desenvolvimento
 
 #### 3. **Conversão Estratégica**
 - CTAs (Call-to-Actions) estrategicamente posicionados

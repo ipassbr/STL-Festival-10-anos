@@ -289,6 +289,7 @@ Atualizar o README conforme seções forem concluídas:
 3. **Commit Frequente:** Pequenos commits com mensagens claras
 4. **Teste Continuamente:** Não deixe todos os testes para o final
 5. **Documente Problemas:** Se encontrou dificuldade, documente no plano
+6. **Use TypeScript:** Todos os componentes React devem ser desenvolvidos em TypeScript (básico) para type safety
 
 ### Durante o Code Review
 

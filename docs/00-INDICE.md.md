@@ -187,6 +187,7 @@ Garante que TODOS os padrões documentados sejam automaticamente seguidos durant
 
 ```
 Frontend: Astro 5.x + React 19 (componentes interativos)
+Linguagem: TypeScript (básico)
 Styling: Tailwind CSS (com tokens customizados)
 i18n: Astro nativo (PT-BR, EN, ES)
 Deploy: Vercel
