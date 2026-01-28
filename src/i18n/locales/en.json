@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "title": "STL Festival 2026 - 10th Edition | Reggae, Trap, Rap",
+    "description": "Reggae, Trap and Rap Festival. June 6th, 2026 at Montanha Mágica. Lineup featuring Edson Gomes, Matuê, Marcelo D2 and more!"
+  },
+  "hero": {
+    "title": "STL Festival 2026 - 10th Edition",
+    "date": "June 6th, 2026",
+    "time": "8:00 PM",
+    "location": "Montanha Mágica, São Thomé das Letras - MG, Brazil",
+    "locationShort": "Montanha Mágica - STL/MG",
+    "tickerLabel": "STL Festival 2026 event information",
+    "tickerText1": "STL FESTIVAL 2026",
+    "tickerText2": "10 YEARS",
+    "tickerText3": "SÃO THOME DAS LETRAS",
+    "imageAlt": "STL Festival 2026 - Festival venue at Montanha Mágica",
+    "scrollLabel": "Scroll to see more content",
+    "scrollText": "Scroll down",
+    "spotifyLabel": "Listen to STL Festival's official playlist on Spotify"
+  }
+}

@@ -1,0 +1,294 @@
+---
+/**
+ * Spotify Badge Component - Hero Section
+ * Badge responsivo com auto-hide em mobile para economia de espaço
+ *
+ * Features:
+ * - Desktop: Tamanho completo (120x40px), sempre visível
+ * - Mobile: Reduzido 70% (84x28px), auto-hide após 3s
+ * - Touch area mínima: 44x44px
+ * - Texto fixo: "playlist stl-festival"
+ */
+
+interface Props {
+  playlistUrl: string;
+  class?: string;
+}
+
+const { playlistUrl, class: className = '' } = Astro.props;
+---
+
+<a
+  href={playlistUrl}
+  target="_blank"
+  rel="noopener noreferrer"
+  class:list={['spotify-badge', className]}
+  aria-label="Ouça a playlist oficial STL Festival no Spotify"
+  data-spotify-badge
+>
+  <!-- Logo STL Festival - Desktop First -->
+  <img
+    src="https://res.cloudinary.com/dazkdemvu/image/upload/v1769622514/stl-festival/logos/logo-stl_ydnwga.svg"
+    alt="STL Festival"
+    class="stl-logo"
+    width="80"
+    height="24"
+    aria-hidden="true"
+  />
+
+  <!-- Spotify Logo - Depois da Logo -->
+  <svg
+    class="spotify-icon"
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    aria-hidden="true"
+  >
+    <path
+      d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"
+    ></path>
+  </svg>
+</a>
+
+<!-- Script de Auto-hide Mobile -->
+<script>
+  // Importa o script de badge detection com auto-hide
+  import '@/scripts/hero/badgeDetection';
+</script>
+
+<style>
+  .spotify-badge {
+    /* Layout */
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem; /* Gap maior entre logo e ícone */
+
+    /* Position - Desktop - Próximo ao final da hero, acima do ticker */
+    position: fixed;
+    bottom: 28%; /* Bem mais acima do ticker (que está em 10%) */
+    left: 0; /* Encosta no lado esquerdo */
+    z-index: 50;
+
+    /* Visual - Badge maior */
+    padding: 0.875rem 1.25rem; /* Padding maior: 14px 20px */
+    background: #1db954; /* Spotify Green */
+    color: white;
+    border-radius: 0 12px 12px 0; /* Arredondado no lado direito (top e bottom) */
+
+    /* Typography */
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.2;
+    text-decoration: none;
+    white-space: nowrap;
+
+    /* Shadow - Mais pronunciada */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+
+    /* Transitions */
+    opacity: 1;
+    transform: scale(1);
+    transform-origin: top left;
+    transition:
+      opacity 0.3s ease,
+      transform 0.2s ease,
+      background-color 0.2s ease,
+      box-shadow 0.2s ease;
+
+    /* Cursor */
+    cursor: pointer;
+  }
+
+  /* Hover State - Desktop */
+  .spotify-badge:hover {
+    background: #1ed760; /* Spotify Green Hover */
+    transform: scale(1.02); /* Hover mais sutil */
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  }
+
+  /* Focus State - Acessibilidade */
+  .spotify-badge:focus-visible {
+    outline: 3px solid #2563eb;
+    outline-offset: 2px;
+  }
+
+  /* Active State */
+  .spotify-badge:active {
+    transform: scale(0.98);
+  }
+
+  /* Icon Styling - Desktop maior */
+  .spotify-icon {
+    flex-shrink: 0;
+    width: 28px; /* Maior: 20px → 28px */
+    height: 28px;
+  }
+
+  /* STL Logo Styling - Desktop maior */
+  .stl-logo {
+    flex-shrink: 0;
+    height: 32px; /* Maior: 24px → 32px */
+    width: auto;
+    object-fit: contain;
+    user-select: none;
+  }
+
+  /* ========================================
+     MOBILE RESPONSIVO (<1024px)
+     ======================================== */
+  @media (max-width: 1023px) {
+    .spotify-badge {
+      /* Position Mobile - Próximo ao final da hero, acima do ticker */
+      position: fixed;
+      bottom: 18%; /* Acima do ticker (que está em 10%) */
+      left: 0; /* Encosta no lado esquerdo */
+
+      /* Remove qualquer margem ou padding externo */
+      margin: 0;
+
+      /* Border radius no lado direito */
+      border-radius: 0 12px 12px 0;
+
+      /* Badge quadrado apenas com ícone */
+      width: 44px;
+      height: 44px;
+      padding: 0.5rem;
+      justify-content: center;
+
+      /* Opacidade Reduzida - Estado Ativo */
+      opacity: 0.85;
+
+      /* Remove scale, usa tamanho fixo */
+      transform: scale(1);
+      transform-origin: top left;
+
+      /* Z-index alto para garantir que fica acima do vídeo */
+      z-index: 50;
+    }
+
+    /* Esconde a logo STL em mobile */
+    .stl-logo {
+      display: none;
+    }
+
+    /* Aumenta o ícone em mobile */
+    .spotify-icon {
+      width: 24px;
+      height: 24px;
+    }
+
+    /* Estado Hidden - Após 3s de inatividade */
+    .spotify-badge.is-hidden {
+      opacity: 0.4;
+      transition: opacity 0.5s ease;
+    }
+
+    /* Hover Mobile - Mantém tamanho */
+    .spotify-badge:hover {
+      transform: scale(1);
+      background: #1ed760;
+    }
+
+    /* Tap Area já é 44x44px nativamente em mobile */
+  }
+
+  /* ========================================
+     MICRO MOBILE (<375px)
+     ======================================== */
+  @media (max-width: 374px) {
+    .spotify-badge {
+      /* Mantém mesmo tamanho - apenas ícone */
+      width: 44px;
+      height: 44px;
+      top: 0;
+      left: 0;
+    }
+  }
+
+  /* ========================================
+     TABLET (768px - 1023px)
+     ======================================== */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .spotify-badge {
+      /* Em tablets ainda mostra apenas ícone */
+      position: fixed;
+      bottom: 16%; /* Acima do ticker */
+      left: 0; /* Encosta no lado esquerdo */
+      margin: 0;
+      width: 48px;
+      height: 48px;
+      padding: 0.625rem;
+      border-radius: 0 12px 12px 0; /* Arredondado no lado direito */
+      z-index: 50;
+    }
+
+    .stl-logo {
+      display: none;
+    }
+
+    .spotify-icon {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  /* ========================================
+     DESKTOP LARGE (≥1440px)
+     ======================================== */
+  @media (min-width: 1440px) {
+    .spotify-badge {
+      /* Badge ainda maior em telas grandes */
+      padding: 1rem 1.5rem; /* 16px 24px */
+      gap: 1rem;
+    }
+
+    .stl-logo {
+      height: 36px; /* Logo ainda maior */
+    }
+
+    .spotify-icon {
+      width: 32px; /* Ícone ainda maior */
+      height: 32px;
+    }
+  }
+
+  /* ========================================
+     REDUCED MOTION - Acessibilidade
+     ======================================== */
+  @media (prefers-reduced-motion: reduce) {
+    .spotify-badge {
+      transition: opacity 0.3s ease;
+    }
+
+    .spotify-badge:hover {
+      transform: scale(1);
+    }
+
+    @media (max-width: 1023px) {
+      .spotify-badge:hover {
+        transform: scale(1);
+      }
+    }
+  }
+
+  /* ========================================
+     ANIMATION PULSE - Indicador de interatividade
+     ======================================== */
+  @keyframes badge-pulse {
+    0%,
+    100% {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+    50% {
+      box-shadow: 0 2px 12px rgba(29, 185, 84, 0.4);
+    }
+  }
+
+  /* Aplica pulse apenas em mobile ao carregar */
+  @media (max-width: 1023px) {
+    .spotify-badge {
+      animation: badge-pulse 2s ease-in-out 1;
+    }
+  }
+</style>

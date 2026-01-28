@@ -1,0 +1,541 @@
+---
+/**
+ * Hero Section - STL Festival 2026
+ * Seção minimalista com vídeo de fundo e ticker automático
+ */
+
+import { getLangFromUrl, useTranslations } from '@/i18n/utils';
+import SpotifyBadge from './SpotifyBadge.astro';
+
+interface Props {
+  videoUrl?: string;
+  fallbackImage?: string;
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+// URLs de mídia
+const {
+  videoUrl = import.meta.env.PUBLIC_CLOUDINARY_VIDEO_URL ||
+    'https://res.cloudinary.com/dazkdemvu/video/upload/v1768415565/stl-festival/videos/hero.mp4',
+  fallbackImage = import.meta.env.PUBLIC_FALLBACK_IMAGE_URL ||
+    '/assets/images/fallbacks/herosection.jpg',
+} = Astro.props;
+
+// URL da playlist do Spotify
+const spotifyPlaylistUrl =
+  import.meta.env.PUBLIC_SPOTIFY_PLAYLIST_URL ||
+  'https://open.spotify.com/playlist/3FffolLJeoJbwg4eQn53qu';
+---
+
+<section class="hero" aria-label={t('hero.title')}>
+  <!-- Imagem de fallback -->
+  <img
+    id="hero-fallback-image"
+    src={fallbackImage}
+    alt={t('hero.imageAlt')}
+    class="hero__media"
+    loading="eager"
+    decoding="async"
+    fetchpriority="high"
+    width="1920"
+    height="1080"
+    aria-hidden="true"
+  />
+
+  <!-- Vídeo de fundo Cloudinary -->
+  {
+    videoUrl && (
+      <video
+        id="hero-video"
+        loop
+        muted
+        playsinline
+        preload="auto"
+        poster={fallbackImage}
+        class="hero__media hero__video"
+        aria-hidden="true"
+      >
+        <source
+          src={videoUrl.replace(
+            '/upload/',
+            '/upload/q_auto:low,w_960,br_800k,ac_none/'
+          )}
+          type="video/mp4"
+          media="(max-width: 768px)"
+        />
+        <source
+          src={videoUrl.replace(
+            '/upload/',
+            '/upload/q_auto:low,w_1280,br_1500k,ac_none/'
+          )}
+          type="video/mp4"
+          media="(max-width: 1920px)"
+        />
+        <source src={videoUrl} type="video/mp4" />
+      </video>
+    )
+  }
+
+  <!-- Overlay escuro sutil -->
+  <div class="hero__overlay" aria-hidden="true"></div>
+
+  <!-- Logo STL - Centralizada -->
+  <div class="hero__logo-container">
+    <img
+      id="hero-logo"
+      src="https://res.cloudinary.com/dazkdemvu/image/upload/v1769622514/stl-festival/logos/logo-stl_ydnwga.svg"
+      alt="STL Festival Logo"
+      class="hero__logo"
+      loading="eager"
+      decoding="async"
+      width="600"
+      height="180"
+    />
+  </div>
+
+  <!-- Badge do Spotify - Responsivo com auto-hide mobile -->
+  <SpotifyBadge playlistUrl={spotifyPlaylistUrl} />
+
+  <!-- Faixa Ticker Automática -->
+  <div class="hero-ticker" role="banner" aria-label={t('hero.tickerLabel')}>
+    <div class="hero-ticker__wrapper">
+      <!-- Loop 1 -->
+      <div class="hero-ticker__content">
+        <span>{t('hero.tickerText1')}</span>
+        <span class="hero-ticker__separator" aria-hidden="true">✦</span>
+        <span>{t('hero.tickerText2')}</span>
+        <span class="hero-ticker__separator" aria-hidden="true">✦</span>
+        <span>{t('hero.tickerText3')}</span>
+        <span class="hero-ticker__separator" aria-hidden="true">✦</span>
+      </div>
+      <!-- Loop 2 -->
+      <div class="hero-ticker__content" aria-hidden="true">
+        <span>{t('hero.tickerText1')}</span>
+        <span class="hero-ticker__separator">✦</span>
+        <span>{t('hero.tickerText2')}</span>
+        <span class="hero-ticker__separator">✦</span>
+        <span>{t('hero.tickerText3')}</span>
+        <span class="hero-ticker__separator">✦</span>
+      </div>
+      <!-- Loop 3 -->
+      <div class="hero-ticker__content" aria-hidden="true">
+        <span>{t('hero.tickerText1')}</span>
+        <span class="hero-ticker__separator">✦</span>
+        <span>{t('hero.tickerText2')}</span>
+        <span class="hero-ticker__separator">✦</span>
+        <span>{t('hero.tickerText3')}</span>
+        <span class="hero-ticker__separator">✦</span>
+      </div>
+      <!-- Loop 4 -->
+      <div class="hero-ticker__content" aria-hidden="true">
+        <span>{t('hero.tickerText1')}</span>
+        <span class="hero-ticker__separator">✦</span>
+        <span>{t('hero.tickerText2')}</span>
+        <span class="hero-ticker__separator">✦</span>
+        <span>{t('hero.tickerText3')}</span>
+        <span class="hero-ticker__separator">✦</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Indicador de scroll mobile -->
+  <button
+    id="mobile-scroll-indicator"
+    class="hero__scroll-indicator"
+    aria-label={t('hero.scrollLabel')}
+    data-scroll-to="#lineup"
+  >
+    <svg
+      class="hero__scroll-icon"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+    </svg>
+    <span class="hero__scroll-text">
+      {t('hero.scrollText')}
+    </span>
+  </button>
+
+  <!-- H1 para SEO (visualmente oculto) -->
+  <h1 class="sr-only">{t('hero.title')}</h1>
+</section>
+
+<script>
+  import {
+    updateHeroContent,
+    startVideo,
+    setupVideoErrorHandling,
+    type VideoControlElements,
+  } from '@/scripts/hero/videoControl';
+  import { setupMobileScrollIndicator } from '@/scripts/hero/mobileIndicator';
+
+  // Elementos
+  const elements: VideoControlElements = {
+    video: document.getElementById('hero-video') as HTMLVideoElement,
+    fallbackImage: document.getElementById(
+      'hero-fallback-image'
+    ) as HTMLImageElement,
+    badge: document.querySelector('[data-spotify-badge]') as HTMLElement,
+    logo: document.getElementById('hero-logo') as HTMLImageElement,
+  };
+
+  // Configurar erro de vídeo
+  setupVideoErrorHandling(elements);
+
+  // Escutar eventos do Preloader (se existir)
+  window.addEventListener('preloader-progress', ((e: CustomEvent<number>) => {
+    updateHeroContent(e.detail, elements);
+  }) as EventListener);
+
+  window.addEventListener('preloader-complete', () => {
+    startVideo(elements);
+    setupMobileScrollIndicator();
+    // Badge auto-hide é gerenciado pelo badgeDetection.ts
+  });
+
+  // Suporte a reduced motion
+  const prefersReducedMotion = window.matchMedia(
+    '(prefers-reduced-motion: reduce)'
+  ).matches;
+
+  if (prefersReducedMotion) {
+    startVideo(elements);
+    if (elements.fallbackImage) elements.fallbackImage.style.opacity = '1';
+
+    // Pausar animação do ticker se reduced motion
+    const ticker = document.querySelector(
+      '.hero-ticker__wrapper'
+    ) as HTMLElement;
+    if (ticker) {
+      ticker.style.animationPlayState = 'paused';
+    }
+  } else {
+    updateHeroContent(0, elements);
+  }
+
+  setupMobileScrollIndicator();
+</script>
+
+<style>
+  /* Hero Container */
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh; /* Dynamic viewport para mobile */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  /* Mídia de fundo (imagem e vídeo) */
+  .hero__media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 75%;
+    opacity: 0;
+    transition: opacity 500ms var(--ease-out);
+  }
+
+  #hero-fallback-image {
+    z-index: 0;
+  }
+
+  #hero-video {
+    z-index: 1;
+  }
+
+  /* Overlay escuro */
+  .hero__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  /* ========== LOGO STL CENTRALIZADA ========== */
+  .hero__logo-container {
+    position: absolute;
+    z-index: 5;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  .hero__logo {
+    width: auto;
+    height: clamp(
+      120px,
+      20vw,
+      280px
+    ); /* Responsivo: 120px (mobile) até 280px (desktop) */
+    max-width: 90vw; /* Garante que não ultrapasse a largura da tela */
+    object-fit: contain;
+    user-select: none;
+    opacity: 0;
+    filter: drop-shadow(0 8px 32px rgba(0, 0, 0, 0.4));
+    transition: opacity 800ms var(--ease-out);
+    animation: logo-fade-in 1.2s ease-out forwards;
+  }
+
+  @keyframes logo-fade-in {
+    0% {
+      opacity: 0;
+      transform: scale(0.92);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* ========== FAIXA TICKER AUTOMÁTICA ========== */
+  .hero-ticker {
+    position: absolute;
+    bottom: 10%;
+    left: 0;
+    z-index: 10;
+    width: 100%;
+    background: var(--color-red);
+    color: var(--color-white);
+    padding: var(--spacing-md) 0;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Efeito de gradiente fade nas pontas laterais (esquerda e direita) */
+  .hero-ticker::before,
+  .hero-ticker::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 150px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .hero-ticker::before {
+    left: 0;
+    background: linear-gradient(
+      to right,
+      rgba(255, 77, 45, 1) 0%,
+      rgba(255, 77, 45, 0) 100%
+    );
+  }
+
+  .hero-ticker::after {
+    right: 0;
+    background: linear-gradient(
+      to left,
+      rgba(255, 77, 45, 1) 0%,
+      rgba(255, 77, 45, 0) 100%
+    );
+  }
+
+  .hero-ticker__wrapper {
+    display: flex;
+    width: fit-content;
+    animation: scroll-ticker 20s linear infinite;
+    will-change: transform;
+    position: relative;
+    z-index: 0;
+    gap: 0; /* Remove qualquer gap entre os blocos */
+  }
+
+  .hero-ticker__content {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    padding: 0; /* Remove padding lateral */
+    font-family: var(--font-heading);
+    font-size: clamp(1.25rem, 3vw, 2rem);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    flex-shrink: 0; /* Previne shrinking */
+  }
+
+  .hero-ticker__content > span:not(.hero-ticker__separator) {
+    padding: 0 var(--spacing-sm); /* Espaçamento interno nos textos */
+  }
+
+  .hero-ticker__separator {
+    margin: 0 var(--spacing-md);
+    opacity: 0.8;
+    font-size: 1.2em;
+    flex-shrink: 0;
+  }
+
+  /* Animação de scroll infinito */
+  @keyframes scroll-ticker {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-25%);
+    }
+  }
+
+  /* Pausar animação no hover para melhor UX */
+  .hero-ticker:hover .hero-ticker__wrapper {
+    animation-play-state: paused;
+  }
+
+  /* Badge do Spotify - Gerenciado pelo componente SpotifyBadge.astro */
+
+  /* Indicador de scroll mobile */
+  .hero__scroll-indicator {
+    position: absolute;
+    bottom: var(--spacing-2xl);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-sm);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    opacity: 0;
+    transition: all var(--duration-normal) var(--ease-out);
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .hero__scroll-indicator:hover {
+    transform: translateX(-50%) scale(1.1);
+  }
+
+  .hero__scroll-indicator:focus-visible {
+    outline: 2px solid var(--color-white);
+    outline-offset: 4px;
+    border-radius: var(--radius-sm);
+  }
+
+  .hero__scroll-icon {
+    width: 24px;
+    height: 24px;
+    color: rgba(255, 255, 255, 0.7);
+    transition: color var(--duration-normal) var(--ease-out);
+    animation: bounce-slow 2s ease-in-out infinite;
+  }
+
+  .hero__scroll-indicator:hover .hero__scroll-icon {
+    color: rgba(255, 255, 255, 1);
+  }
+
+  .hero__scroll-text {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: rgba(255, 255, 255, 0.5);
+    transition: color var(--duration-normal) var(--ease-out);
+  }
+
+  .hero__scroll-indicator:hover .hero__scroll-text {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  /* Esconder indicador em desktop */
+  @media (min-width: 1024px) {
+    .hero__scroll-indicator {
+      display: none;
+    }
+  }
+
+  /* Animação bounce */
+  @keyframes bounce-slow {
+    0%,
+    100% {
+      transform: translateY(0);
+      opacity: 0.7;
+    }
+    50% {
+      transform: translateY(8px);
+      opacity: 1;
+    }
+  }
+
+  /* Suporte a prefers-reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-ticker__wrapper {
+      animation: none !important;
+    }
+
+    .hero__scroll-icon {
+      animation: none;
+    }
+
+    .hero__logo {
+      animation: none;
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    * {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+  }
+
+  /* Ajustes mobile */
+  @media (max-width: 768px) {
+    .hero-ticker {
+      padding: var(--spacing-sm) 0;
+    }
+
+    .hero-ticker__content {
+      font-size: clamp(1rem, 4vw, 1.5rem);
+      padding: 0 var(--spacing-md);
+    }
+
+    .hero-ticker__separator {
+      margin: 0 var(--spacing-md);
+    }
+
+    /* Logo menor em mobile */
+    .hero__logo {
+      height: clamp(100px, 18vw, 160px);
+    }
+  }
+
+  /* Ajustes para telas muito pequenas */
+  @media (max-width: 480px) {
+    .hero-ticker__content {
+      font-size: clamp(0.875rem, 4vw, 1.25rem);
+    }
+
+    /* Logo ainda menor em telas pequenas */
+    .hero__logo {
+      height: clamp(80px, 20vw, 120px);
+    }
+  }
+
+  /* Ajustes para desktop large */
+  @media (min-width: 1440px) {
+    .hero__logo {
+      height: clamp(200px, 18vw, 320px);
+    }
+  }
+</style>
