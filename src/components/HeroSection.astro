@@ -19,19 +19,17 @@ const t = useTranslations(lang);
 const {
   videoUrl = import.meta.env.PUBLIC_CLOUDINARY_VIDEO_URL ||
     'https://res.cloudinary.com/dazkdemvu/video/upload/v1768415565/stl-festival/videos/hero.mp4',
-  fallbackImage = import.meta.env.PUBLIC_FALLBACK_IMAGE_URL || '/assets/images/fallbacks/herosection.jpg',
+  fallbackImage = import.meta.env.PUBLIC_FALLBACK_IMAGE_URL ||
+    '/assets/images/fallbacks/herosection.jpg',
 } = Astro.props;
 
 // URL da playlist do Spotify
 const spotifyPlaylistUrl =
-  import.meta.env.PUBLIC_SPOTIFY_PLAYLIST_URL || 
+  import.meta.env.PUBLIC_SPOTIFY_PLAYLIST_URL ||
   'https://open.spotify.com/playlist/3FffolLJeoJbwg4eQn53qu';
 ---
 
-<section 
-  class="hero" 
-  aria-label={t('hero.title')}
->
+<section class="hero" aria-label={t('hero.title')}>
   <!-- Imagem de fallback -->
   <img
     id="hero-fallback-image"
@@ -47,30 +45,38 @@ const spotifyPlaylistUrl =
   />
 
   <!-- Vídeo de fundo Cloudinary -->
-  {videoUrl && (
-    <video
-      id="hero-video"
-      loop
-      muted
-      playsinline
-      preload="auto"
-      poster={fallbackImage}
-      class="hero__media hero__video"
-      aria-hidden="true"
-    >
-      <source
-        src={videoUrl.replace('/upload/', '/upload/q_auto:low,w_960,br_800k,ac_none/')}
-        type="video/mp4"
-        media="(max-width: 768px)"
-      />
-      <source
-        src={videoUrl.replace('/upload/', '/upload/q_auto:low,w_1280,br_1500k,ac_none/')}
-        type="video/mp4"
-        media="(max-width: 1920px)"
-      />
-      <source src={videoUrl} type="video/mp4" />
-    </video>
-  )}
+  {
+    videoUrl && (
+      <video
+        id="hero-video"
+        loop
+        muted
+        playsinline
+        preload="auto"
+        poster={fallbackImage}
+        class="hero__media hero__video"
+        aria-hidden="true"
+      >
+        <source
+          src={videoUrl.replace(
+            '/upload/',
+            '/upload/q_auto:low,w_960,br_800k,ac_none/'
+          )}
+          type="video/mp4"
+          media="(max-width: 768px)"
+        />
+        <source
+          src={videoUrl.replace(
+            '/upload/',
+            '/upload/q_auto:low,w_1280,br_1500k,ac_none/'
+          )}
+          type="video/mp4"
+          media="(max-width: 1920px)"
+        />
+        <source src={videoUrl} type="video/mp4" />
+      </video>
+    )
+  }
 
   <!-- Overlay escuro sutil -->
   <div class="hero__overlay" aria-hidden="true"></div>
@@ -129,8 +135,7 @@ const spotifyPlaylistUrl =
         stroke-linecap="round"
         stroke-linejoin="round"
         stroke-width="2"
-        d="M19 14l-7 7m0 0l-7-7m7 7V3"
-      />
+        d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
     </svg>
     <span class="hero__scroll-text">
       {t('hero.scrollText')}
@@ -154,7 +159,9 @@ const spotifyPlaylistUrl =
   // Elementos
   const elements: VideoControlElements = {
     video: document.getElementById('hero-video') as HTMLVideoElement,
-    fallbackImage: document.getElementById('hero-fallback-image') as HTMLImageElement,
+    fallbackImage: document.getElementById(
+      'hero-fallback-image'
+    ) as HTMLImageElement,
     badge: document.querySelector('.hero-spotify-badge') as HTMLElement,
     logo: null,
   };
@@ -175,16 +182,20 @@ const spotifyPlaylistUrl =
   });
 
   // Suporte a reduced motion
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const prefersReducedMotion = window.matchMedia(
+    '(prefers-reduced-motion: reduce)'
+  ).matches;
 
   if (prefersReducedMotion) {
     startVideo(elements);
     if (elements.fallbackImage) elements.fallbackImage.style.opacity = '1';
     if (elements.badge) elements.badge.style.opacity = '1';
     setupBadgeColorDetection();
-    
+
     // Pausar animação do ticker se reduced motion
-    const ticker = document.querySelector('.hero-ticker__wrapper') as HTMLElement;
+    const ticker = document.querySelector(
+      '.hero-ticker__wrapper'
+    ) as HTMLElement;
     if (ticker) {
       ticker.style.animationPlayState = 'paused';
     }
@@ -239,12 +250,11 @@ const spotifyPlaylistUrl =
   /* ========== FAIXA TICKER AUTOMÁTICA ========== */
   .hero-ticker {
     position: absolute;
-    top: 50%;
+    bottom: 10%;
     left: 0;
-    transform: translateY(-50%);
     z-index: 10;
     width: 100%;
-    background: var(--color-blue);
+    background: var(--color-red);
     color: var(--color-white);
     padding: var(--spacing-md) 0;
     overflow: hidden;
@@ -362,7 +372,8 @@ const spotifyPlaylistUrl =
 
   /* Animação bounce */
   @keyframes bounce-slow {
-    0%, 100% {
+    0%,
+    100% {
       transform: translateY(0);
       opacity: 0.7;
     }
