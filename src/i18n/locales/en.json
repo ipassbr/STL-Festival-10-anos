@@ -33,6 +33,13 @@
     "openMobileMenu": "Open navigation menu",
     "closeMobileMenu": "Close navigation menu",
     "buyTicketsAriaLabel": "Buy tickets for STL Festival",
+    "menu": {
+      "lineup": "Lineup",
+      "about": "About",
+      "sectors": "Sectors",
+      "accessibility": "Accessibility",
+      "valley": "STL Valley"
+    },
     "languages": {
       "pt": "Português",
       "en": "English",

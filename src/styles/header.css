@@ -28,6 +28,7 @@
    HEADER BASE
    ======================================== */
 .header {
+  /* Posicionamento */
   position: fixed;
   top: 0;
   left: 0;
@@ -35,61 +36,51 @@
   width: 100%;
   z-index: 50;
 
-  /* Estado inicial: oculto até preloader completar */
-  opacity: 0;
-  visibility: hidden;
-  transition:
-    opacity 0.3s ease,
-    visibility 0.3s ease;
-}
-
-.header.header-visible {
+  /* Visibilidade */
   opacity: 1;
   visibility: visible;
-}
 
-/* ========================================
-   ESTADO NORMAL - GLASSMORPHISM
-   (Sobre Hero Section)
-   ======================================== */
-.header {
-  /* Background transparente com blur */
+  /* Background semi-transparente */
   background: rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(10px) saturate(180%);
-  -webkit-backdrop-filter: blur(10px) saturate(180%); /* Safari */
 
-  /* Sem border em nenhum estado - integração visual completa */
-  border-bottom: none;
+  /* Transições suaves */
+  transition: all 0.3s ease;
 
-  /* Sombra sutil sem criar linha divisória */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-
-  /* Transição suave */
-  transition:
-    background 0.3s ease,
-    backdrop-filter 0.3s ease,
-    box-shadow 0.3s ease,
-    opacity 0.3s ease,
-    visibility 0.3s ease;
+  /* SOLUÇÃO: Extender levemente para baixo para cobrir artefato do blur */
+  padding-bottom: 2px;
+  margin-bottom: -2px;
 }
 
-/* ========================================
-   ESTADO APÓS SCROLL - OPACO ESCURO
-   (Sobre conteúdo sólido)
-   ======================================== */
+/* Pseudo-elemento para aplicar blur (evita artefato de borda) */
+.header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
+  z-index: -1;
+
+  /* Extender o blur para baixo para cobrir completamente */
+  bottom: -2px;
+}
+
+/* Estado após scroll - Opaco */
 .header.header-scrolled {
-  /* Background opaco escuro */
   background: rgba(0, 0, 0, 0.95);
-
-  /* Remove blur quando opaco */
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-
-  /* Sombra mais pronunciada */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 
-  /* Sem border em nenhum estado - integração visual completa */
-  border-bottom: none;
+  /* Remover extensão quando opaco */
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+/* Remover blur do pseudo-elemento quando scrolled */
+.header.header-scrolled::before {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 /* ========================================
@@ -104,6 +95,7 @@
   max-width: 1920px;
   margin: 0 auto;
   min-height: 64px;
+  position: relative;
 }
 
 /* ========================================
@@ -128,10 +120,191 @@
 }
 
 .header-logo-img {
-  height: 32px;
+  height: 40px;
   width: auto;
   object-fit: contain;
   user-select: none;
+}
+
+/* ========================================
+   MENU DE NAVEGAÇÃO DESKTOP
+   ======================================== */
+.header-nav {
+  display: none;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.header-nav-list {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.header-nav-item {
+  margin: 0;
+}
+
+.header-nav-link {
+  display: block;
+  color: var(--color-white);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 0.5rem 0;
+  transition: opacity 0.2s ease;
+  white-space: nowrap;
+  position: relative;
+}
+
+.header-nav-link:hover {
+  opacity: 0.8;
+}
+
+.header-nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--color-white);
+  transition: width 0.3s ease;
+}
+
+.header-nav-link:hover::after {
+  width: 100%;
+}
+
+.header-nav-link:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 4px;
+  border-radius: 0.25rem;
+}
+
+/* ========================================
+   BOTÃO MENU MOBILE (HAMBURGER)
+   ======================================== */
+.header-menu-toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.header-menu-toggle-icon {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 18px;
+  gap: 5px;
+}
+
+.header-menu-toggle-icon span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--color-white);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.header-menu-toggle[aria-expanded='true']
+  .header-menu-toggle-icon
+  span:nth-child(1) {
+  transform: rotate(45deg) translate(7px, 7px);
+}
+
+.header-menu-toggle[aria-expanded='true']
+  .header-menu-toggle-icon
+  span:nth-child(2) {
+  opacity: 0;
+}
+
+.header-menu-toggle[aria-expanded='true']
+  .header-menu-toggle-icon
+  span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -7px);
+}
+
+.header-menu-toggle:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+  border-radius: 0.25rem;
+}
+
+/* ========================================
+   MENU MOBILE
+   ======================================== */
+.header-mobile-menu {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.98);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 40;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  overflow-y: auto;
+  padding: 2rem 0;
+}
+
+.header-mobile-menu[aria-hidden='false'] {
+  transform: translateX(0);
+}
+
+.header-mobile-menu-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.header-mobile-menu-item {
+  margin: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.header-mobile-menu-link {
+  display: block;
+  color: var(--color-white);
+  font-size: 1.125rem;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 1.25rem 1.5rem;
+  transition: background 0.2s ease;
+}
+
+.header-mobile-menu-link:hover,
+.header-mobile-menu-link:focus {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.header-mobile-menu-link:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: -2px;
+}
+
+body.menu-open {
+  overflow: hidden;
 }
 
 /* ========================================
@@ -153,22 +326,14 @@
   justify-content: center;
   padding: 0.625rem 1.25rem;
   min-height: 44px;
-
-  /* Estilo destacado */
   background: var(--color-red);
   color: var(--color-white);
   font-size: 0.875rem;
   font-weight: 600;
   text-decoration: none;
   border-radius: 0.5rem;
-
-  /* Sombra com cor do botão */
   box-shadow: 0 4px 12px rgba(255, 77, 45, 0.3);
-
-  /* Transições */
   transition: all 0.2s ease;
-
-  /* Touch-friendly */
   cursor: pointer;
   white-space: nowrap;
 }
@@ -192,6 +357,21 @@
    RESPONSIVIDADE
    ======================================== */
 
+/* Desktop */
+@media (min-width: 1024px) {
+  .header-nav {
+    display: block;
+  }
+
+  .header-menu-toggle {
+    display: none;
+  }
+
+  .header-mobile-menu {
+    display: none;
+  }
+}
+
 /* Tablet */
 @media (min-width: 768px) and (max-width: 1023px) {
   .header-container {
@@ -199,7 +379,7 @@
   }
 
   .header-logo-img {
-    height: 36px;
+    height: 44px;
   }
 
   .header-cta-button {
@@ -217,7 +397,7 @@
   }
 
   .header-logo-img {
-    height: 28px;
+    height: 32px;
   }
 
   .header-right {
@@ -229,6 +409,10 @@
     font-size: 0.8125rem;
     min-height: 40px;
   }
+
+  .header-mobile-menu {
+    top: 56px;
+  }
 }
 
 /* Mobile pequeno */
@@ -239,7 +423,7 @@
   }
 
   .header-logo-img {
-    height: 24px;
+    height: 28px;
   }
 
   .header-right {
@@ -253,12 +437,27 @@
   }
 }
 
+/* Desktop Large */
+@media (min-width: 1440px) {
+  .header-container {
+    padding: 1.25rem 2rem;
+  }
+
+  .header-logo-img {
+    height: 48px;
+  }
+
+  .header-cta-button {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+
 /* ========================================
    REDUCED MOTION
    ======================================== */
 @media (prefers-reduced-motion: reduce) {
   .header,
-  .header.header-scrolled,
   .header-cta-button {
     transition:
       opacity 0.3s ease,
@@ -267,23 +466,5 @@
 
   .header-cta-button:hover {
     transform: none;
-  }
-}
-
-/* ========================================
-   DESKTOP LARGE
-   ======================================== */
-@media (min-width: 1440px) {
-  .header-container {
-    padding: 1.25rem 2rem;
-  }
-
-  .header-logo-img {
-    height: 40px;
-  }
-
-  .header-cta-button {
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
   }
 }

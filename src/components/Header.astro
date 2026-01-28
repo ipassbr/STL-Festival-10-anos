@@ -1,12 +1,12 @@
 ---
 /**
  * Header - Navegação principal do STL Festival
- * Layout simplificado: Logo (esquerda), Botão Ingressos + Seletor Idioma (direita)
+ * Layout: Logo (esquerda), Menu de Navegação (centro), Botão Ingressos + Seletor Idioma (direita)
  * Efeito glass sobre Hero Section, transição para opaco após scroll
  */
 
 import '@/styles/header.css';
-import { getLangFromUrl, useTranslations, getLocalizedUrl } from '@/i18n/utils';
+import { getLangFromUrl, useTranslations } from '@/i18n/utils';
 import LanguageSelector from './LanguageSelector.astro';
 
 const lang = getLangFromUrl(Astro.url);
@@ -20,8 +20,12 @@ const ipassUrl =
 const logoUrl =
   'https://res.cloudinary.com/dazkdemvu/image/upload/v1769622514/stl-festival/logos/logo-stl_ydnwga.svg';
 
-// URL localizada para home
-const homeUrl = getLocalizedUrl('/', lang);
+// Links de navegação do MVP
+const navLinks = [
+  { href: '#lineup', label: t('nav.menu.lineup') },
+  { href: '#sobre', label: t('nav.menu.about') },
+  { href: '#setores', label: t('nav.menu.sectors') },
+];
 ---
 
 <!-- Skip to main content link -->
@@ -32,7 +36,12 @@ const homeUrl = getLocalizedUrl('/', lang);
 <header class="header" id="header" role="banner">
   <div class="header-container">
     <!-- Logo -->
-    <a href={homeUrl} class="header-logo" aria-label={t('nav.logoAriaLabel')}>
+    <a
+      href="#"
+      class="header-logo"
+      aria-label={t('nav.logoAriaLabel')}
+      id="header-logo-link"
+    >
       <img
         src={logoUrl}
         alt="STL Festival Logo"
@@ -43,6 +52,25 @@ const homeUrl = getLocalizedUrl('/', lang);
         height="36"
       />
     </a>
+
+    <!-- Menu de Navegação Desktop -->
+    <nav class="header-nav" aria-label="Navegação principal">
+      <ul class="header-nav-list">
+        {
+          navLinks.map((link) => (
+            <li class="header-nav-item">
+              <a
+                href={link.href}
+                class="header-nav-link"
+                data-scroll-to={link.href}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
 
     <!-- Right side: Botão Ingressos + Seletor Idioma -->
     <div class="header-right">
@@ -59,8 +87,47 @@ const homeUrl = getLocalizedUrl('/', lang);
 
       <!-- Seletor de Idioma -->
       <LanguageSelector />
+
+      <!-- Botão Menu Mobile -->
+      <button
+        class="header-menu-toggle"
+        aria-label={t('nav.openMobileMenu')}
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        id="menu-toggle"
+      >
+        <span class="header-menu-toggle-icon" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </button>
     </div>
   </div>
+
+  <!-- Menu Mobile -->
+  <nav
+    class="header-mobile-menu"
+    id="mobile-menu"
+    aria-label="Menu de navegação mobile"
+    aria-hidden="true"
+  >
+    <ul class="header-mobile-menu-list">
+      {
+        navLinks.map((link) => (
+          <li class="header-mobile-menu-item">
+            <a
+              href={link.href}
+              class="header-mobile-menu-link"
+              data-scroll-to={link.href}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
 </header>
 
 <script>
@@ -93,51 +160,100 @@ const homeUrl = getLocalizedUrl('/', lang);
   // Inicializar estado do header
   updateHeader();
 
-  // Mostrar header apenas após preloader completar
-  const header = document.getElementById('header');
-
-  // Verificar se preloader já completou (caso de reduced motion ou reload)
-  const checkPreloaderComplete = () => {
-    // Se não houver preloader ou se reduced motion, mostrar header imediatamente
-    const prefersReducedMotion = window.matchMedia(
-      '(prefers-reduced-motion: reduce)'
-    ).matches;
-    if (prefersReducedMotion) {
-      if (header) {
-        header.classList.add('header-visible');
-      }
-      return;
-    }
-
-    // Escutar evento de preloader completo
-    window.addEventListener(
-      'preloader-complete',
-      () => {
-        if (header) {
-          // Pequeno delay para transição suave
-          setTimeout(() => {
-            header.classList.add('header-visible');
-          }, 300);
-        }
-      },
-      { once: true }
-    );
-
-    // FALLBACK: Se após 5 segundos o preloader não completar, mostrar header
-    setTimeout(() => {
-      if (header && !header.classList.contains('header-visible')) {
-        console.warn(
-          '[Header] Fallback: Preloader event not fired, showing header anyway'
-        );
-        header.classList.add('header-visible');
-      }
-    }, 5000);
-  };
-
-  // Aguardar DOM estar pronto
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', checkPreloaderComplete);
-  } else {
-    checkPreloaderComplete();
+  // Logo click handler - scroll suave para o topo sem recarregar página
+  const logoLink = document.getElementById('header-logo-link');
+  if (logoLink) {
+    logoLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   }
+
+  // Menu Mobile Toggle
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  function closeMobileMenu() {
+    if (menuToggle && mobileMenu) {
+      menuToggle.setAttribute('aria-expanded', 'false');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('menu-open');
+      menuToggle.focus();
+    }
+  }
+
+  function openMobileMenu() {
+    if (menuToggle && mobileMenu) {
+      menuToggle.setAttribute('aria-expanded', 'true');
+      mobileMenu.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('menu-open');
+    }
+  }
+
+  if (menuToggle && mobileMenu) {
+    menuToggle.addEventListener('click', () => {
+      const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+      if (isExpanded) {
+        closeMobileMenu();
+      } else {
+        openMobileMenu();
+      }
+    });
+  }
+
+  // Escape key handler
+  document.addEventListener('keydown', (e) => {
+    if (
+      e.key === 'Escape' &&
+      mobileMenu &&
+      mobileMenu.getAttribute('aria-hidden') === 'false'
+    ) {
+      closeMobileMenu();
+    }
+  });
+
+  // Scroll suave para âncoras
+  const navLinks = document.querySelectorAll('[data-scroll-to]');
+  navLinks.forEach((link) => {
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href');
+      if (href?.startsWith('#')) {
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) {
+          const headerHeight =
+            document.getElementById('header')?.offsetHeight || 0;
+          const targetPosition =
+            target.getBoundingClientRect().top +
+            window.pageYOffset -
+            headerHeight;
+
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth',
+          });
+
+          // Fechar menu mobile após clicar em link
+          if (
+            mobileMenu &&
+            mobileMenu.getAttribute('aria-hidden') === 'false'
+          ) {
+            closeMobileMenu();
+          }
+        }
+      }
+    });
+  });
+
+  // Fechar menu ao clicar fora
+  document.addEventListener('click', (e) => {
+    if (
+      mobileMenu &&
+      mobileMenu.getAttribute('aria-hidden') === 'false' &&
+      !mobileMenu.contains(e.target as Node) &&
+      !menuToggle?.contains(e.target as Node)
+    ) {
+      closeMobileMenu();
+    }
+  });
 </script>
