@@ -69,7 +69,6 @@
     background 0.3s ease,
     backdrop-filter 0.3s ease,
     box-shadow 0.3s ease,
-    border-bottom 0.3s ease,
     opacity 0.3s ease,
     visibility 0.3s ease;
 }
@@ -89,8 +88,8 @@
   /* Sombra mais pronunciada */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 
-  /* Border aparece apenas quando opaco - faz sentido dividir do conteúdo */
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  /* Sem border em nenhum estado - integração visual completa */
+  border-bottom: none;
 }
 
 /* ========================================
