@@ -1,0 +1,17 @@
+# Environment
+.env
+
+# IDE / Agent
+.cursor/
+.agent/
+
+# Dependencies
+node_modules/
+
+# Build
+dist/
+.next/
+
+# OS
+.DS_Store
+Thumbs.db
