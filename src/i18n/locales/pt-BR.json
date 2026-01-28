@@ -17,5 +17,9 @@
     "scrollLabel": "Rolar para ver mais conteúdo",
     "scrollText": "Role para baixo",
     "spotifyLabel": "Ouça a playlist oficial do STL Festival no Spotify"
+  },
+  "accessibility": {
+    "badgeLabel": "Evento acessível",
+    "badgeAriaLabel": "Ir para seção de acessibilidade - O STL Festival é um evento inclusivo para todos"
   }
 }
