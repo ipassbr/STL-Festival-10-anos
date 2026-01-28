@@ -1,0 +1,62 @@
+name: Issue Triage
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+
+    steps:
+      - name: Analyze issue and label
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+
+            async function analyzeIssue(title, body) {
+              // TODO: Call your AI provider here and return the JSON shape below.
+              return {
+                type: "bug",
+                severity: "low",
+                area: "other",
+                hasReproSteps: false
+              };
+            }
+
+            const analysis = await analyzeIssue(issue.title, issue.body || "");
+
+            const labels = [];
+            if (analysis.type === 'bug') {
+              labels.push('bug');
+              if (analysis.severity === 'high') labels.push('priority: high');
+            } else if (analysis.type === 'feature') {
+              labels.push('enhancement');
+            } else if (analysis.type === 'question') {
+              labels.push('question');
+            }
+
+            if (analysis.area) {
+              labels.push(`area: ${analysis.area}`);
+            }
+
+            if (labels.length) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                labels
+              });
+            }
+
+            if (analysis.type === 'bug' && !analysis.hasReproSteps) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                body: 'Thanks for reporting this issue!\n\nTo help us investigate, could you please provide:\n- Steps to reproduce the issue\n- Expected behavior\n- Actual behavior\n- Environment (OS, version, etc.)\n\nThis will help us resolve your issue faster.'
+              });
+            }
