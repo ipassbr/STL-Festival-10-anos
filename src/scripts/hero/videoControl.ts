@@ -3,7 +3,9 @@
  * Gerencia vídeo de fundo, fallback e error handling
  */
 
-export type { VideoControlElements } from '@/types';
+import type { VideoControlElements } from '@/types';
+
+export type { VideoControlElements };
 
 export function updateHeroContent(
   progress: number,
@@ -24,7 +26,7 @@ export function startVideo(elements: VideoControlElements): void {
   const { video, fallbackImage } = elements;
 
   if (video) {
-    video.play().catch((error) => {
+    video.play().catch((error: unknown) => {
       console.warn('Video autoplay failed:', error);
       // Keep fallback image visible if video fails to play
       if (fallbackImage) {
