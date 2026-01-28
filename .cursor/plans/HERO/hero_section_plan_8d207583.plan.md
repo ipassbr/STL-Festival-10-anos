@@ -1,40 +1,3 @@
----
-name: Hero Section Plan
-overview: Plano de desenvolvimento completo para a Hero Section do STL Festival 2026, incluindo vídeo de fundo, ticker automático, badge do Spotify, countdown e indicador de scroll mobile, seguindo padrões de performance e acessibilidade WCAG AA.
-todos:
-  - id: setup-structure
-    content: Criar estrutura de pastas e arquivos base (HeroSection.astro, scripts TypeScript)
-    status: pending
-  - id: video-fallback
-    content: Implementar vídeo responsivo com fallback image e Cloudinary transformations
-    status: pending
-  - id: ticker-animation
-    content: Desenvolver ticker automático com animação CSS seamless e suporte a reduced motion
-    status: pending
-  - id: spotify-badge
-    content: Integrar SpotifyBadge component com color detection e posicionamento fixed
-    status: pending
-  - id: scroll-indicator
-    content: Criar indicador de scroll mobile com animação bounce e smooth scroll
-    status: pending
-  - id: typescript-scripts
-    content: Desenvolver scripts TypeScript (videoControl, badgeDetection, mobileIndicator)
-    status: pending
-  - id: i18n-integration
-    content: Extrair textos para i18n e adicionar traduções PT-BR, EN, ES
-    status: pending
-  - id: responsive-testing
-    content: Testar responsividade em mobile (320px), tablet (768px) e desktop (1024px+)
-    status: pending
-  - id: accessibility-validation
-    content: 'Validar WCAG AA: navegação teclado, screen reader, contraste, ARIA labels'
-    status: pending
-  - id: performance-optimization
-    content: 'Otimizar performance: Lighthouse 95+, LCP < 1.5s, CLS < 0.05'
-    status: pending
-isProject: false
----
-
 # Plano: Hero Section - STL Festival 10ª Edição
 
 ## 🎯 Objetivo da Seção
@@ -182,7 +145,7 @@ A Hero Section é o primeiro impacto visual do STL Festival, estabelecendo imedi
 - PT-BR: "06 de Junho de 2026"
 - EN: "June 6th, 2026"
 - ES: "6 de Junio de 2026"
-- Textos extraídos para `[src/i18n/locales/{lang}.json](src/i18n/locales)`
+- Textos extraídos para [`src/i18n/locales/{lang}.json`](src/i18n/locales)
 
 ---
 
@@ -190,19 +153,19 @@ A Hero Section é o primeiro impacto visual do STL Festival, estabelecendo imedi
 
 ### Componentes Astro (Estáticos)
 
-- `[HeroSection.astro](src/components/HeroSection.astro)` - Container principal
-- `[SpotifyBadge.astro](src/components/SpotifyBadge.astro)` - Badge reutilizável
+- [`HeroSection.astro`](src/components/HeroSection.astro) - Container principal
+- [`SpotifyBadge.astro`](src/components/SpotifyBadge.astro) - Badge reutilizável
 
 ### Scripts TypeScript (Client-side)
 
-- `[src/scripts/hero/videoControl.ts](src/scripts/hero/videoControl.ts)` - Controle de vídeo, fallback, erro handling
-- `[src/scripts/hero/badgeDetection.ts](src/scripts/hero/badgeDetection.ts)` - Detecção de cor de fundo para badge
-- `[src/scripts/hero/mobileIndicator.ts](src/scripts/hero/mobileIndicator.ts)` - Controle do indicador de scroll
+- [`src/scripts/hero/videoControl.ts`](src/scripts/hero/videoControl.ts) - Controle de vídeo, fallback, erro handling
+- [`src/scripts/hero/badgeDetection.ts`](src/scripts/hero/badgeDetection.ts) - Detecção de cor de fundo para badge
+- [`src/scripts/hero/mobileIndicator.ts`](src/scripts/hero/mobileIndicator.ts) - Controle do indicador de scroll
 
 ### Assets Cloudinary
 
-- Vídeo hero: `[hero.mp4](https://res.cloudinary.com/dazkdemvu/video/upload/v1768415565/stl-festival/videos/hero.mp4)`
-- Fallback image: `[herosection.jpg](/assets/images/fallbacks/herosection.jpg)`
+- Vídeo hero: [`hero.mp4`](https://res.cloudinary.com/dazkdemvu/video/upload/v1768415565/stl-festival/videos/hero.mp4)
+- Fallback image: [`herosection.jpg`](/assets/images/fallbacks/herosection.jpg)
 - Transformações: q_auto:low, w_960/1280, br_800k/1500k
 
 ---
@@ -298,7 +261,7 @@ bounce-slow: 2s ease-in-out infinite;
 
 ### 4. Badge Color Detection
 
-**Script:** `[badgeDetection.ts](src/scripts/hero/badgeDetection.ts)`
+**Script:** [`badgeDetection.ts`](src/scripts/hero/badgeDetection.ts)
 
 **Lógica:**
 
@@ -325,7 +288,7 @@ bounce-slow: 2s ease-in-out infinite;
 ### Fase 3: Hero Reveal (2-3s)
 
 1. Event `preloader-complete` disparado
-2. `[startVideo()](src/scripts/hero/videoControl.ts)` inicia playback
+2. [`startVideo()`](src/scripts/hero/videoControl.ts) inicia playback
 3. Fade in: vídeo, badge, scroll indicator
 4. Ticker já animando (não espera preloader)
 
@@ -342,12 +305,18 @@ bounce-slow: 2s ease-in-out infinite;
 
 O código fornecido já implementa:
 
-✅ Vídeo responsivo com fallback  
-✅ Ticker automático seamless  
-✅ Badge do Spotify integrado  
-✅ Indicador de scroll mobile  
-✅ Scripts de controle (videoControl, badgeDetection, mobileIndicator)  
-✅ Suporte a reduced motion  
+✅ Vídeo responsivo com fallback
+
+✅ Ticker automático seamless
+
+✅ Badge do Spotify integrado
+
+✅ Indicador de scroll mobile
+
+✅ Scripts de controle (videoControl, badgeDetection, mobileIndicator)
+
+✅ Suporte a reduced motion
+
 ✅ i18n integration
 
 **Próximos passos:** Refinamento, testes e otimizações conforme plano.
@@ -433,20 +402,33 @@ O código fornecido já implementa:
 
 ## 📊 Estimativa de Implementação
 
-| Tarefa                       | Estimativa | Prioridade  |
+| Tarefa | Estimativa | Prioridade |
+
 | ---------------------------- | ---------- | ----------- |
-| Setup estrutura Astro        | 2h         | 🔴 Crítica  |
-| Implementar vídeo + fallback | 3h         | 🔴 Crítica  |
-| Ticker automático            | 2h         | 🔴 Crítica  |
-| Badge Spotify                | 1h         | 🟡 Alta     |
-| Scroll indicator             | 1h         | 🟡 Alta     |
-| Scripts TypeScript           | 3h         | 🔴 Crítica  |
-| Responsividade               | 2h         | 🔴 Crítica  |
-| Acessibilidade               | 2h         | 🔴 Crítica  |
-| i18n integration             | 1h         | 🔴 Crítica  |
-| Performance tuning           | 2h         | 🔴 Crítica  |
-| Testes cross-browser         | 2h         | 🟡 Alta     |
-| **TOTAL**                    | **21h**    | **~3 dias** |
+
+| Setup estrutura Astro | 2h | 🔴 Crítica |
+
+| Implementar vídeo + fallback | 3h | 🔴 Crítica |
+
+| Ticker automático | 2h | 🔴 Crítica |
+
+| Badge Spotify | 1h | 🟡 Alta |
+
+| Scroll indicator | 1h | 🟡 Alta |
+
+| Scripts TypeScript | 3h | 🔴 Crítica |
+
+| Responsividade | 2h | 🔴 Crítica |
+
+| Acessibilidade | 2h | 🔴 Crítica |
+
+| i18n integration | 1h | 🔴 Crítica |
+
+| Performance tuning | 2h | 🔴 Crítica |
+
+| Testes cross-browser | 2h | 🟡 Alta |
+
+| **TOTAL** | **21h** | **~3 dias** |
 
 ---
 
@@ -454,14 +436,14 @@ O código fornecido já implementa:
 
 ### Imediatos
 
-1. Validar estrutura de pastas `[src/components/](src/components)` e `[src/scripts/hero/](src/scripts/hero)`
+1. Validar estrutura de pastas [`src/components/`](src/components) e [`src/scripts/hero/`](src/scripts/hero)
 2. Configurar Cloudinary URLs nas env vars
 3. Criar arquivos de tradução i18n para hero
 
 ### Dependências
 
-- ✅ Design System tokens (`[tokens.css](src/styles/tokens.css)`)
-- ✅ i18n utils (`[src/i18n/utils.ts](src/i18n/utils.ts)`)
+- ✅ Design System tokens ([`tokens.css`](src/styles/tokens.css))
+- ✅ i18n utils ([`src/i18n/utils.ts`](src/i18n/utils.ts))
 - ✅ Preloader component (dispara eventos necessários)
 - ✅ SpotifyBadge component
 
@@ -907,9 +889,12 @@ git checkout -b feature/hero-section
 
 ---
 
-**Labels:** `feature`, `hero-section`, `priority-high`, `i18n`, `a11y`, `performance`  
-**Assignees:** (a definir)  
-**Milestone:** Hero Section MVP  
+**Labels:** `feature`, `hero-section`, `priority-high`, `i18n`, `a11y`, `performance`
+
+**Assignees:** (a definir)
+
+**Milestone:** Hero Section MVP
+
 **Epic Points:** 21 (horas)
 
 ````
@@ -966,9 +951,12 @@ gh issue create \
 
 ---
 
-**Plano criado em:** 28/01/2026  
-**Última atualização:** 28/01/2026  
-**Versão:** 1.2  
+**Plano criado em:** 28/01/2026
+
+**Última atualização:** 28/01/2026
+
+**Versão:** 1.2
+
 **Status:** 📝 Atualizado com correções de design (ticker position e cor)
 
 **Changelog v1.2:**
