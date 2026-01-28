@@ -94,25 +94,41 @@ const spotifyPlaylistUrl =
   <!-- Faixa Ticker Automática -->
   <div class="hero-ticker" role="banner" aria-label={t('hero.tickerLabel')}>
     <div class="hero-ticker__wrapper">
-      <!-- Duplicar conteúdo para loop seamless -->
+      <!-- Loop 1 -->
       <div class="hero-ticker__content">
-        <span>{t('hero.date')}</span>
+        <span>{t('hero.tickerText1')}</span>
         <span class="hero-ticker__separator" aria-hidden="true">✦</span>
-        <span>{t('hero.locationShort')}</span>
+        <span>{t('hero.tickerText2')}</span>
         <span class="hero-ticker__separator" aria-hidden="true">✦</span>
-        <span>STL FESTIVAL</span>
+        <span>{t('hero.tickerText3')}</span>
         <span class="hero-ticker__separator" aria-hidden="true">✦</span>
-        <span>STL FESTIVAL</span>
       </div>
-      <!-- Duplicata para loop infinito -->
+      <!-- Loop 2 -->
       <div class="hero-ticker__content" aria-hidden="true">
-        <span>{t('hero.date')}</span>
+        <span>{t('hero.tickerText1')}</span>
         <span class="hero-ticker__separator">✦</span>
-        <span>{t('hero.locationShort')}</span>
+        <span>{t('hero.tickerText2')}</span>
         <span class="hero-ticker__separator">✦</span>
-        <span>STL FESTIVAL</span>
+        <span>{t('hero.tickerText3')}</span>
         <span class="hero-ticker__separator">✦</span>
-        <span>STL FESTIVAL</span>
+      </div>
+      <!-- Loop 3 -->
+      <div class="hero-ticker__content" aria-hidden="true">
+        <span>{t('hero.tickerText1')}</span>
+        <span class="hero-ticker__separator">✦</span>
+        <span>{t('hero.tickerText2')}</span>
+        <span class="hero-ticker__separator">✦</span>
+        <span>{t('hero.tickerText3')}</span>
+        <span class="hero-ticker__separator">✦</span>
+      </div>
+      <!-- Loop 4 -->
+      <div class="hero-ticker__content" aria-hidden="true">
+        <span>{t('hero.tickerText1')}</span>
+        <span class="hero-ticker__separator">✦</span>
+        <span>{t('hero.tickerText2')}</span>
+        <span class="hero-ticker__separator">✦</span>
+        <span>{t('hero.tickerText3')}</span>
+        <span class="hero-ticker__separator">✦</span>
       </div>
     </div>
   </div>
@@ -261,29 +277,68 @@ const spotifyPlaylistUrl =
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   }
 
+  /* Efeito de gradiente fade nas pontas laterais (esquerda e direita) */
+  .hero-ticker::before,
+  .hero-ticker::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 150px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .hero-ticker::before {
+    left: 0;
+    background: linear-gradient(
+      to right,
+      rgba(255, 77, 45, 1) 0%,
+      rgba(255, 77, 45, 0) 100%
+    );
+  }
+
+  .hero-ticker::after {
+    right: 0;
+    background: linear-gradient(
+      to left,
+      rgba(255, 77, 45, 1) 0%,
+      rgba(255, 77, 45, 0) 100%
+    );
+  }
+
   .hero-ticker__wrapper {
     display: flex;
     width: fit-content;
-    animation: scroll-ticker 30s linear infinite;
+    animation: scroll-ticker 20s linear infinite;
     will-change: transform;
+    position: relative;
+    z-index: 0;
+    gap: 0; /* Remove qualquer gap entre os blocos */
   }
 
   .hero-ticker__content {
     display: flex;
     align-items: center;
     white-space: nowrap;
-    padding: 0 var(--spacing-lg);
+    padding: 0; /* Remove padding lateral */
     font-family: var(--font-heading);
     font-size: clamp(1.25rem, 3vw, 2rem);
     font-weight: 700;
     letter-spacing: 0.05em;
     text-transform: uppercase;
+    flex-shrink: 0; /* Previne shrinking */
+  }
+
+  .hero-ticker__content > span:not(.hero-ticker__separator) {
+    padding: 0 var(--spacing-sm); /* Espaçamento interno nos textos */
   }
 
   .hero-ticker__separator {
-    margin: 0 var(--spacing-lg);
+    margin: 0 var(--spacing-md);
     opacity: 0.8;
     font-size: 1.2em;
+    flex-shrink: 0;
   }
 
   /* Animação de scroll infinito */
@@ -292,7 +347,7 @@ const spotifyPlaylistUrl =
       transform: translateX(0);
     }
     100% {
-      transform: translateX(-50%);
+      transform: translateX(-25%);
     }
   }
 
