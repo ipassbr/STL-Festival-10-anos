@@ -6,6 +6,7 @@
 
 import { getLangFromUrl, useTranslations } from '@/i18n/utils';
 import SpotifyBadge from './SpotifyBadge.astro';
+import AccessibilityBadge from './AccessibilityBadge.astro';
 
 interface Props {
   videoUrl?: string;
@@ -81,8 +82,11 @@ const spotifyPlaylistUrl =
   <!-- Overlay escuro sutil -->
   <div class="hero__overlay" aria-hidden="true"></div>
 
-  <!-- Badge do Spotify - Responsivo com auto-hide mobile -->
+  <!-- Badge do Spotify - Responsivo com auto-hide mobile (esquerda) -->
   <SpotifyBadge playlistUrl={spotifyPlaylistUrl} />
+
+  <!-- Badge de Acessibilidade - Responsivo com auto-hide mobile (direita) -->
+  <AccessibilityBadge targetSection="#accessibility" />
 
   <!-- Faixa Ticker Automática -->
   <div class="hero-ticker" role="banner" aria-label={t('hero.tickerLabel')}>
