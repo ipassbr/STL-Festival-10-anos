@@ -64,7 +64,7 @@ A Hero Section é o primeiro impacto visual do STL Festival, estabelecendo imedi
 
 ### RF-03: Badge do Spotify Interativo
 
-**Descrição:** Badge fixo levando à playlist oficial do festival
+**Descrição:** Badge fixo levando à playlist oficial do festival, com design responsivo otimizado para mobile
 
 **User Story:** Como usuário, eu quero ouvir a vibe do festival antes de comprar ingresso, para saber se é meu estilo
 
@@ -72,10 +72,35 @@ A Hero Section é o primeiro impacto visual do STL Festival, estabelecendo imedi
 
 **Detalhamento:**
 
-- Posição: fixed, canto superior esquerdo
-- Link externo para playlist do Spotify
-- Animação de entrada suave (opacity fade)
+- **Posição Desktop (≥1024px):**
+  - `position: fixed`, canto superior esquerdo
+  - `top: 1.5rem`, `left: 1.5rem`
+  - Tamanho: ~120px x 40px (tamanho padrão)
+- **Posição Mobile (<1024px):**
+  - `position: fixed`, **encosta no canto superior esquerdo**
+  - `top: 0`, `left: 0` (sem margem)
+  - **Apenas ícone do Spotify** (texto oculto)
+  - Tamanho fixo: 44px × 44px (tap target WCAG)
+  - Ícone: 24px × 24px
+  - `border-top-left-radius: 0` (quadrado no canto)
+  - Opacidade reduzida em estado idle: `opacity: 0.85`
+  - `z-index: 40` (abaixo de modais, acima do conteúdo)
+- **Comportamento Mobile:**
+  - Auto-hide após 3s de inatividade (fade to `opacity: 0.4`)
+  - Reaparece (`opacity: 0.85`) ao scroll ou touch
+  - Tap area mínima: 44x44px (padding invisível)
+  - Animação de pulso sutil ao carregar (indicar interatividade)
+
+- **Conteúdo do Badge:**
+  - **Desktop:** Logo STL Festival (SVG) + Ícone Spotify (nessa ordem)
+  - **Mobile:** Apenas ícone do Spotify (logo oculta)
+  - Logo STL: https://res.cloudinary.com/dazkdemvu/image/upload/v1769622514/stl-festival/logos/logo-stl_ydnwga.svg
+  - Ícone: Logo oficial do Spotify (SVG inline)
+
+- Link externo para playlist do Spotify (`target="_blank"`, `rel="noopener noreferrer"`)
+- Animação de entrada suave (opacity fade, delay 200ms após preloader)
 - Detecção de cor de fundo para contraste (badge detection script)
+- Suporte a `prefers-reduced-motion` (sem animações se ativo)
 
 ### RF-04: Indicador de Scroll Mobile
 
@@ -135,10 +160,11 @@ A Hero Section é o primeiro impacto visual do STL Festival, estabelecendo imedi
 
 ### Responsividade
 
-- Mobile: 320px - 767px (vídeo mobile, indicator visível)
-- Tablet: 768px - 1023px (vídeo medium)
-- Desktop: 1024px+ (vídeo full HD, indicator oculto)
-- Touch-friendly: scroll indicator min 44x44px
+- Mobile: 320px - 767px (vídeo mobile, indicator visível, badge reduzido e semi-transparente)
+- Tablet: 768px - 1023px (vídeo medium, badge reduzido)
+- Desktop: 1024px+ (vídeo full HD, indicator oculto, badge tamanho completo)
+- Touch-friendly: scroll indicator min 44x44px, badge tap area 44x44px
+- Badge responsivo: scale(0.7) em mobile, auto-hide após 3s de inatividade
 
 ### Internacionalização (i18n)
 
@@ -159,7 +185,7 @@ A Hero Section é o primeiro impacto visual do STL Festival, estabelecendo imedi
 ### Scripts TypeScript (Client-side)
 
 - [`src/scripts/hero/videoControl.ts`](src/scripts/hero/videoControl.ts) - Controle de vídeo, fallback, erro handling
-- [`src/scripts/hero/badgeDetection.ts`](src/scripts/hero/badgeDetection.ts) - Detecção de cor de fundo para badge
+- [`src/scripts/hero/badgeDetection.ts`](src/scripts/hero/badgeDetection.ts) - Detecção de cor de fundo para badge + auto-hide mobile
 - [`src/scripts/hero/mobileIndicator.ts`](src/scripts/hero/mobileIndicator.ts) - Controle do indicador de scroll
 
 ### Assets Cloudinary
@@ -201,6 +227,89 @@ A Hero Section é o primeiro impacto visual do STL Festival, estabelecendo imedi
 ```css
 scroll-ticker: 30s linear infinite;
 bounce-slow: 2s ease-in-out infinite;
+badge-pulse: 2s ease-in-out 1 (mobile only, ao carregar);
+```
+
+### Badge Responsivo
+
+**Estrutura do Badge:**
+
+```html
+<!-- Desktop -->
+[🎨 STL Logo] [🎵 Spotify Logo]
+
+<!-- Mobile -->
+[🎵]
+```
+
+**Especificações:**
+
+- **Desktop:** ~140px × 40px, texto + ícone, pill shape
+- **Mobile:** 44px × 44px, apenas ícone, quadrado no canto
+- **Tablet:** 48px × 48px, apenas ícone, quadrado no canto
+
+**CSS:**
+
+```css
+/* Desktop (≥1024px) */
+.spotify-badge {
+  position: fixed;
+  top: 1.5rem;
+  left: 1.5rem;
+  transform: scale(1);
+  opacity: 1;
+  transition: opacity 0.3s ease;
+
+  /* Estilo do badge */
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: #1db954; /* Spotify Green */
+  color: white;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Mobile (<1024px) */
+@media (max-width: 1023px) {
+  .spotify-badge {
+    /* Encosta no canto */
+    top: 0;
+    left: 0;
+
+    /* Badge quadrado apenas com ícone */
+    width: 44px;
+    height: 44px;
+    padding: 0.5rem;
+
+    /* Remove border radius no canto */
+    border-top-left-radius: 0;
+
+    /* Opacidade adaptativa */
+    opacity: 0.85;
+  }
+
+  /* Esconde texto em mobile */
+  .spotify-text {
+    display: none;
+  }
+
+  /* Aumenta ícone */
+  .spotify-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  /* Estado hidden */
+  .spotify-badge.is-hidden {
+    opacity: 0.4;
+    transition: opacity 0.5s ease;
+  }
+}
 ```
 
 ---
@@ -259,15 +368,22 @@ bounce-slow: 2s ease-in-out infinite;
 
 **Interação:** Hover scale 1.1, click → smooth scroll
 
-### 4. Badge Color Detection
+### 4. Badge Color Detection + Auto-hide Mobile
 
 **Script:** [`badgeDetection.ts`](src/scripts/hero/badgeDetection.ts)
 
 **Lógica:**
 
-- Sample pixel na posição do badge
-- Calcular luminância
-- Ajustar cor do badge (dark/light) para contraste adequado
+- **Color Detection:**
+  - Sample pixel na posição do badge
+  - Calcular luminância
+  - Ajustar cor do badge (dark/light) para contraste adequado
+
+- **Auto-hide Mobile (<1024px):**
+  - Após 3s de inatividade: fade to `opacity: 0.4`
+  - Eventos de reativação (scroll, touch, mousemove): fade to `opacity: 0.85`
+  - Debounce de 150ms para performance
+  - Não aplicar em desktop (badge sempre visível)
 
 ---
 
@@ -330,7 +446,8 @@ O código fornecido já implementa:
 - Vídeo carrega otimizado por device (mobile: 960px, desktop: 1920px)
 - Fallback image aparece se vídeo falhar
 - Ticker anima sem cortes, pausa no hover
-- Badge do Spotify link funcional, abre em nova aba
+- Badge do Spotify com texto "playlist stl-festival", link funcional, abre em nova aba
+- Badge responsivo: tamanho completo desktop, scale(0.7) mobile, auto-hide após 3s
 - Scroll indicator clicável (mobile only), scroll suave
 - H1 oculto presente no DOM para SEO
 
@@ -358,9 +475,10 @@ O código fornecido já implementa:
 
 ### Responsividade
 
-- Mobile (320px): Ticker responsivo, indicator visível
-- Tablet (768px): Layout adapta
-- Desktop (1024px+): Indicator oculto, vídeo full HD
+- Mobile (320px): Ticker responsivo, indicator visível, badge reduzido (scale 0.7) e auto-hide
+- Tablet (768px): Layout adapta, badge reduzido
+- Desktop (1024px+): Indicator oculto, vídeo full HD, badge tamanho completo
+- Badge touch area: mínimo 44x44px em todos os breakpoints
 
 ### i18n
 
@@ -412,7 +530,7 @@ O código fornecido já implementa:
 
 | Ticker automático | 2h | 🔴 Crítica |
 
-| Badge Spotify | 1h | 🟡 Alta |
+| Badge Spotify (responsivo) | 2h | 🟡 Alta |
 
 | Scroll indicator | 1h | 🟡 Alta |
 
@@ -428,7 +546,7 @@ O código fornecido já implementa:
 
 | Testes cross-browser | 2h | 🟡 Alta |
 
-| **TOTAL** | **21h** | **~3 dias** |
+| **TOTAL** | **22h** | **~3 dias** |
 
 ---
 
@@ -484,6 +602,7 @@ Este desenvolvimento utilizará as seguintes Cursor Skills para garantir qualida
 
 - Todas as strings do ticker extraídas para `src/i18n/locales/{lang}.json`
 - Data formatada via `Intl.DateTimeFormat` respeitando locale
+- Texto do badge Spotify: "playlist stl-festival" (pode permanecer em inglês ou traduzir)
 - Textos do scroll indicator traduzidos
 - ARIA labels traduzidos (`aria-label` usando `t()`)
 - Alt text da fallback image traduzido
@@ -661,11 +780,15 @@ Implementar Hero Section completa do STL Festival 2026 com vídeo de fundo respo
 
 ### Should Have (🟡 Alta)
 
-- [x] **RF-03:** Badge do Spotify interativo
+- [x] **RF-03:** Badge do Spotify interativo responsivo
   - Fixed position (top-left)
+  - Texto: "playlist stl-festival" (nome curto)
   - Link para playlist oficial
   - Color detection para contraste
   - Animação de entrada suave
+  - **Mobile (<1024px):** Tamanho reduzido (scale 0.7), auto-hide após 3s
+  - Touch area mínima 44x44px
+  - Opacidade adaptativa (0.85 ativo, 0.4 idle)
 
 - [x] **RF-04:** Indicador de scroll mobile
   - Visível apenas em < 1024px
@@ -752,12 +875,18 @@ Implementar Hero Section completa do STL Festival 2026 com vídeo de fundo respo
 - [ ] Adicionar suporte a reduced motion
 - [ ] Implementar pause no hover
 
-### Fase 4: Badge Spotify (1h)
+### Fase 4: Badge Spotify (2h)
 
 - [ ] Integrar SpotifyBadge component
-- [ ] Posicionar fixed top-left
+- [ ] Adicionar texto "playlist stl-festival" (nome curto)
+- [ ] Posicionar fixed top-left responsivo (1.5rem desktop, 0.75rem mobile)
+- [ ] Implementar scale(0.7) em mobile (<1024px)
 - [ ] Script badgeDetection.ts para contraste
-- [ ] Animação de entrada fade-in
+- [ ] Implementar auto-hide mobile (fade to 0.4 após 3s)
+- [ ] Adicionar eventos de reativação (scroll, touch, mousemove)
+- [ ] Garantir tap area mínima 44x44px (::before pseudo-element)
+- [ ] Animação de entrada fade-in (delay 200ms)
+- [ ] Teste de usabilidade mobile (320px, 375px, 414px)
 
 ### Fase 5: Scroll Indicator (1h)
 
@@ -825,7 +954,8 @@ Implementar Hero Section completa do STL Festival 2026 com vídeo de fundo respo
 - [ ] Vídeo carrega otimizado por device
 - [ ] Fallback image aparece se vídeo falhar
 - [ ] Ticker anima sem cortes, pausa no hover
-- [ ] Badge Spotify funcional, abre em nova aba
+- [ ] Badge Spotify com texto "playlist stl-festival", funcional, abre em nova aba
+- [ ] Badge responsivo: scale(0.7) mobile, auto-hide após 3s, reaparece ao tocar/scrollar
 - [ ] Scroll indicator clicável, scroll suave
 - [ ] H1 oculto presente para SEO
 
@@ -955,9 +1085,31 @@ gh issue create \
 
 **Última atualização:** 28/01/2026
 
-**Versão:** 1.2
+**Versão:** 1.3
 
-**Status:** 📝 Atualizado com correções de design (ticker position e cor)
+**Status:** 📝 Atualizado com Badge do Spotify responsivo para mobile
+
+**Changelog v1.4 (FINAL):**
+
+- 🎨 Desktop: Logo STL Festival (SVG Cloudinary) + ícone Spotify
+- 📱 Mobile: Apenas ícone do Spotify (44×44px), **ENCOSTA no canto** (top: 0, left: 0)
+- 📱 Badge `position: fixed` + `z-index: 50` para garantir que fica acima do vídeo
+- 📱 Badge quadrado sem border-radius no canto superior esquerdo/inferior esquerdo
+- 📱 Auto-hide do badge após 3s de inatividade (opacity 0.85 → 0.4)
+- 📱 Eventos de reativação (scroll, touch, mousemove) retornam badge
+- ♿ Tap area nativa 44x44px em mobile (WCAG compliant)
+- ⏱️ Estimativa atualizada: Badge Spotify 1h → 2h (total: 22h)
+
+**Changelog v1.3:**
+
+- 📱 Badge do Spotify agora responsivo com comportamento diferenciado
+- 🖥️ Desktop: Texto "playlist stl-festival" + ícone (texto primeiro)
+- 📱 Mobile: Apenas ícone do Spotify (44×44px), encosta no canto (top: 0, left: 0)
+- 📱 Badge quadrado sem border-radius no canto superior esquerdo
+- 📱 Auto-hide do badge após 3s de inatividade (opacity 0.85 → 0.4)
+- 📱 Eventos de reativação (scroll, touch, mousemove) retornam badge
+- ♿ Tap area nativa 44x44px em mobile (WCAG compliant)
+- ⏱️ Estimativa atualizada: Badge Spotify 1h → 2h (total: 22h)
 
 **Changelog v1.2:**
 

@@ -81,15 +81,8 @@ const spotifyPlaylistUrl =
   <!-- Overlay escuro sutil -->
   <div class="hero__overlay" aria-hidden="true"></div>
 
-  <!-- Badge do Spotify -->
-  <SpotifyBadge
-    playlistUrl={spotifyPlaylistUrl}
-    variant="fixed"
-    position="left"
-    size="md"
-    showText={true}
-    class="hero-spotify-badge"
-  />
+  <!-- Badge do Spotify - Responsivo com auto-hide mobile -->
+  <SpotifyBadge playlistUrl={spotifyPlaylistUrl} />
 
   <!-- Faixa Ticker Automática -->
   <div class="hero-ticker" role="banner" aria-label={t('hero.tickerLabel')}>
@@ -169,7 +162,6 @@ const spotifyPlaylistUrl =
     setupVideoErrorHandling,
     type VideoControlElements,
   } from '@/scripts/hero/videoControl';
-  import { setupBadgeColorDetection } from '@/scripts/hero/badgeDetection';
   import { setupMobileScrollIndicator } from '@/scripts/hero/mobileIndicator';
 
   // Elementos
@@ -178,7 +170,7 @@ const spotifyPlaylistUrl =
     fallbackImage: document.getElementById(
       'hero-fallback-image'
     ) as HTMLImageElement,
-    badge: document.querySelector('.hero-spotify-badge') as HTMLElement,
+    badge: document.querySelector('[data-spotify-badge]') as HTMLElement,
     logo: null,
   };
 
@@ -192,9 +184,8 @@ const spotifyPlaylistUrl =
 
   window.addEventListener('preloader-complete', () => {
     startVideo(elements);
-    if (elements.badge) elements.badge.style.opacity = '1';
-    setupBadgeColorDetection();
     setupMobileScrollIndicator();
+    // Badge auto-hide é gerenciado pelo badgeDetection.ts
   });
 
   // Suporte a reduced motion
@@ -205,8 +196,6 @@ const spotifyPlaylistUrl =
   if (prefersReducedMotion) {
     startVideo(elements);
     if (elements.fallbackImage) elements.fallbackImage.style.opacity = '1';
-    if (elements.badge) elements.badge.style.opacity = '1';
-    setupBadgeColorDetection();
 
     // Pausar animação do ticker se reduced motion
     const ticker = document.querySelector(
@@ -356,11 +345,7 @@ const spotifyPlaylistUrl =
     animation-play-state: paused;
   }
 
-  /* Badge do Spotify */
-  .hero-spotify-badge {
-    opacity: 0;
-    transition: opacity 500ms var(--ease-out);
-  }
+  /* Badge do Spotify - Gerenciado pelo componente SpotifyBadge.astro */
 
   /* Indicador de scroll mobile */
   .hero__scroll-indicator {
