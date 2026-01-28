@@ -1,0 +1,26 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import HeroSection from '@/components/HeroSection.astro';
+import { getLangFromUrl, useTranslations } from '@/i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<BaseLayout title={t('meta.title')} description={t('meta.description')}>
+  <HeroSection />
+
+  <!-- Placeholder for upcoming sections -->
+  <section
+    id="lineup"
+    style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--color-cream);"
+  >
+    <div class="container">
+      <h2
+        style="font-family: var(--font-heading); font-size: 3rem; text-align: center;"
+      >
+        Lineup coming soon...
+      </h2>
+    </div>
+  </section>
+</BaseLayout>

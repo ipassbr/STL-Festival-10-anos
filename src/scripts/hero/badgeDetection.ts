@@ -24,17 +24,13 @@ interface BadgeState {
 const MOBILE_BREAKPOINT = 1024; // px
 const HIDE_DELAY = 3000; // 3 segundos
 const DEBOUNCE_DELAY = 150; // ms
-const BADGE_SELECTOR = '[data-spotify-badge]';
+const BADGE_SELECTORS = ['[data-spotify-badge]', '[data-accessibility-badge]']; // Múltiplos badges
 
 // ========================================
-// STATE
+// STATE (agora suporta múltiplos badges)
 // ========================================
 
-const state: BadgeState = {
-  isHidden: false,
-  hideTimer: null,
-  debounceTimer: null,
-};
+const badgeStates = new Map<HTMLElement, BadgeState>();
 
 // ========================================
 // UTILITY FUNCTIONS
@@ -51,12 +47,29 @@ function isMobile(): boolean {
  * Debounce function
  */
 function debounce(fn: () => void, delay: number): () => void {
+  let debounceTimer: number | null = null;
   return () => {
-    if (state.debounceTimer) {
-      clearTimeout(state.debounceTimer);
+    if (debounceTimer) {
+      clearTimeout(debounceTimer);
     }
-    state.debounceTimer = window.setTimeout(fn, delay);
+    debounceTimer = window.setTimeout(fn, delay);
   };
+}
+
+/**
+ * Obtém ou cria o state para um badge específico
+ */
+function getBadgeState(badge: HTMLElement): BadgeState {
+  let state = badgeStates.get(badge);
+  if (!state) {
+    state = {
+      isHidden: false,
+      hideTimer: null,
+      debounceTimer: null,
+    };
+    badgeStates.set(badge, state);
+  }
+  return state;
 }
 
 // ========================================
@@ -67,6 +80,7 @@ function debounce(fn: () => void, delay: number): () => void {
  * Esconde o badge (semi-transparente)
  */
 function hideBadge(badge: HTMLElement): void {
+  const state = getBadgeState(badge);
   if (!isMobile() || state.isHidden) return;
 
   badge.classList.add('is-hidden');
@@ -79,6 +93,7 @@ function hideBadge(badge: HTMLElement): void {
 function showBadge(badge: HTMLElement): void {
   if (!isMobile()) return;
 
+  const state = getBadgeState(badge);
   badge.classList.remove('is-hidden');
   state.isHidden = false;
 
@@ -90,6 +105,8 @@ function showBadge(badge: HTMLElement): void {
  * Inicia o timer para auto-hide
  */
 function startHideTimer(badge: HTMLElement): void {
+  const state = getBadgeState(badge);
+
   // Limpa timer anterior se existir
   if (state.hideTimer) {
     clearTimeout(state.hideTimer);
@@ -106,7 +123,8 @@ function startHideTimer(badge: HTMLElement): void {
 /**
  * Para o timer de auto-hide
  */
-function stopHideTimer(): void {
+function stopHideTimer(badge: HTMLElement): void {
+  const state = getBadgeState(badge);
   if (state.hideTimer) {
     clearTimeout(state.hideTimer);
     state.hideTimer = null;
@@ -114,10 +132,10 @@ function stopHideTimer(): void {
 }
 
 /**
- * Setup auto-hide mobile behavior
+ * Setup auto-hide mobile behavior para um badge específico
  */
-function setupAutoHideMobile(): void {
-  const badge = document.querySelector<HTMLElement>(BADGE_SELECTOR);
+function setupBadgeAutoHide(selector: string): void {
+  const badge = document.querySelector<HTMLElement>(selector);
   if (!badge) return;
 
   // Inicia timer inicial apenas em mobile
@@ -143,12 +161,13 @@ function setupAutoHideMobile(): void {
   window.addEventListener(
     'resize',
     () => {
+      const state = getBadgeState(badge);
       if (isMobile()) {
         // Entrou em mobile - inicia timer
         startHideTimer(badge);
       } else {
         // Saiu de mobile - para timer e remove classe
-        stopHideTimer();
+        stopHideTimer(badge);
         badge.classList.remove('is-hidden');
         state.isHidden = false;
       }
@@ -167,6 +186,15 @@ function setupAutoHideMobile(): void {
   });
 }
 
+/**
+ * Setup auto-hide mobile behavior para todos os badges
+ */
+function setupAutoHideMobile(): void {
+  BADGE_SELECTORS.forEach((selector) => {
+    setupBadgeAutoHide(selector);
+  });
+}
+
 // ========================================
 // COLOR DETECTION
 // ========================================
@@ -175,8 +203,10 @@ function setupAutoHideMobile(): void {
  * Detecta cor de fundo e ajusta contraste do badge
  * NOTA: Funcionalidade opcional - pode ser desabilitada se causar problemas de CORS
  */
-function setupBadgeColorDetection(): void {
-  const badge = document.querySelector<HTMLElement>(BADGE_SELECTOR);
+function setupBadgeColorDetection(
+  selector: string = BADGE_SELECTORS[0] ?? '[data-spotify-badge]'
+): void {
+  const badge = document.querySelector<HTMLElement>(selector);
   if (!badge) return;
 
   // Get badge position
@@ -261,4 +291,4 @@ init();
 // EXPORTS (para uso externo se necessário)
 // ========================================
 
-export { setupAutoHideMobile, setupBadgeColorDetection };
+export { setupAutoHideMobile, setupBadgeAutoHide, setupBadgeColorDetection };

@@ -1,0 +1,265 @@
+---
+/**
+ * Header - Navegação principal do STL Festival
+ * Layout: Logo (esquerda), Menu de Navegação (centro), Botão Ingressos + Seletor Idioma (direita)
+ * Efeito glass sobre Hero Section, transição para opaco após scroll
+ */
+
+import '@/styles/header.css';
+import { getLangFromUrl, useTranslations } from '@/i18n/utils';
+import LanguageSelector from './LanguageSelector.astro';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+// URL do iPass com UTM parameters
+const ipassUrl =
+  'https://ipass.com.br/stlfestival?utm_source=stl-festival&utm_medium=header&utm_campaign=cta';
+
+// Logo URL (mesma do SpotifyBadge)
+const logoUrl =
+  'https://res.cloudinary.com/dazkdemvu/image/upload/v1769622514/stl-festival/logos/logo-stl_ydnwga.svg';
+
+// Links de navegação do MVP
+const navLinks = [
+  { href: '#lineup', label: t('nav.menu.lineup') },
+  { href: '#sobre', label: t('nav.menu.about') },
+  { href: '#setores', label: t('nav.menu.sectors') },
+];
+---
+
+<!-- Skip to main content link -->
+<a href="#main-content" class="header-skip-link">
+  {t('nav.skipToContent')}
+</a>
+
+<header class="header" id="header" role="banner">
+  <div class="header-container">
+    <!-- Logo -->
+    <a
+      href="#"
+      class="header-logo"
+      aria-label={t('nav.logoAriaLabel')}
+      id="header-logo-link"
+    >
+      <img
+        src={logoUrl}
+        alt="STL Festival Logo"
+        class="header-logo-img"
+        loading="eager"
+        decoding="async"
+        width="120"
+        height="36"
+      />
+    </a>
+
+    <!-- Menu de Navegação Desktop -->
+    <nav class="header-nav" aria-label="Navegação principal">
+      <ul class="header-nav-list">
+        {
+          navLinks.map((link) => (
+            <li class="header-nav-item">
+              <a
+                href={link.href}
+                class="header-nav-link"
+                data-scroll-to={link.href}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <!-- Right side: Botão Ingressos + Seletor Idioma -->
+    <div class="header-right">
+      <!-- Botão CTA Ingressos -->
+      <a
+        href={ipassUrl}
+        class="header-cta-button"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={t('nav.buyTicketsAriaLabel')}
+      >
+        {t('nav.tickets')}
+      </a>
+
+      <!-- Seletor de Idioma -->
+      <LanguageSelector />
+
+      <!-- Botão Menu Mobile -->
+      <button
+        class="header-menu-toggle"
+        aria-label={t('nav.openMobileMenu')}
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        id="menu-toggle"
+      >
+        <span class="header-menu-toggle-icon" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Menu Mobile -->
+  <nav
+    class="header-mobile-menu"
+    id="mobile-menu"
+    aria-label="Menu de navegação mobile"
+    aria-hidden="true"
+  >
+    <ul class="header-mobile-menu-list">
+      {
+        navLinks.map((link) => (
+          <li class="header-mobile-menu-item">
+            <a
+              href={link.href}
+              class="header-mobile-menu-link"
+              data-scroll-to={link.href}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</header>
+
+<script>
+  // Scroll detection otimizado com requestAnimationFrame
+  let ticking = false;
+  const scrollThreshold = 50;
+
+  function updateHeader() {
+    const header = document.getElementById('header');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const scrolled = window.pageYOffset > scrollThreshold;
+
+    if (header) {
+      header.classList.toggle('header-scrolled', scrolled);
+    }
+
+    // Sincronizar estado do menu mobile com o header
+    if (mobileMenu) {
+      mobileMenu.classList.toggle('menu-scrolled', scrolled);
+    }
+
+    ticking = false;
+  }
+
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (!ticking) {
+        requestAnimationFrame(updateHeader);
+        ticking = true;
+      }
+    },
+    { passive: true }
+  );
+
+  // Inicializar estado do header
+  updateHeader();
+
+  // Logo click handler - scroll suave para o topo sem recarregar página
+  const logoLink = document.getElementById('header-logo-link');
+  if (logoLink) {
+    logoLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  // Menu Mobile Toggle
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  function closeMobileMenu() {
+    if (menuToggle && mobileMenu) {
+      menuToggle.setAttribute('aria-expanded', 'false');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('menu-open');
+      menuToggle.focus();
+    }
+  }
+
+  function openMobileMenu() {
+    if (menuToggle && mobileMenu) {
+      menuToggle.setAttribute('aria-expanded', 'true');
+      mobileMenu.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('menu-open');
+    }
+  }
+
+  if (menuToggle && mobileMenu) {
+    menuToggle.addEventListener('click', () => {
+      const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+      if (isExpanded) {
+        closeMobileMenu();
+      } else {
+        openMobileMenu();
+      }
+    });
+  }
+
+  // Escape key handler
+  document.addEventListener('keydown', (e) => {
+    if (
+      e.key === 'Escape' &&
+      mobileMenu &&
+      mobileMenu.getAttribute('aria-hidden') === 'false'
+    ) {
+      closeMobileMenu();
+    }
+  });
+
+  // Scroll suave para âncoras
+  const navLinks = document.querySelectorAll('[data-scroll-to]');
+  navLinks.forEach((link) => {
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href');
+      if (href?.startsWith('#')) {
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) {
+          const headerHeight =
+            document.getElementById('header')?.offsetHeight || 0;
+          const targetPosition =
+            target.getBoundingClientRect().top +
+            window.pageYOffset -
+            headerHeight;
+
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth',
+          });
+
+          // Fechar menu mobile após clicar em link
+          if (
+            mobileMenu &&
+            mobileMenu.getAttribute('aria-hidden') === 'false'
+          ) {
+            closeMobileMenu();
+          }
+        }
+      }
+    });
+  });
+
+  // Fechar menu ao clicar fora
+  document.addEventListener('click', (e) => {
+    if (
+      mobileMenu &&
+      mobileMenu.getAttribute('aria-hidden') === 'false' &&
+      !mobileMenu.contains(e.target as Node) &&
+      !menuToggle?.contains(e.target as Node)
+    ) {
+      closeMobileMenu();
+    }
+  });
+</script>

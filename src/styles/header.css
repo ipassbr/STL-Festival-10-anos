@@ -1,0 +1,494 @@
+/**
+ * Header Styles - STL Festival
+ * Efeito glass sobre Hero Section, transição para opaco após scroll
+ */
+
+/* ========================================
+   SKIP LINK (Acessibilidade)
+   ======================================== */
+.header-skip-link {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  background: var(--color-indigo);
+  color: var(--color-white);
+  padding: var(--spacing-md) var(--spacing-lg);
+  text-decoration: none;
+  z-index: 9999;
+  font-weight: 600;
+  border-radius: 0 0 0.5rem 0;
+  transition: top 0.2s ease;
+}
+
+.header-skip-link:focus {
+  top: 0;
+}
+
+/* ========================================
+   HEADER BASE
+   ======================================== */
+.header {
+  /* Posicionamento */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 50;
+
+  /* Visibilidade */
+  opacity: 1;
+  visibility: visible;
+
+  /* Background semi-transparente */
+  background: rgba(0, 0, 0, 0.15);
+
+  /* Transições suaves */
+  transition: all 0.3s ease;
+
+  /* SOLUÇÃO: Extender levemente para baixo para cobrir artefato do blur */
+  padding-bottom: 2px;
+  margin-bottom: -2px;
+}
+
+/* Pseudo-elemento para aplicar blur (evita artefato de borda) */
+.header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
+  z-index: -1;
+
+  /* Extender o blur para baixo para cobrir completamente */
+  bottom: -2px;
+}
+
+/* Estado após scroll - Opaco */
+.header.header-scrolled {
+  background: rgba(0, 0, 0, 0.95);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+
+  /* Remover extensão quando opaco */
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+/* Remover blur do pseudo-elemento quando scrolled */
+.header.header-scrolled::before {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* ========================================
+   CONTAINER
+   ======================================== */
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  gap: 1rem;
+  max-width: 1920px;
+  margin: 0 auto;
+  min-height: 64px;
+  position: relative;
+}
+
+/* ========================================
+   LOGO
+   ======================================== */
+.header-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: opacity 0.2s ease;
+}
+
+.header-logo:hover {
+  opacity: 0.8;
+}
+
+.header-logo:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 4px;
+  border-radius: 0.25rem;
+}
+
+.header-logo-img {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+  user-select: none;
+}
+
+/* ========================================
+   MENU DE NAVEGAÇÃO DESKTOP
+   ======================================== */
+.header-nav {
+  display: none;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.header-nav-list {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.header-nav-item {
+  margin: 0;
+}
+
+.header-nav-link {
+  display: block;
+  color: var(--color-white);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 0.5rem 0;
+  transition: opacity 0.2s ease;
+  white-space: nowrap;
+  position: relative;
+}
+
+.header-nav-link:hover {
+  opacity: 0.8;
+}
+
+.header-nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--color-white);
+  transition: width 0.3s ease;
+}
+
+.header-nav-link:hover::after {
+  width: 100%;
+}
+
+.header-nav-link:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 4px;
+  border-radius: 0.25rem;
+}
+
+/* ========================================
+   BOTÃO MENU MOBILE (HAMBURGER)
+   ======================================== */
+.header-menu-toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.header-menu-toggle-icon {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 18px;
+  gap: 5px;
+}
+
+.header-menu-toggle-icon span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--color-white);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.header-menu-toggle[aria-expanded='true']
+  .header-menu-toggle-icon
+  span:nth-child(1) {
+  transform: rotate(45deg) translate(7px, 7px);
+}
+
+.header-menu-toggle[aria-expanded='true']
+  .header-menu-toggle-icon
+  span:nth-child(2) {
+  opacity: 0;
+}
+
+.header-menu-toggle[aria-expanded='true']
+  .header-menu-toggle-icon
+  span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -7px);
+}
+
+.header-menu-toggle:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+  border-radius: 0.25rem;
+}
+
+/* ========================================
+   MENU MOBILE
+   ======================================== */
+.header-mobile-menu {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* Estado glass (padrão) - semi-transparente com blur */
+  background: rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
+  z-index: 40;
+  transform: translateX(-100%);
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease,
+    backdrop-filter 0.3s ease;
+  overflow-y: auto;
+  padding: 2rem 0;
+}
+
+/* Estado após scroll - Opaco (sincronizado com header-scrolled) */
+.header-mobile-menu.menu-scrolled {
+  background: rgba(0, 0, 0, 0.98);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.header-mobile-menu[aria-hidden='false'] {
+  transform: translateX(0);
+}
+
+.header-mobile-menu-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.header-mobile-menu-item {
+  margin: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Ajustar opacidade da borda quando em modo opaco */
+.header-mobile-menu.menu-scrolled .header-mobile-menu-item {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.header-mobile-menu-link {
+  display: block;
+  color: var(--color-white);
+  font-size: 1.125rem;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 1.25rem 1.5rem;
+  transition: background 0.2s ease;
+  /* Melhor legibilidade em glass */
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.header-mobile-menu-link:hover,
+.header-mobile-menu-link:focus {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Hover mais sutil quando em modo opaco */
+.header-mobile-menu.menu-scrolled .header-mobile-menu-link:hover,
+.header-mobile-menu.menu-scrolled .header-mobile-menu-link:focus {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.header-mobile-menu-link:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: -2px;
+}
+
+body.menu-open {
+  overflow: hidden;
+}
+
+/* ========================================
+   RIGHT SIDE (Botão + Seletor)
+   ======================================== */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+/* ========================================
+   BOTÃO CTA INGRESSOS
+   ======================================== */
+.header-cta-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.625rem 1.25rem;
+  min-height: 44px;
+  background: #1db954; /* Verde Spotify */
+  color: var(--color-white);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(29, 185, 84, 0.3);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.header-cta-button:hover {
+  background: #1ed760; /* Verde Spotify Hover */
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(29, 185, 84, 0.4);
+}
+
+.header-cta-button:active {
+  transform: translateY(0);
+}
+
+.header-cta-button:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+/* ========================================
+   RESPONSIVIDADE
+   ======================================== */
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .header-nav {
+    display: block;
+  }
+
+  .header-menu-toggle {
+    display: none;
+  }
+
+  .header-mobile-menu {
+    display: none;
+  }
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .header-container {
+    padding: 1rem 1.25rem;
+  }
+
+  .header-logo-img {
+    height: 44px;
+  }
+
+  .header-cta-button {
+    padding: 0.625rem 1rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .header-container {
+    padding: 0.875rem 1rem;
+    gap: 0.75rem;
+    min-height: 56px;
+  }
+
+  .header-logo-img {
+    height: 32px;
+  }
+
+  .header-right {
+    gap: 0.75rem;
+  }
+
+  .header-cta-button {
+    padding: 0.5rem 0.875rem;
+    font-size: 0.8125rem;
+    min-height: 40px;
+  }
+
+  .header-mobile-menu {
+    top: 56px;
+  }
+}
+
+/* Mobile pequeno */
+@media (max-width: 374px) {
+  .header-container {
+    padding: 0.75rem 0.875rem;
+    gap: 0.5rem;
+  }
+
+  .header-logo-img {
+    height: 28px;
+  }
+
+  .header-right {
+    gap: 0.5rem;
+  }
+
+  .header-cta-button {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+    min-height: 36px;
+  }
+}
+
+/* Desktop Large */
+@media (min-width: 1440px) {
+  .header-container {
+    padding: 1.25rem 2rem;
+  }
+
+  .header-logo-img {
+    height: 48px;
+  }
+
+  .header-cta-button {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+/* ========================================
+   REDUCED MOTION
+   ======================================== */
+@media (prefers-reduced-motion: reduce) {
+  .header,
+  .header-cta-button {
+    transition:
+      opacity 0.3s ease,
+      visibility 0.3s ease;
+  }
+
+  .header-cta-button:hover {
+    transform: none;
+  }
+}

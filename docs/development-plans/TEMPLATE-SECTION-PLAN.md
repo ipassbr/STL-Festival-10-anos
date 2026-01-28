@@ -366,6 +366,6 @@ Closes #X, Closes #Y, Closes #Z
 
 ---
 
-**Documento Criado em:** [DD/MM/YYYY]  
-**Última Atualização:** [DD/MM/YYYY]  
+**Documento Criado em:** [DD/MM/YYYY]
+**Última Atualização:** [DD/MM/YYYY]
 **Versão:** 1.0

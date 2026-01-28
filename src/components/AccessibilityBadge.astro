@@ -1,0 +1,294 @@
+---
+/**
+ * Accessibility Badge Component - Hero Section
+ * Badge responsivo com auto-hide em mobile para economia de espaço
+ *
+ * Features:
+ * - Desktop: Tamanho 44x44px, sempre visível
+ * - Mobile: Reduzido, auto-hide após 3s (mesmo comportamento do Spotify)
+ * - Touch area mínima: 44x44px (WCAG)
+ * - Link interno: Scroll suave para seção #accessibility
+ * - Ícone universal: ♿ (símbolo internacional de acessibilidade)
+ */
+
+import { getLangFromUrl, useTranslations } from '@/i18n/utils';
+
+interface Props {
+  targetSection?: string;
+  class?: string;
+}
+
+const { targetSection = '#accessibility', class: className = '' } = Astro.props;
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<a
+  href={targetSection}
+  class:list={['accessibility-badge', className]}
+  aria-label={t('accessibility.badgeAriaLabel')}
+  data-accessibility-badge
+>
+  <!-- Ícone Universal de Acessibilidade ♿ -->
+  <span class="accessibility-icon" aria-hidden="true">♿</span>
+</a>
+
+<!-- Script de Auto-hide Mobile + Smooth Scroll -->
+<script>
+  // Importa o script de badge detection com auto-hide
+  import '@/scripts/hero/badgeDetection';
+
+  // Smooth scroll ao clicar
+  function setupSmoothScroll() {
+    const badge = document.querySelector<HTMLAnchorElement>(
+      '[data-accessibility-badge]'
+    );
+
+    if (!badge) return;
+
+    badge.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      const targetId = badge.getAttribute('href');
+      if (!targetId) return;
+
+      const targetElement = document.querySelector(targetId);
+      if (!targetElement) {
+        console.warn(
+          `Accessibility badge: target section "${targetId}" not found`
+        );
+        return;
+      }
+
+      // Smooth scroll
+      targetElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+
+      // Focus no elemento alvo (acessibilidade)
+      if (targetElement instanceof HTMLElement) {
+        targetElement.setAttribute('tabindex', '-1');
+        targetElement.focus();
+      }
+    });
+  }
+
+  // Aguarda DOM estar pronto
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupSmoothScroll);
+  } else {
+    setupSmoothScroll();
+  }
+</script>
+
+<style>
+  .accessibility-badge {
+    /* Layout */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    /* Position - Desktop - Espelhado ao Spotify (direita) */
+    position: fixed;
+    bottom: 28%; /* Mesma altura do Spotify */
+    right: 0; /* Encosta no lado direito */
+    z-index: 50;
+
+    /* Visual - Badge maior, mesmo padding do Spotify */
+    padding: 0.875rem 1.25rem; /* Mesmo do Spotify: 14px 20px */
+    background: #007b9a; /* --stl-teal */
+    color: white;
+    border-radius: 12px 0 0 12px; /* Arredondado no lado esquerdo (top e bottom) */
+
+    /* Typography */
+    text-decoration: none;
+
+    /* Shadow - Mesma do Spotify */
+    box-shadow: 0 4px 12px rgba(0, 123, 154, 0.25);
+
+    /* Transitions */
+    opacity: 1;
+    transform: scale(1);
+    transform-origin: top right;
+    transition:
+      opacity 0.3s ease,
+      transform 0.2s ease,
+      background-color 0.2s ease,
+      box-shadow 0.2s ease;
+
+    /* Cursor */
+    cursor: pointer;
+  }
+
+  /* Hover State - Desktop */
+  .accessibility-badge:hover {
+    background: #008aaa; /* Teal mais claro */
+    transform: scale(1.02); /* Hover mais sutil, igual ao Spotify */
+    box-shadow: 0 6px 16px rgba(0, 123, 154, 0.35);
+  }
+
+  /* Focus State - Acessibilidade */
+  .accessibility-badge:focus-visible {
+    outline: 3px solid #007b9a;
+    outline-offset: 2px;
+  }
+
+  /* Active State */
+  .accessibility-badge:active {
+    transform: scale(0.98); /* Igual ao Spotify */
+  }
+
+  /* Icon Styling - Desktop */
+  .accessibility-icon {
+    flex-shrink: 0;
+    font-size: 28px; /* Mesmo tamanho do ícone do Spotify */
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ========================================
+     MOBILE RESPONSIVO (<1024px)
+     ======================================== */
+  @media (max-width: 1023px) {
+    .accessibility-badge {
+      /* Position Mobile - Próximo ao final da hero, acima do ticker */
+      position: fixed;
+      bottom: 18%; /* Mesma altura do Spotify em mobile */
+      right: 0; /* Encosta no lado direito */
+
+      /* Remove qualquer margem ou padding externo */
+      margin: 0;
+
+      /* Border radius no lado esquerdo */
+      border-radius: 12px 0 0 12px;
+
+      /* Badge quadrado */
+      width: 44px;
+      height: 44px;
+      padding: 0.5rem;
+      justify-content: center;
+
+      /* Opacidade Reduzida - Estado Ativo */
+      opacity: 0.85;
+
+      /* Z-index alto para garantir que fica acima do vídeo */
+      z-index: 50;
+    }
+
+    /* Ícone mesmo tamanho do Spotify mobile */
+    .accessibility-icon {
+      font-size: 24px; /* Spotify usa 24px em mobile */
+    }
+
+    /* Estado Hidden - Após 3s de inatividade */
+    .accessibility-badge.is-hidden {
+      opacity: 0.4;
+      transition: opacity 0.5s ease;
+    }
+
+    /* Hover Mobile - Mantém tamanho */
+    .accessibility-badge:hover {
+      transform: scale(1);
+      background: #008aaa;
+    }
+
+    /* Tap Area já é 44x44px nativamente em mobile */
+  }
+
+  /* ========================================
+     MICRO MOBILE (<375px)
+     ======================================== */
+  @media (max-width: 374px) {
+    .accessibility-badge {
+      /* Mantém mesmo tamanho - apenas ícone */
+      width: 44px;
+      height: 44px;
+    }
+  }
+
+  /* ========================================
+     TABLET (768px - 1023px)
+     ======================================== */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .accessibility-badge {
+      /* Em tablets, mesmo tamanho do Spotify */
+      position: fixed;
+      bottom: 16%; /* Mesma altura do Spotify em tablet */
+      right: 0; /* Encosta no lado direito */
+      margin: 0;
+      width: 48px;
+      height: 48px;
+      padding: 0.625rem; /* Mesmo do Spotify tablet */
+      border-radius: 12px 0 0 12px; /* Arredondado no lado esquerdo */
+      z-index: 50;
+    }
+
+    .accessibility-icon {
+      font-size: 24px; /* Spotify tablet usa 24px */
+    }
+  }
+
+  /* ========================================
+     DESKTOP LARGE (≥1440px)
+     ======================================== */
+  @media (min-width: 1440px) {
+    .accessibility-badge {
+      /* Badge ainda maior em telas grandes, igual ao Spotify */
+      padding: 1rem 1.5rem; /* 16px 24px - mesmo do Spotify large */
+    }
+
+    .accessibility-icon {
+      font-size: 32px; /* Spotify large usa 32px */
+    }
+  }
+
+  /* ========================================
+     REDUCED MOTION - Acessibilidade
+     ======================================== */
+  @media (prefers-reduced-motion: reduce) {
+    .accessibility-badge {
+      transition: opacity 0.3s ease;
+    }
+
+    .accessibility-badge:hover {
+      transform: scale(1);
+    }
+
+    @media (max-width: 1023px) {
+      .accessibility-badge:hover {
+        transform: scale(1);
+      }
+    }
+  }
+
+  /* ========================================
+     ANIMATION PULSE - Indicador de interatividade
+     ======================================== */
+  @keyframes accessibility-pulse {
+    0%,
+    100% {
+      box-shadow: 0 2px 8px rgba(0, 123, 154, 0.2);
+    }
+    50% {
+      box-shadow: 0 2px 16px rgba(0, 123, 154, 0.5);
+    }
+  }
+
+  /* Aplica pulse apenas em mobile ao carregar */
+  @media (max-width: 1023px) {
+    .accessibility-badge {
+      animation: accessibility-pulse 2s ease-in-out 1;
+    }
+
+    /* Remove pulse se reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .accessibility-badge {
+        animation: none;
+      }
+    }
+  }
+</style>

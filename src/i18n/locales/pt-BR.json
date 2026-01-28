@@ -17,5 +17,33 @@
     "scrollLabel": "Rolar para ver mais conteúdo",
     "scrollText": "Role para baixo",
     "spotifyLabel": "Ouça a playlist oficial do STL Festival no Spotify"
+  },
+  "accessibility": {
+    "badgeLabel": "Evento acessível",
+    "badgeAriaLabel": "Ir para seção de acessibilidade - O STL Festival é um evento inclusivo para todos"
+  },
+  "nav": {
+    "skipToContent": "Pular para o conteúdo principal",
+    "logoAriaLabel": "STL Festival - Página inicial",
+    "tickets": "Ingressos",
+    "languageSelector": "Seletor de idioma",
+    "currentLanguage": "Idioma atual",
+    "openLanguageMenu": "Abrir menu de idiomas",
+    "closeLanguageMenu": "Fechar menu de idiomas",
+    "openMobileMenu": "Abrir menu de navegação",
+    "closeMobileMenu": "Fechar menu de navegação",
+    "buyTicketsAriaLabel": "Comprar ingressos para o STL Festival",
+    "menu": {
+      "lineup": "Lineup",
+      "about": "Sobre",
+      "sectors": "Setores",
+      "accessibility": "Acessibilidade",
+      "valley": "STL Valley"
+    },
+    "languages": {
+      "pt": "Português",
+      "en": "English",
+      "es": "Español"
+    }
   }
 }

@@ -329,5 +329,5 @@ Atualizar o README conforme seções forem concluídas:
 
 ---
 
-**Última Atualização:** 28 de Janeiro de 2026  
+**Última Atualização:** 28 de Janeiro de 2026
 **Mantido por:** Equipe de Desenvolvimento STL Festival

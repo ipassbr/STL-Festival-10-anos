@@ -62,7 +62,7 @@ Atualmente, o STL Festival não possui uma presença digital dedicada que:
 - **Público Recorrente (Alta Prioridade):** Participantes de edições anteriores buscando informações da 10ª edição
 - **Novos Participantes:** Pessoas descobrindo o festival pela primeira vez
 - **Público Internacional:** Turistas e estrangeiros interessados (necessidade de site multilíngue)
-- **Públicos Específicos:** 
+- **Públicos Específicos:**
   - Pessoas com deficiência buscando informações de acessibilidade
   - Público consciente buscando informações sobre sustentabilidade
   - Grupos planejando ir juntos (informações sobre setores e translado)

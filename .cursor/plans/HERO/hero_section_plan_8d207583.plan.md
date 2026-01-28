@@ -73,30 +73,11 @@ A Hero Section é o primeiro impacto visual do STL Festival, estabelecendo imedi
 
 **Detalhamento:**
 
-- **Posição Desktop (≥1024px):**
-  - `position: fixed`, canto superior esquerdo
-  - `top: 1.5rem`, `left: 1.5rem`
-  - Tamanho: ~120px x 40px (tamanho padrão)
-- **Posição Mobile (<1024px):**
-  - `position: fixed`, **encosta no canto superior esquerdo**
-  - `top: 0`, `left: 0` (sem margem)
-  - **Apenas ícone do Spotify** (texto oculto)
-  - Tamanho fixo: 44px × 44px (tap target WCAG)
-  - Ícone: 24px × 24px
-  - `border-top-left-radius: 0` (quadrado no canto)
-  - Opacidade reduzida em estado idle: `opacity: 0.85`
-  - `z-index: 40` (abaixo de modais, acima do conteúdo)
-- **Comportamento Mobile:**
-  - Auto-hide após 3s de inatividade (fade to `opacity: 0.4`)
-  - Reaparece (`opacity: 0.85`) ao scroll ou touch
-  - Tap area mínima: 44x44px (padding invisível)
-  - Animação de pulso sutil ao carregar (indicar interatividade)
+- **Posição Desktop (≥1024px):** - `position: fixed`, canto superior esquerdo - `top: 1.5rem`, `left: 1.5rem` - Tamanho: ~120px x 40px (tamanho padrão)
+- **Posição Mobile (<1024px):** - `position: fixed`, **encosta no canto superior esquerdo** - `top: 0`, `left: 0` (sem margem) - **Apenas ícone do Spotify** (texto oculto) - Tamanho fixo: 44px × 44px (tap target WCAG) - Ícone: 24px × 24px - `border-top-left-radius: 0` (quadrado no canto) - Opacidade reduzida em estado idle: `opacity: 0.85` - `z-index: 40` (abaixo de modais, acima do conteúdo)
+- **Comportamento Mobile:** - Auto-hide após 3s de inatividade (fade to `opacity: 0.4`) - Reaparece (`opacity: 0.85`) ao scroll ou touch - Tap area mínima: 44x44px (padding invisível) - Animação de pulso sutil ao carregar (indicar interatividade)
 
-- **Conteúdo do Badge:**
-  - **Desktop:** Logo STL Festival (SVG) + Ícone Spotify (nessa ordem)
-  - **Mobile:** Apenas ícone do Spotify (logo oculta)
-  - Logo STL: https://res.cloudinary.com/dazkdemvu/image/upload/v1769622514/stl-festival/logos/logo-stl_ydnwga.svg
-  - Ícone: Logo oficial do Spotify (SVG inline)
+- **Conteúdo do Badge:** - **Desktop:** Logo STL Festival (SVG) + Ícone Spotify (nessa ordem) - **Mobile:** Apenas ícone do Spotify (logo oculta) - Logo STL: https://res.cloudinary.com/dazkdemvu/image/upload/v1769622514/stl-festival/logos/logo-stl_ydnwga.svg - Ícone: Logo oficial do Spotify (SVG inline)
 
 - Link externo para playlist do Spotify (`target="_blank"`, `rel="noopener noreferrer"`)
 - Animação de entrada suave (opacity fade, delay 200ms após preloader)
@@ -451,16 +432,9 @@ z-index: 50 → Spotify Badge (via SpotifyBadge.astro) - fixed position
 
 **Lógica:**
 
-- **Color Detection:**
-  - Sample pixel na posição do badge
-  - Calcular luminância
-  - Ajustar cor do badge (dark/light) para contraste adequado
+- **Color Detection:** - Sample pixel na posição do badge - Calcular luminância - Ajustar cor do badge (dark/light) para contraste adequado
 
-- **Auto-hide Mobile (<1024px):**
-  - Após 3s de inatividade: fade to `opacity: 0.4`
-  - Eventos de reativação (scroll, touch, mousemove): fade to `opacity: 0.85`
-  - Debounce de 150ms para performance
-  - Não aplicar em desktop (badge sempre visível)
+- **Auto-hide Mobile (<1024px):** - Após 3s de inatividade: fade to `opacity: 0.4` - Eventos de reativação (scroll, touch, mousemove): fade to `opacity: 0.85` - Debounce de 150ms para performance - Não aplicar em desktop (badge sempre visível)
 
 ---
 
@@ -722,23 +696,10 @@ Este desenvolvimento utilizará as seguintes Cursor Skills para garantir qualida
 
 **Aplicação:**
 
-- **Acessibilidade (P1 - CRÍTICO)**:
-  - Contraste 4.5:1+ (ticker branco em `#ff4d2d`)
-  - Focus states visíveis (badge, scroll indicator)
-  - Alt text em fallback image
-  - ARIA labels em elementos interativos
-- **Toque & Interação (P2 - CRÍTICO)**:
-  - Touch target 44x44px (scroll indicator)
-  - `cursor: pointer` em badge e indicator
-  - Feedback de hover (scale 1.1)
-- **Performance (P3 - ALTO)**:
-  - Lazy load vídeo (preload via preloader)
-  - WebP/AVIF para fallback image
-  - `prefers-reduced-motion` respeitado
-- **Responsividade (P4 - ALTO)**:
-  - Breakpoints: 320px, 768px, 1024px+
-  - Vídeo srcset por device
-  - Indicator mobile-only
+- **Acessibilidade (P1 - CRÍTICO)**: - Contraste 4.5:1+ (ticker branco em `#ff4d2d`) - Focus states visíveis (badge, scroll indicator) - Alt text em fallback image - ARIA labels em elementos interativos
+- **Toque & Interação (P2 - CRÍTICO)**: - Touch target 44x44px (scroll indicator) - `cursor: pointer` em badge e indicator - Feedback de hover (scale 1.1)
+- **Performance (P3 - ALTO)**: - Lazy load vídeo (preload via preloader) - WebP/AVIF para fallback image - `prefers-reduced-motion` respeitado
+- **Responsividade (P4 - ALTO)**: - Breakpoints: 320px, 768px, 1024px+ - Vídeo srcset por device - Indicator mobile-only
 
 **Checklist UX:**
 

@@ -6,6 +6,7 @@
 
 import { getLangFromUrl, useTranslations } from '@/i18n/utils';
 import SpotifyBadge from './SpotifyBadge.astro';
+import AccessibilityBadge from './AccessibilityBadge.astro';
 
 interface Props {
   videoUrl?: string;
@@ -95,8 +96,11 @@ const spotifyPlaylistUrl =
     />
   </div>
 
-  <!-- Badge do Spotify - Responsivo com auto-hide mobile -->
+  <!-- Badge do Spotify - Responsivo com auto-hide mobile (esquerda) -->
   <SpotifyBadge playlistUrl={spotifyPlaylistUrl} />
+
+  <!-- Badge de Acessibilidade - Responsivo com auto-hide mobile (direita) -->
+  <AccessibilityBadge targetSection="#accessibility" />
 
   <!-- Faixa Ticker Automática -->
   <div class="hero-ticker" role="banner" aria-label={t('hero.tickerLabel')}>
@@ -191,38 +195,55 @@ const spotifyPlaylistUrl =
   // Configurar erro de vídeo
   setupVideoErrorHandling(elements);
 
-  // Escutar eventos do Preloader (se existir)
-  window.addEventListener('preloader-progress', ((e: CustomEvent<number>) => {
-    updateHeroContent(e.detail, elements);
-  }) as EventListener);
-
-  window.addEventListener('preloader-complete', () => {
-    startVideo(elements);
-    setupMobileScrollIndicator();
-    // Badge auto-hide é gerenciado pelo badgeDetection.ts
-  });
-
-  // Suporte a reduced motion
+  // Inicializar sem depender do preloader
   const prefersReducedMotion = window.matchMedia(
     '(prefers-reduced-motion: reduce)'
   ).matches;
 
-  if (prefersReducedMotion) {
-    startVideo(elements);
-    if (elements.fallbackImage) elements.fallbackImage.style.opacity = '1';
+  // Mostrar fallback imediatamente
+  if (elements.fallbackImage) {
+    elements.fallbackImage.style.opacity = '1';
+  }
 
-    // Pausar animação do ticker se reduced motion
+  // Iniciar vídeo automaticamente
+  if (elements.video && !prefersReducedMotion) {
+    elements.video.addEventListener(
+      'canplay',
+      () => {
+        elements.video?.play().catch(() => {
+          // Silenciar erro se autoplay falhar
+        });
+        // Mostrar vídeo quando estiver pronto
+        elements.video?.classList.add('loaded');
+      },
+      { once: true }
+    );
+
+    // Tentar carregar o vídeo
+    elements.video.load();
+  }
+
+  // Pausar animação do ticker se reduced motion
+  if (prefersReducedMotion) {
     const ticker = document.querySelector(
       '.hero-ticker__wrapper'
     ) as HTMLElement;
     if (ticker) {
       ticker.style.animationPlayState = 'paused';
     }
-  } else {
-    updateHeroContent(0, elements);
   }
 
+  // Inicializar scroll indicator
   setupMobileScrollIndicator();
+
+  // Escutar eventos do Preloader para futuro (quando implementado)
+  window.addEventListener('preloader-progress', ((e: CustomEvent<number>) => {
+    updateHeroContent(e.detail, elements);
+  }) as EventListener);
+
+  window.addEventListener('preloader-complete', () => {
+    startVideo(elements);
+  });
 </script>
 
 <style>
@@ -246,16 +267,22 @@ const spotifyPlaylistUrl =
     height: 100%;
     object-fit: cover;
     object-position: center 75%;
-    opacity: 0;
+    opacity: 1; /* Visível por padrão (preloader será implementado depois) */
     transition: opacity 500ms var(--ease-out);
   }
 
   #hero-fallback-image {
     z-index: 0;
+    opacity: 1; /* Mostrar imagem de fallback imediatamente */
   }
 
   #hero-video {
     z-index: 1;
+    opacity: 0; /* Vídeo inicia oculto, aparece quando carregado */
+  }
+
+  #hero-video.loaded {
+    opacity: 1;
   }
 
   /* Overlay escuro */

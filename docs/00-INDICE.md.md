@@ -111,7 +111,7 @@ Guia visual e técnico - COMO vai ficar visualmente e comportamentalmente.
 **Por que é importante:**
 Define a primeira impressão do site - experiência de entrada impactante que gera expectativa.
 
-**Nota Técnica:** 
+**Nota Técnica:**
 Não há documento de especificação separado pois o código já existe e será reutilizado. A documentação técnica será feita durante a migração/integração.
 
 ---
@@ -205,10 +205,10 @@ Garante que todos os desenvolvedores tenham o mesmo ambiente configurado, com qu
 
 ### O Que Temos Até Agora?
 
-✅ **Documentação Estratégica** (Vision, Briefing)  
-✅ **Documentação Técnica** (PRD, Stack Analysis)  
-✅ **Documentação Visual** (Design System)  
-✅ **Documentação de Features** (Preloader, i18n)  
+✅ **Documentação Estratégica** (Vision, Briefing)
+✅ **Documentação Técnica** (PRD, Stack Analysis)
+✅ **Documentação Visual** (Design System)
+✅ **Documentação de Features** (Preloader, i18n)
 
 ### Stack Recomendado
 
@@ -476,12 +476,12 @@ Estou à disposição para:
 - Discutir alternativas técnicas
 - Planejar a implementação
 
-**Não hesite em questionar ou sugerir mudanças!** 
+**Não hesite em questionar ou sugerir mudanças!**
 
 A documentação existe para servir o projeto, não o contrário. Se algo não faz sentido ou pode ser melhorado, vamos ajustar! 💪
 
 ---
 
-**Status:** 📝 **Aguardando Revisão**  
-**Última atualização:** 26 de Janeiro de 2026  
+**Status:** 📝 **Aguardando Revisão**
+**Última atualização:** 26 de Janeiro de 2026
 **Próximo passo:** Validação da documentação com stakeholders
