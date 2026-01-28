@@ -81,6 +81,20 @@ const spotifyPlaylistUrl =
   <!-- Overlay escuro sutil -->
   <div class="hero__overlay" aria-hidden="true"></div>
 
+  <!-- Logo STL - Centralizada -->
+  <div class="hero__logo-container">
+    <img
+      id="hero-logo"
+      src="https://res.cloudinary.com/dazkdemvu/image/upload/v1769622514/stl-festival/logos/logo-stl_ydnwga.svg"
+      alt="STL Festival Logo"
+      class="hero__logo"
+      loading="eager"
+      decoding="async"
+      width="600"
+      height="180"
+    />
+  </div>
+
   <!-- Badge do Spotify - Responsivo com auto-hide mobile -->
   <SpotifyBadge playlistUrl={spotifyPlaylistUrl} />
 
@@ -171,7 +185,7 @@ const spotifyPlaylistUrl =
       'hero-fallback-image'
     ) as HTMLImageElement,
     badge: document.querySelector('[data-spotify-badge]') as HTMLElement,
-    logo: null,
+    logo: document.getElementById('hero-logo') as HTMLImageElement,
   };
 
   // Configurar erro de vídeo
@@ -250,6 +264,46 @@ const spotifyPlaylistUrl =
     inset: 0;
     z-index: 2;
     background: rgba(0, 0, 0, 0.2);
+  }
+
+  /* ========== LOGO STL CENTRALIZADA ========== */
+  .hero__logo-container {
+    position: absolute;
+    z-index: 5;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  .hero__logo {
+    width: auto;
+    height: clamp(
+      120px,
+      20vw,
+      280px
+    ); /* Responsivo: 120px (mobile) até 280px (desktop) */
+    max-width: 90vw; /* Garante que não ultrapasse a largura da tela */
+    object-fit: contain;
+    user-select: none;
+    opacity: 0;
+    filter: drop-shadow(0 8px 32px rgba(0, 0, 0, 0.4));
+    transition: opacity 800ms var(--ease-out);
+    animation: logo-fade-in 1.2s ease-out forwards;
+  }
+
+  @keyframes logo-fade-in {
+    0% {
+      opacity: 0;
+      transform: scale(0.92);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
   }
 
   /* ========== FAIXA TICKER AUTOMÁTICA ========== */
@@ -433,6 +487,12 @@ const spotifyPlaylistUrl =
       animation: none;
     }
 
+    .hero__logo {
+      animation: none;
+      opacity: 1;
+      transform: scale(1);
+    }
+
     * {
       transition-duration: 0.01ms !important;
       animation-duration: 0.01ms !important;
@@ -453,12 +513,29 @@ const spotifyPlaylistUrl =
     .hero-ticker__separator {
       margin: 0 var(--spacing-md);
     }
+
+    /* Logo menor em mobile */
+    .hero__logo {
+      height: clamp(100px, 18vw, 160px);
+    }
   }
 
   /* Ajustes para telas muito pequenas */
   @media (max-width: 480px) {
     .hero-ticker__content {
       font-size: clamp(0.875rem, 4vw, 1.25rem);
+    }
+
+    /* Logo ainda menor em telas pequenas */
+    .hero__logo {
+      height: clamp(80px, 20vw, 120px);
+    }
+  }
+
+  /* Ajustes para desktop large */
+  @media (min-width: 1440px) {
+    .hero__logo {
+      height: clamp(200px, 18vw, 320px);
     }
   }
 </style>

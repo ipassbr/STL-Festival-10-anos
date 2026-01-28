@@ -6,6 +6,7 @@
 
 A Hero Section é o primeiro impacto visual do STL Festival, estabelecendo imediatamente a identidade energética e vibrante do evento. Comunica:
 
+- **Identidade visual** através da logo STL centralizada
 - **Data e local** do evento através de ticker automático
 - **Atmosfera do festival** via vídeo de fundo imersivo
 - **Call-to-action** direto para compra de ingressos
@@ -131,6 +132,29 @@ A Hero Section é o primeiro impacto visual do STL Festival, estabelecendo imedi
 - Conteúdo traduzido via i18n
 - Mantém hierarquia semântica (H1 único na página)
 
+### RF-06: Logo STL Centralizada
+
+**Descrição:** Logo STL posicionada no centro da Hero Section com tamanho responsivo e animação de entrada
+
+**User Story:** Como usuário, eu quero ver a identidade visual do festival imediatamente ao acessar a página, para reconhecer a marca e criar conexão emocional
+
+**Prioridade:** 🔴 Must Have
+
+**Detalhamento:**
+
+- Logo SVG do Cloudinary otimizada
+- Tamanho responsivo via clamp():
+  - Mobile pequeno (≤480px): 80-120px
+  - Mobile (≤768px): 100-160px
+  - Desktop: 120-280px
+  - Desktop large (≥1440px): 200-320px
+- Centralização perfeita (vertical e horizontal)
+- Animação fade-in + scale (1.2s)
+- Drop shadow para contraste sobre vídeo
+- z-index: 5 (acima do overlay, abaixo do ticker)
+- Suporte a prefers-reduced-motion
+- Loading eager para performance
+
 ---
 
 ## 🚀 Requisitos Não-Funcionais (RNF)
@@ -192,7 +216,8 @@ A Hero Section é o primeiro impacto visual do STL Festival, estabelecendo imedi
 
 - Vídeo hero: [`hero.mp4`](https://res.cloudinary.com/dazkdemvu/video/upload/v1768415565/stl-festival/videos/hero.mp4)
 - Fallback image: [`herosection.jpg`](/assets/images/fallbacks/herosection.jpg)
-- Transformações: q_auto:low, w_960/1280, br_800k/1500k
+- Logo STL: [`logo-stl_ydnwga.svg`](https://res.cloudinary.com/dazkdemvu/image/upload/v1769622514/stl-festival/logos/logo-stl_ydnwga.svg)
+- Transformações vídeo: q_auto:low, w_960/1280, br_800k/1500k
 
 ---
 
@@ -308,6 +333,58 @@ badge-pulse: 2s ease-in-out 1 (mobile only, ao carregar);
   .spotify-badge.is-hidden {
     opacity: 0.4;
     transition: opacity 0.5s ease;
+  }
+}
+```
+
+### Hierarquia Visual (z-index)
+
+**Camadas da Hero Section (bottom to top):**
+
+```
+z-index: 0  → Fallback Image (#hero-fallback-image)
+z-index: 1  → Vídeo de fundo (#hero-video)
+z-index: 2  → Overlay escuro (.hero__overlay) - rgba(0, 0, 0, 0.2)
+z-index: 5  → Logo STL (.hero__logo-container) - centralizada
+z-index: 10 → Ticker (.hero-ticker) - bottom: 10%
+z-index: 20 → Scroll Indicator (.hero__scroll-indicator) - mobile only
+z-index: 50 → Spotify Badge (via SpotifyBadge.astro) - fixed position
+```
+
+**Especificações da Logo:**
+
+```css
+.hero__logo-container {
+  position: absolute;
+  z-index: 5;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.hero__logo {
+  height: clamp(120px, 20vw, 280px);
+  max-width: 90vw;
+  filter: drop-shadow(0 8px 32px rgba(0, 0, 0, 0.4));
+  animation: logo-fade-in 1.2s ease-out forwards;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .hero__logo {
+    height: clamp(100px, 18vw, 160px);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero__logo {
+    height: clamp(80px, 20vw, 120px);
+  }
+}
+
+@media (min-width: 1440px) {
+  .hero__logo {
+    height: clamp(200px, 18vw, 320px);
   }
 }
 ```
@@ -875,7 +952,23 @@ Implementar Hero Section completa do STL Festival 2026 com vídeo de fundo respo
 - [ ] Adicionar suporte a reduced motion
 - [ ] Implementar pause no hover
 
-### Fase 4: Badge Spotify (2h)
+### Fase 4: Logo STL Centralizada (1h)
+
+- [x] Adicionar logo SVG do Cloudinary no centro da hero
+- [x] Implementar posicionamento centralizado (transform: translate(-50%, -50%))
+- [x] Configurar tamanhos responsivos via clamp()
+  - Mobile pequeno (≤480px): 80-120px
+  - Mobile (≤768px): 100-160px
+  - Desktop: 120-280px
+  - Desktop large (≥1440px): 200-320px
+- [x] Adicionar animação fade-in + scale (1.2s)
+- [x] Aplicar drop-shadow para contraste sobre vídeo
+- [x] Definir z-index: 5 (acima overlay, abaixo ticker)
+- [x] Configurar loading: eager, decoding: async
+- [x] Adicionar suporte a prefers-reduced-motion
+- [x] Integrar logo element no videoControl.ts
+
+### Fase 5: Badge Spotify (2h)
 
 - [ ] Integrar SpotifyBadge component
 - [ ] Adicionar texto "playlist stl-festival" (nome curto)
@@ -888,21 +981,21 @@ Implementar Hero Section completa do STL Festival 2026 com vídeo de fundo respo
 - [ ] Animação de entrada fade-in (delay 200ms)
 - [ ] Teste de usabilidade mobile (320px, 375px, 414px)
 
-### Fase 5: Scroll Indicator (1h)
+### Fase 6: Scroll Indicator (1h)
 
 - [ ] Criar indicador mobile-only
 - [ ] Animação bounce CSS
 - [ ] Script mobileIndicator.ts para smooth scroll
 - [ ] Fade out após scroll ou timeout
 
-### Fase 6: Scripts TypeScript (3h)
+### Fase 7: Scripts TypeScript (3h)
 
 - [ ] videoControl.ts completo
 - [ ] badgeDetection.ts completo
 - [ ] mobileIndicator.ts completo
 - [ ] Integração com preloader events
 
-### Fase 7: i18n Integration (1h)
+### Fase 8: i18n Integration (1h)
 
 - [ ] Extrair todas as strings para i18n
 - [ ] Adicionar traduções PT-BR
@@ -910,14 +1003,14 @@ Implementar Hero Section completa do STL Festival 2026 com vídeo de fundo respo
 - [ ] Adicionar traduções ES
 - [ ] Validar formatação de datas
 
-### Fase 8: Responsividade (2h)
+### Fase 9: Responsividade (2h)
 
 - [ ] Testar mobile (320px, 375px, 414px)
 - [ ] Testar tablet (768px, 1024px)
 - [ ] Testar desktop (1280px, 1440px, 1920px)
 - [ ] Ajustar breakpoints se necessário
 
-### Fase 9: Acessibilidade (2h)
+### Fase 10: Acessibilidade (2h)
 
 - [ ] WAVE scan (0 erros críticos)
 - [ ] axe DevTools scan
@@ -926,7 +1019,7 @@ Implementar Hero Section completa do STL Festival 2026 com vídeo de fundo respo
 - [ ] Validar contraste de cores
 - [ ] Adicionar ARIA labels
 
-### Fase 10: Performance (2h)
+### Fase 11: Performance (2h)
 
 - [ ] Lighthouse audit mobile
 - [ ] Lighthouse audit desktop
@@ -934,7 +1027,7 @@ Implementar Hero Section completa do STL Festival 2026 com vídeo de fundo respo
 - [ ] Validar CLS (< 0.05)
 - [ ] Testar em throttling 3G
 
-### Fase 11: Testes Cross-Browser (2h)
+### Fase 12: Testes Cross-Browser (2h)
 
 - [ ] Chrome (latest)
 - [ ] Firefox (latest)
@@ -945,7 +1038,9 @@ Implementar Hero Section completa do STL Festival 2026 com vídeo de fundo respo
 
 ## 📊 Estimativa Total
 
-**Total:** 21 horas (~3 dias de trabalho)
+**Total:** 22 horas (~3 dias de trabalho)
+
+**Adicionado em v1.5:** +1h para implementação da logo STL centralizada
 
 ## ✅ Critérios de Aceitação
 
@@ -953,6 +1048,8 @@ Implementar Hero Section completa do STL Festival 2026 com vídeo de fundo respo
 
 - [ ] Vídeo carrega otimizado por device
 - [ ] Fallback image aparece se vídeo falhar
+- [x] Logo STL centralizada exibe corretamente em todos os breakpoints
+- [x] Logo STL anima ao carregar (fade-in + scale)
 - [ ] Ticker anima sem cortes, pausa no hover
 - [ ] Badge Spotify com texto "playlist stl-festival", funcional, abre em nova aba
 - [ ] Badge responsivo: scale(0.7) mobile, auto-hide após 3s, reaparece ao tocar/scrollar
@@ -961,6 +1058,11 @@ Implementar Hero Section completa do STL Festival 2026 com vídeo de fundo respo
 
 ### Design
 
+- [x] Logo STL: centralizada (top: 50%, left: 50%, transform: translate(-50%, -50%))
+- [x] Logo STL: tamanhos responsivos (80px mobile pequeno → 320px desktop large)
+- [x] Logo STL: z-index: 5 (acima overlay, abaixo ticker)
+- [x] Logo STL: drop-shadow para contraste sobre vídeo
+- [x] Logo STL: animação fade-in + scale (1.2s)
 - [ ] Ticker: background `#ff4d2d` (vermelho-alaranjado vibrante), texto branco
 - [ ] Ticker position: `bottom: 10%` (quase no final da hero)
 - [ ] Tipografia: Jairo para ticker
@@ -1087,7 +1189,24 @@ gh issue create \
 
 **Versão:** 1.3
 
-**Status:** 📝 Atualizado com Badge do Spotify responsivo para mobile
+**Status:** 📝 Atualizado com Logo STL Centralizada
+
+**Changelog v1.5 (28/01/2026):**
+
+- 🎨 Adicionada logo STL centralizada na Hero Section
+- 📏 Tamanho responsivo via clamp():
+  - Mobile pequeno (≤480px): 80-120px altura
+  - Mobile (≤768px): 100-160px altura
+  - Desktop padrão: 120-280px altura
+  - Desktop large (≥1440px): 200-320px altura
+- ✨ Animação de fade-in suave (1.2s) com scale
+- 💫 Drop shadow para destacar sobre vídeo: `0 8px 32px rgba(0, 0, 0, 0.4)`
+- 📍 Position: absolute, z-index: 5 (acima overlay, abaixo ticker/badge)
+- 🎯 Centralização perfeita: `top: 50%, left: 50%, transform: translate(-50%, -50%)`
+- ♿ Suporte a prefers-reduced-motion (sem animação)
+- 🌐 Logo do Cloudinary: `logo-stl_ydnwga.svg`
+- 📱 Max-width: 90vw (garante não ultrapassar largura da tela)
+- ⚡ Loading: eager, decoding: async para performance
 
 **Changelog v1.4 (FINAL):**
 
