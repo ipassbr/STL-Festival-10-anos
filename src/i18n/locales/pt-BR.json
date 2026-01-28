@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "title": "STL Festival 2026 - 10ª Edição | Reggae, Trap, Rap",
+    "description": "Festival de Reggae, Trap e Rap. 06 de junho de 2026 na Montanha Mágica. Lineup com Edson Gomes, Matuê, Marcelo D2 e mais!"
+  },
+  "hero": {
+    "title": "STL Festival 2026 - 10ª Edição",
+    "date": "06 de Junho de 2026",
+    "time": "20:00h",
+    "location": "Montanha Mágica, São Thomé das Letras - MG",
+    "locationShort": "Montanha Mágica - STL/MG",
+    "tickerLabel": "Informações do evento STL Festival 2026",
+    "imageAlt": "STL Festival 2026 - Cenário do festival na Montanha Mágica",
+    "scrollLabel": "Rolar para ver mais conteúdo",
+    "scrollText": "Role para baixo",
+    "spotifyLabel": "Ouça a playlist oficial do STL Festival no Spotify"
+  }
+}
