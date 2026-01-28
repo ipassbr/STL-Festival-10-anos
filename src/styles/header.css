@@ -255,14 +255,25 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.98);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  /* Estado glass (padrão) - semi-transparente com blur */
+  background: rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
   z-index: 40;
   transform: translateX(-100%);
-  transition: transform 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease,
+    backdrop-filter 0.3s ease;
   overflow-y: auto;
   padding: 2rem 0;
+}
+
+/* Estado após scroll - Opaco (sincronizado com header-scrolled) */
+.header-mobile-menu.menu-scrolled {
+  background: rgba(0, 0, 0, 0.98);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 .header-mobile-menu[aria-hidden='false'] {
@@ -280,6 +291,11 @@
 
 .header-mobile-menu-item {
   margin: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Ajustar opacidade da borda quando em modo opaco */
+.header-mobile-menu.menu-scrolled .header-mobile-menu-item {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -291,10 +307,18 @@
   text-decoration: none;
   padding: 1.25rem 1.5rem;
   transition: background 0.2s ease;
+  /* Melhor legibilidade em glass */
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 .header-mobile-menu-link:hover,
 .header-mobile-menu-link:focus {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Hover mais sutil quando em modo opaco */
+.header-mobile-menu.menu-scrolled .header-mobile-menu-link:hover,
+.header-mobile-menu.menu-scrolled .header-mobile-menu-link:focus {
   background: rgba(255, 255, 255, 0.05);
 }
 
@@ -326,22 +350,22 @@ body.menu-open {
   justify-content: center;
   padding: 0.625rem 1.25rem;
   min-height: 44px;
-  background: var(--color-red);
+  background: #1db954; /* Verde Spotify */
   color: var(--color-white);
   font-size: 0.875rem;
   font-weight: 600;
   text-decoration: none;
   border-radius: 0.5rem;
-  box-shadow: 0 4px 12px rgba(255, 77, 45, 0.3);
+  box-shadow: 0 4px 12px rgba(29, 185, 84, 0.3);
   transition: all 0.2s ease;
   cursor: pointer;
   white-space: nowrap;
 }
 
 .header-cta-button:hover {
-  background: var(--color-red-dark);
+  background: #1ed760; /* Verde Spotify Hover */
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(255, 77, 45, 0.4);
+  box-shadow: 0 6px 16px rgba(29, 185, 84, 0.4);
 }
 
 .header-cta-button:active {

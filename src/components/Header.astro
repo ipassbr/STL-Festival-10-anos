@@ -137,10 +137,16 @@ const navLinks = [
 
   function updateHeader() {
     const header = document.getElementById('header');
+    const mobileMenu = document.getElementById('mobile-menu');
     const scrolled = window.pageYOffset > scrollThreshold;
 
     if (header) {
       header.classList.toggle('header-scrolled', scrolled);
+    }
+
+    // Sincronizar estado do menu mobile com o header
+    if (mobileMenu) {
+      mobileMenu.classList.toggle('menu-scrolled', scrolled);
     }
 
     ticking = false;
