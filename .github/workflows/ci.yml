@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    paths:
+      - "docs/**"
+      - "README.md"
+      - ".github/workflows/**"
+  pull_request:
+    paths:
+      - "docs/**"
+      - "README.md"
+      - ".github/workflows/**"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  docs-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Markdown whitespace check
+        run: |
+          python - <<'PY'
+          import pathlib
+          import sys
+
+          root = pathlib.Path(".")
+          issues = []
+
+          targets = []
+          docs_dir = root / "docs"
+          if docs_dir.exists():
+              targets.extend(docs_dir.rglob("*.md"))
+          readme = root / "README.md"
+          if readme.exists():
+              targets.append(readme)
+
+          for path in targets:
+              lines = path.read_text(encoding="utf-8", errors="ignore").splitlines()
+              for idx, line in enumerate(lines, 1):
+                  if line.rstrip() != line or "\t" in line:
+                      issues.append((path, idx))
+
+          if issues:
+              print("Markdown style issues (trailing whitespace or tabs):")
+              for path, idx in issues[:200]:
+                  print(f"{path}:{idx}")
+              sys.exit(1)
+
+          print("Markdown style check passed.")
+          PY
