@@ -1,6 +1,7 @@
 ---
 import '@/styles/global.css';
 import { getLangFromUrl } from '@/i18n/utils';
+import Header from '@/components/Header.astro';
 
 interface Props {
   title?: string;
@@ -9,7 +10,11 @@ interface Props {
 }
 
 const lang = getLangFromUrl(Astro.url);
-const { title = 'STL Festival 2026', description = 'Festival de Reggae, Trap e Rap', image = '/og-image.jpg' } = Astro.props;
+const {
+  title = 'STL Festival 2026',
+  description = 'Festival de Reggae, Trap e Rap',
+  image = '/og-image.jpg',
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -19,19 +24,19 @@ const { title = 'STL Festival 2026', description = 'Festival de Reggae, Trap e R
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    
+
     <!-- Primary Meta Tags -->
     <title>{title}</title>
     <meta name="title" content={title} />
     <meta name="description" content={description} />
-    
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={Astro.url} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={new URL(image, Astro.url)} />
-    
+
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={Astro.url} />
@@ -40,6 +45,9 @@ const { title = 'STL Festival 2026', description = 'Festival de Reggae, Trap e R
     <meta property="twitter:image" content={new URL(image, Astro.url)} />
   </head>
   <body>
-    <slot />
+    <Header />
+    <main id="main-content">
+      <slot />
+    </main>
   </body>
 </html>

@@ -1,0 +1,146 @@
+---
+/**
+ * Header - Navegação principal do STL Festival
+ * Layout simplificado: Logo (esquerda), Botão Ingressos + Seletor Idioma (direita)
+ * Efeito glass sobre Hero Section, transição para opaco após scroll
+ */
+
+import { getLangFromUrl, useTranslations, getLocalizedUrl } from '@/i18n/utils';
+import LanguageSelector from './LanguageSelector.astro';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+// URL do iPass com UTM parameters
+const ipassUrl =
+  'https://ipass.com.br/stlfestival?utm_source=stl-festival&utm_medium=header&utm_campaign=cta';
+
+// Logo URL (mesma do SpotifyBadge)
+const logoUrl =
+  'https://res.cloudinary.com/dazkdemvu/image/upload/v1769622514/stl-festival/logos/logo-stl_ydnwga.svg';
+
+// URL localizada para home
+const homeUrl = getLocalizedUrl('/', lang);
+---
+
+<!-- Skip to main content link -->
+<a href="#main-content" class="header-skip-link">
+  {t('nav.skipToContent')}
+</a>
+
+<header class="header" id="header" role="banner">
+  <div class="header-container">
+    <!-- Logo -->
+    <a href={homeUrl} class="header-logo" aria-label={t('nav.logoAriaLabel')}>
+      <img
+        src={logoUrl}
+        alt="STL Festival Logo"
+        class="header-logo-img"
+        loading="eager"
+        decoding="async"
+        width="120"
+        height="36"
+      />
+    </a>
+
+    <!-- Right side: Botão Ingressos + Seletor Idioma -->
+    <div class="header-right">
+      <!-- Botão CTA Ingressos -->
+      <a
+        href={ipassUrl}
+        class="header-cta-button"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={t('nav.buyTicketsAriaLabel')}
+      >
+        {t('nav.tickets')}
+      </a>
+
+      <!-- Seletor de Idioma -->
+      <LanguageSelector />
+    </div>
+  </div>
+</header>
+
+<script>
+  // Scroll detection otimizado com requestAnimationFrame
+  let ticking = false;
+  const scrollThreshold = 50;
+
+  function updateHeader() {
+    const header = document.getElementById('header');
+    const scrolled = window.pageYOffset > scrollThreshold;
+
+    if (header) {
+      header.classList.toggle('header-scrolled', scrolled);
+    }
+
+    ticking = false;
+  }
+
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (!ticking) {
+        requestAnimationFrame(updateHeader);
+        ticking = true;
+      }
+    },
+    { passive: true }
+  );
+
+  // Inicializar estado do header
+  updateHeader();
+
+  // Mostrar header apenas após preloader completar
+  const header = document.getElementById('header');
+
+  // Verificar se preloader já completou (caso de reduced motion ou reload)
+  const checkPreloaderComplete = () => {
+    // Se não houver preloader ou se reduced motion, mostrar header imediatamente
+    const prefersReducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+    if (prefersReducedMotion) {
+      if (header) {
+        header.classList.add('header-visible');
+      }
+      return;
+    }
+
+    // Escutar evento de preloader completo
+    window.addEventListener(
+      'preloader-complete',
+      () => {
+        if (header) {
+          // Pequeno delay para transição suave
+          setTimeout(() => {
+            header.classList.add('header-visible');
+          }, 300);
+        }
+      },
+      { once: true }
+    );
+
+    // FALLBACK: Se após 5 segundos o preloader não completar, mostrar header
+    setTimeout(() => {
+      if (header && !header.classList.contains('header-visible')) {
+        console.warn(
+          '[Header] Fallback: Preloader event not fired, showing header anyway'
+        );
+        header.classList.add('header-visible');
+      }
+    }, 5000);
+  };
+
+  // Aguardar DOM estar pronto
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', checkPreloaderComplete);
+  } else {
+    checkPreloaderComplete();
+  }
+</script>
+
+<style is:global>
+  @import '../../styles/header.css';
+</style>

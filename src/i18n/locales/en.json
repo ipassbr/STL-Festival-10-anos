@@ -21,5 +21,22 @@
   "accessibility": {
     "badgeLabel": "Accessible event",
     "badgeAriaLabel": "Go to accessibility section - STL Festival is an inclusive event for everyone"
+  },
+  "nav": {
+    "skipToContent": "Skip to main content",
+    "logoAriaLabel": "STL Festival - Home page",
+    "tickets": "Tickets",
+    "languageSelector": "Language selector",
+    "currentLanguage": "Current language",
+    "openLanguageMenu": "Open language menu",
+    "closeLanguageMenu": "Close language menu",
+    "openMobileMenu": "Open navigation menu",
+    "closeMobileMenu": "Close navigation menu",
+    "buyTicketsAriaLabel": "Buy tickets for STL Festival",
+    "languages": {
+      "pt": "Português",
+      "en": "English",
+      "es": "Español"
+    }
   }
 }
