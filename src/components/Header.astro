@@ -5,6 +5,7 @@
  * Efeito glass sobre Hero Section, transição para opaco após scroll
  */
 
+import '@/styles/header.css';
 import { getLangFromUrl, useTranslations, getLocalizedUrl } from '@/i18n/utils';
 import LanguageSelector from './LanguageSelector.astro';
 
@@ -140,7 +141,3 @@ const homeUrl = getLocalizedUrl('/', lang);
     checkPreloaderComplete();
   }
 </script>
-
-<style is:global>
-  @import '../../styles/header.css';
-</style>
