@@ -84,18 +84,22 @@ O Pre-loader é a **primeira impressão** do site, criando uma experiência de e
 - **User Story:** Como usuário, eu quero ver uma animação de carregamento profissional ao invés de uma tela em branco
 - **Prioridade:** 🔴 Must Have
 
-### RF-02: Animação de Progresso
+### RF-02: Animação de Progresso com Frase
 
-- **Descrição:** Preloader deve exibir progresso visual do carregamento (barra de progresso, porcentagem, ou animação indicativa)
+- **Descrição:** Preloader deve exibir a frase progressivamente conforme o carregamento avança (texto aparece palavra por palavra ou letra por letra)
 - **Eventos:** Deve disparar eventos `preloader-progress` com valor de 0-100% para comunicação com Hero Section
-- **User Story:** Como usuário, eu quero ver o progresso do carregamento para saber que algo está acontecendo
+- **Visual:** Linhas horizontais finas brancas no topo e na parte inferior (cerca de 5% de cada borda) como elementos decorativos
+- **User Story:** Como usuário, eu quero ver o progresso do carregamento através da exibição progressiva da frase inspiradora
 - **Prioridade:** 🔴 Must Have
 
-### RF-03: Logo STL Centralizada
+### RF-03: Frase Inspiradora Centralizada
 
-- **Descrição:** Logo STL deve aparecer centralizada no preloader, possivelmente com animação (rotação, pulse, fade)
-- **Logo:** Usar mesma logo do header: `https://res.cloudinary.com/dazkdemvu/image/upload/v1769622514/stl-festival/logos/logo-stl_ydnwga.svg`
-- **User Story:** Como usuário, eu quero ver o logo do STL Festival durante o carregamento para reconhecer a marca
+- **Descrição:** Frase inspiradora deve aparecer centralizada no preloader, exibida progressivamente conforme o carregamento
+- **Frase PT-BR:** "Venha fazer parte da nossa História, conexão, música, natureza e sustentabilidade"
+- **Frase EN:** "Come be part of our History, connection, music, nature and sustainability"
+- **Frase ES:** "Ven a ser parte de nuestra Historia, conexión, música, naturaleza y sostenibilidad"
+- **Tipografia:** Fonte simples e fina (sans-serif), branca sobre fundo preto
+- **User Story:** Como usuário, eu quero ver uma mensagem inspiradora durante o carregamento que comunique os valores do festival
 - **Prioridade:** 🔴 Must Have
 
 ### RF-04: Integração com Hero Section
@@ -178,8 +182,9 @@ O Pre-loader é a **primeira impressão** do site, criando uma experiência de e
 
 ### Componentes Customizados
 
-- `Preloader.astro` - Componente principal do preloader (migração de código existente)
-- `PreloaderProgress.astro` - Indicador de progresso (barra ou porcentagem) - **OPCIONAL**
+- `Preloader.astro` - Componente principal do preloader com design minimalista
+  - Estrutura: Fundo preto, linhas decorativas, texto centralizado
+  - Lógica: Gerenciamento de progresso e animação de texto progressivo
 
 ### Scripts TypeScript
 
@@ -193,10 +198,11 @@ O Pre-loader é a **primeira impressão** do site, criando uma experiência de e
 
 **Nota Técnica:**
 
-- Código base já existe em outro projeto - será migrado e adaptado
-- Usar Framer Motion para animações (já decidido no stack)
-- Componente pode ser Astro com JavaScript inline ou React Island (`client:load`)
-- Preferir Astro + vanilla JS para menor bundle size
+- Design minimalista permite implementação leve (sem dependências pesadas)
+- Preferir CSS animations para animações simples (fade, opacity)
+- JavaScript apenas para lógica de progresso e sincronização com eventos
+- Componente Astro com JavaScript inline (não precisa React Island)
+- Framer Motion apenas se necessário para animações complexas de texto progressivo
 
 ---
 
@@ -204,18 +210,19 @@ O Pre-loader é a **primeira impressão** do site, criando uma experiência de e
 
 ### Imagens
 
-- `logo-stl.svg` - Logo STL (mesma do header)
-  - Path: `https://res.cloudinary.com/dazkdemvu/image/upload/v1769622514/stl-festival/logos/logo-stl_ydnwga.svg`
+- Nenhuma imagem necessária (design minimalista com texto apenas)
 
 ### Fontes
 
-- Jairo (headings) - Já carregada no projeto
-- Superbusy Activity (decorativo) - Já carregada no projeto
+- Fonte sans-serif simples e fina para o texto (pode usar fonte do sistema ou fonte customizada leve)
+- Sistema de fontes: `-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif` (fallback)
 
 ### Conteúdo
 
-- Textos de carregamento (PT-BR, EN, ES) - Adicionar em `src/i18n/locales/*.json`
-  - Exemplo: "Carregando...", "Loading...", "Cargando..."
+- Frase inspiradora (PT-BR, EN, ES) - Adicionar em `src/i18n/locales/*.json`
+  - **PT-BR:** "Venha fazer parte da nossa História, conexão, música, natureza e sustentabilidade"
+  - **EN:** "Come be part of our History, connection, music, nature and sustainability"
+  - **ES:** "Ven a ser parte de nuestra Historia, conexión, música, naturaleza y sostenibilidad"
 
 ### Dependências de Outras Seções
 
@@ -230,23 +237,88 @@ O Pre-loader é a **primeira impressão** do site, criando uma experiência de e
 
 ---
 
+## 🎨 Design Visual Detalhado
+
+### Referência Visual
+
+O preloader segue um design **minimalista e elegante**, inspirado em estética moderna e clean:
+
+- **Fundo:** Preto sólido (`#000000`) ou azul índigo escuro (`#1e1876` do design system STL)
+- **Estilo:** Minimalista, sem elementos desnecessários
+- **Foco:** Texto centralizado como elemento principal
+
+### Elementos Visuais
+
+#### 1. Linhas Decorativas Horizontais
+
+- **Posicionamento:**
+  - Linha superior: `top: 5%` (ou `top: calc(100vh * 0.05)`)
+  - Linha inferior: `bottom: 5%` (ou `bottom: calc(100vh * 0.05)`)
+- **Estilo:**
+  - Espessura: `1px` ou `0.5px` (muito fina)
+  - Cor: Branco (`#FFFFFF`)
+  - Largura: `100%` (full width)
+- **Animação:** Fade in suave ao aparecer (200ms)
+
+#### 2. Texto Centralizado
+
+- **Posicionamento:** Centralizado vertical e horizontalmente (`center center`)
+- **Conteúdo:** Frase inspiradora do STL Festival
+- **Tipografia:**
+  - Fonte: Sistema sans-serif (`-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif`)
+  - Peso: `300` (light/thin) ou `400` (regular) - deve ser fino e elegante
+  - Tamanho: Responsivo usando `clamp(1rem, 4vw, 1.5rem)` ou similar
+  - Cor: Branco (`#FFFFFF`)
+  - Alinhamento: `center`
+- **Espaçamento:** Padding adequado para não tocar nas linhas decorativas
+
+#### 3. Fundo
+
+- **Cor:** Preto sólido (`#000000`) - opção preferida para máximo contraste
+- **Alternativa:** Azul índigo escuro (`#1e1876`) do design system STL
+- **Cobertura:** Full viewport (`position: fixed`, `inset: 0`)
+
+### Hierarquia Visual
+
+1. **Fundo preto** (camada base)
+2. **Linhas decorativas** (elementos de estrutura/arquitetura)
+3. **Texto** (elemento principal, foco visual)
+
+---
+
 ## 🎬 Animações e Interações
+
+### Design Visual Minimalista
+
+- **Fundo:** Preto sólido (`#000000` ou `#1e1876` - azul índigo escuro do design system)
+- **Linhas decorativas:** Duas linhas horizontais finas brancas:
+  - Linha superior: posicionada a ~5% do topo
+  - Linha inferior: posicionada a ~5% da parte inferior
+  - Espessura: 1px ou 0.5px
+  - Cor: Branco (`#FFFFFF`)
+- **Texto centralizado:** Vertical e horizontalmente no centro da tela
 
 ### Animações de Entrada
 
 - Fade in do preloader (0ms - instantâneo ao carregar página)
-- Logo aparece com animação (fade + scale ou rotação suave)
+- Linhas decorativas aparecem com fade in suave (200ms)
+- Texto inicia oculto ou com opacidade muito baixa
 
 ### Animações de Progresso
 
-- Barra de progresso animada (width 0% → 100%)
-- Ou: Logo com pulse/rotação durante carregamento
-- Ou: Porcentagem animada (0% → 100%)
+- **Texto progressivo:** Frase aparece progressivamente conforme carregamento:
+  - Opção 1: Palavra por palavra (cada palavra aparece com fade in conforme progresso)
+  - Opção 2: Letra por letra (typewriter effect)
+  - Opção 3: Texto completo com fade in gradual baseado no progresso (0-100%)
+- **Sincronização:** Progresso do texto sincronizado com eventos `preloader-progress`
+- **Efeito visual:** Texto branco fino, elegante, sem distrações
 
 ### Animações de Saída
 
-- Fade out suave (300-500ms ease-out)
-- Logo desaparece antes do fundo (stagger animation)
+- Fade out suave do texto (300-500ms ease-out)
+- Fade out das linhas decorativas (200ms)
+- Fade out do fundo (300-500ms ease-out)
+- Sequência: Texto → Linhas → Fundo (stagger animation)
 
 ### Transições
 
@@ -255,27 +327,63 @@ O Pre-loader é a **primeira impressão** do site, criando uma experiência de e
 
 **Biblioteca:** Framer Motion (já decidido no stack)
 
-**Exemplo de Animação (Framer Motion):**
+**Exemplo de Estrutura CSS:**
 
-```tsx
-// Estrutura básica
-const preloaderVariants = {
-  visible: { opacity: 1 },
-  hidden: { opacity: 0 },
-};
+```css
+.preloader {
+  position: fixed;
+  inset: 0;
+  background: #000000; /* ou #1e1876 (azul índigo escuro) */
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-const logoVariants = {
-  initial: { scale: 0.8, opacity: 0 },
-  animate: {
-    scale: 1,
-    opacity: 1,
-    transition: { duration: 0.5, ease: 'easeOut' },
-  },
-  pulse: {
-    scale: [1, 1.05, 1],
-    transition: { repeat: Infinity, duration: 2 },
-  },
-};
+.preloader__line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #ffffff;
+}
+
+.preloader__line--top {
+  top: 5%;
+}
+
+.preloader__line--bottom {
+  bottom: 5%;
+}
+
+.preloader__text {
+  color: #ffffff;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 300; /* Fino */
+  font-size: clamp(1rem, 4vw, 1.5rem);
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.preloader__text.visible {
+  opacity: 1;
+}
+```
+
+**Exemplo de Animação de Texto Progressivo (JavaScript):**
+
+```typescript
+// Mostrar texto progressivamente baseado no progresso (0-100%)
+function updateTextProgress(progress: number) {
+  const text =
+    'Venha fazer parte da nossa História, conexão, música, natureza e sustentabilidade';
+  const words = text.split(' ');
+  const visibleWords = Math.floor((progress / 100) * words.length);
+
+  return words.slice(0, visibleWords).join(' ');
+}
 ```
 
 ---
@@ -292,16 +400,17 @@ const logoVariants = {
   - Integrar com sistema de eventos existente
 - **Tempo:** 2 horas
 
-### Issue #X: [Pre-loader] Migração de Código Existente
+### Issue #X: [Pre-loader] Implementação do Design Minimalista
 
-- **Descrição:** Migrar código do preloader de outro projeto e adaptar para Astro
+- **Descrição:** Implementar design minimalista com fundo preto, linhas decorativas e frase inspiradora
 - **Tarefas:**
-  - Copiar código base do preloader
-  - Adaptar para sintaxe Astro
-  - Integrar com design system STL (cores, tipografia)
-  - Ajustar paths de assets (logo)
-  - Testar funcionamento básico
-- **Tempo:** 4 horas
+  - Criar estrutura HTML/CSS do preloader (fundo preto, linhas, texto)
+  - Implementar linhas decorativas horizontais (topo e fundo, ~5% das bordas)
+  - Centralizar texto vertical e horizontalmente
+  - Aplicar tipografia simples e fina (sans-serif)
+  - Integrar com design system STL (cores: preto ou azul índigo escuro)
+  - Testar visual em diferentes tamanhos de tela
+- **Tempo:** 3 horas
 
 ### Issue #X: [Pre-loader] Sistema de Preload de Assets
 
@@ -315,17 +424,17 @@ const logoVariants = {
   - Disparar eventos `preloader-progress` (0-100%)
 - **Tempo:** 3 horas
 
-### Issue #X: [Pre-loader] Animações com Framer Motion
+### Issue #X: [Pre-loader] Animações de Texto Progressivo
 
-- **Descrição:** Implementar animações suaves e profissionais
+- **Descrição:** Implementar animação de texto progressivo conforme carregamento
 - **Tarefas:**
-  - Animação de entrada do preloader
-  - Animação do logo (fade + scale ou rotação)
-  - Animação de progresso (barra ou indicador)
-  - Animação de saída (fade out)
-  - Integrar com `prefers-reduced-motion`
-  - Otimizar performance (will-change, transform)
-- **Tempo:** 3 horas
+  - Animação de entrada: fade in do preloader e linhas decorativas
+  - Animação de progresso: texto aparece progressivamente (palavra por palavra ou letra por letra)
+  - Sincronizar progresso do texto com eventos `preloader-progress` (0-100%)
+  - Animação de saída: fade out suave (texto → linhas → fundo)
+  - Integrar com `prefers-reduced-motion` (simplificar animações)
+  - Otimizar performance (CSS animations preferidas sobre JS quando possível)
+- **Tempo:** 4 horas
 
 ### Issue #X: [Pre-loader] Integração com Hero Section
 
@@ -356,7 +465,9 @@ const logoVariants = {
   - Testar em mobile (320px, 375px, 414px)
   - Testar em tablet (768px, 1024px)
   - Testar em desktop (1280px, 1440px, 1920px)
-  - Ajustar tamanho do logo proporcionalmente
+  - Ajustar tamanho da fonte do texto proporcionalmente (usar clamp())
+  - Validar posicionamento das linhas decorativas em todos os tamanhos
+  - Validar legibilidade do texto em diferentes resoluções
   - Validar animações em diferentes tamanhos
 - **Tempo:** 2 horas
 
@@ -393,8 +504,10 @@ const logoVariants = {
 ### Funcionalidade
 
 - Preloader aparece imediatamente ao carregar página
-- Logo STL exibido centralizado
-- Progresso visual durante carregamento
+- Frase inspiradora exibida centralizada
+- Texto aparece progressivamente conforme carregamento (palavra por palavra ou letra por letra)
+- Linhas decorativas visíveis (topo e fundo, ~5% das bordas)
+- Progresso visual sincronizado com carregamento real
 - Eventos `preloader-progress` e `preloader-complete` disparados corretamente
 - Transição suave para Hero Section (sem flash)
 - Preload de assets críticos funcionando
@@ -403,12 +516,13 @@ const logoVariants = {
 
 ### Design
 
-- Visual conforme Design System STL
-- Cores da paleta oficial (fundo escuro ou claro conforme design)
-- Tipografia correta (Jairo para logo, Sistema para textos)
-- Logo com tamanho adequado e proporcional
-- Espaçamento consistente (sistema 8px)
-- Animações suaves e profissionais
+- **Fundo:** Preto sólido ou azul índigo escuro (`#1e1876` do design system)
+- **Linhas decorativas:** Duas linhas horizontais finas brancas (topo e fundo, ~5% de cada borda)
+- **Texto:** Fonte sans-serif simples e fina, branca, centralizada vertical e horizontalmente
+- **Frase:** "Venha fazer parte da nossa História, conexão, música, natureza e sustentabilidade" (PT-BR)
+- **Tipografia:** Sistema de fontes leve (não Jairo ou Superbusy - muito pesadas para este design minimalista)
+- **Espaçamento:** Texto centralizado, linhas posicionadas a ~5% das bordas
+- **Animações:** Suaves, elegantes, sem distrações (fade in/out, texto progressivo)
 
 ### Performance
 
@@ -433,8 +547,10 @@ const logoVariants = {
 - Funciona em mobile (320px+)
 - Funciona em tablet (768px+)
 - Funciona em desktop (1024px+)
-- Logo proporcional em todos os tamanhos
+- Texto responsivo (tamanho de fonte adaptável)
+- Linhas decorativas posicionadas corretamente em todos os tamanhos
 - Animações funcionam em todos os dispositivos
+- Texto legível em todas as resoluções
 
 ### i18n
 
@@ -561,9 +677,9 @@ Closes #X, Closes #Y, Closes #Z
 | Tarefa             | Estimado            | Real  | Status          |
 | ------------------ | ------------------- | ----- | --------------- |
 | Setup e Estrutura  | 2h                  | -     | ⏸️ Pendente     |
-| Migração de Código | 4h                  | -     | ⏸️ Pendente     |
+| Design Minimalista | 3h                  | -     | ⏸️ Pendente     |
 | Sistema de Preload | 3h                  | -     | ⏸️ Pendente     |
-| Animações          | 3h                  | -     | ⏸️ Pendente     |
+| Animações de Texto | 4h                  | -     | ⏸️ Pendente     |
 | Integração Hero    | 2h                  | -     | ⏸️ Pendente     |
 | i18n               | 1h                  | -     | ⏸️ Pendente     |
 | Responsividade     | 2h                  | -     | ⏸️ Pendente     |
@@ -585,4 +701,12 @@ Closes #X, Closes #Y, Closes #Z
 
 **Documento Criado em:** 29/01/2026
 **Última Atualização:** 29/01/2026
-**Versão:** 1.0
+**Versão:** 1.1
+
+**Mudanças na Versão 1.1:**
+
+- Atualizado design para estilo minimalista (fundo preto, linhas decorativas, texto centralizado)
+- Removido logo STL, adicionada frase inspiradora progressiva
+- Especificado design visual detalhado (linhas horizontais, tipografia fina)
+- Atualizado animações para texto progressivo (palavra por palavra ou letra por letra)
+- Adicionadas traduções da frase (PT-BR, EN, ES)
