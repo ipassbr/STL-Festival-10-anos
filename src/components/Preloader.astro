@@ -48,7 +48,16 @@ const {
   const textEl = document.getElementById('preloader-text');
   const progressBarEl = document.getElementById('preloader-progress-bar');
 
-  if (!preloaderEl || !textEl || !progressBarEl) {
+  // Verifica se o preloader já foi exibido nesta sessão
+  const PRELOADER_KEY = 'stl-festival-preloader-shown';
+  const hasShownPreloader = sessionStorage.getItem(PRELOADER_KEY) === 'true';
+
+  // Se já foi exibido, remove imediatamente e não inicia o preloader
+  if (hasShownPreloader) {
+    if (preloaderEl) {
+      preloaderEl.remove();
+    }
+  } else if (!preloaderEl || !textEl || !progressBarEl) {
     console.error('Preloader elements not found');
   } else {
     // Texto completo para animação progressiva
@@ -130,6 +139,8 @@ const {
           // Remove do DOM após animação
           setTimeout(() => {
             preloaderEl.remove();
+            // Marca preloader como exibido na sessão atual
+            sessionStorage.setItem(PRELOADER_KEY, 'true');
           }, 800); // Aumentado de 500ms para 800ms
         }, 500); // Aumentado de 300ms para 500ms
       }, remainingTime);
