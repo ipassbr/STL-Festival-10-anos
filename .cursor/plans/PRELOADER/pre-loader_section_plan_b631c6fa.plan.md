@@ -227,9 +227,9 @@ O Pre-loader é a **primeira impressão** do site, criando uma experiência de e
 ### Conteúdo
 
 - Frase inspiradora (PT-BR, EN, ES) - Adicionar em `src/i18n/locales/*.json`
-  - **PT-BR:** "Venha fazer parte da nossa História, conexão, música, natureza e sustentabilidade"
-  - **EN:** "Come be part of our History, connection, music, nature and sustainability"
-  - **ES:** "Ven a ser parte de nuestra Historia, conexión, música, naturaleza y sostenibilidad"
+  - **PT-BR:** "Faça parte da nossa história"
+  - **EN:** "Be part of our history"
+  - **ES:** "Sé parte de nuestra historia"
 
 ### Dependências de Outras Seções
 
@@ -535,7 +535,7 @@ function updateTextProgress(progress: number) {
 - **Fundo:** Preto sólido (`#000000`)
 - **Barra de loader:** Barra horizontal fina (3px) na parte inferior, branca (`#ffffff`)
 - **Texto:** Fonte IDV Jairo (Marca Registrada STL), branca, centralizada vertical e horizontalmente
-- **Frase:** "Venha fazer parte da nossa História, conexão, música, natureza e sustentabilidade" (PT-BR)
+- **Frase:** "Faça parte da nossa história" (PT-BR)
 - **Tipografia:** Jairo (Condensed Rounded) - fonte IDV oficial do STL Festival
 - **Espaçamento:** Texto centralizado, barra de loader na parte inferior (bottom: 0)
 - **Animações:** Suaves, elegantes, sem distrações (fade in/out, texto progressivo, barra de loader animada)
