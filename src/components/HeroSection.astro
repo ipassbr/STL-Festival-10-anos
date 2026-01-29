@@ -103,43 +103,69 @@ const spotifyPlaylistUrl =
   <AccessibilityBadge targetSection="#accessibility" />
 
   <!-- Faixa Ticker Automática -->
-  <div class="hero-ticker" role="banner" aria-label={t('hero.tickerLabel')}>
+  <div
+    class="hero-ticker"
+    role="marquee"
+    aria-live="off"
+    aria-label={t('hero.ticker.ariaLabel')}
+    style="background: linear-gradient(90deg, #38966d 0%, #d2aa56 100%);"
+  >
     <div class="hero-ticker__wrapper">
       <!-- Loop 1 -->
       <div class="hero-ticker__content">
-        <span>{t('hero.tickerText1')}</span>
-        <span class="hero-ticker__separator" aria-hidden="true">✦</span>
-        <span>{t('hero.tickerText2')}</span>
-        <span class="hero-ticker__separator" aria-hidden="true">✦</span>
-        <span>{t('hero.tickerText3')}</span>
-        <span class="hero-ticker__separator" aria-hidden="true">✦</span>
+        <span class="hero-ticker__text">{t('hero.ticker.date')}</span>
+        <span class="hero-ticker__star" aria-hidden="true">✦</span>
+        <span class="hero-ticker__text">{t('hero.ticker.location')}</span>
+        <span class="hero-ticker__star" aria-hidden="true">✦</span>
       </div>
       <!-- Loop 2 -->
       <div class="hero-ticker__content" aria-hidden="true">
-        <span>{t('hero.tickerText1')}</span>
-        <span class="hero-ticker__separator">✦</span>
-        <span>{t('hero.tickerText2')}</span>
-        <span class="hero-ticker__separator">✦</span>
-        <span>{t('hero.tickerText3')}</span>
-        <span class="hero-ticker__separator">✦</span>
+        <span class="hero-ticker__text">{t('hero.ticker.date')}</span>
+        <span class="hero-ticker__star" aria-hidden="true">✦</span>
+        <span class="hero-ticker__text">{t('hero.ticker.location')}</span>
+        <span class="hero-ticker__star" aria-hidden="true">✦</span>
       </div>
       <!-- Loop 3 -->
       <div class="hero-ticker__content" aria-hidden="true">
-        <span>{t('hero.tickerText1')}</span>
-        <span class="hero-ticker__separator">✦</span>
-        <span>{t('hero.tickerText2')}</span>
-        <span class="hero-ticker__separator">✦</span>
-        <span>{t('hero.tickerText3')}</span>
-        <span class="hero-ticker__separator">✦</span>
+        <span class="hero-ticker__text">{t('hero.ticker.date')}</span>
+        <span class="hero-ticker__star" aria-hidden="true">✦</span>
+        <span class="hero-ticker__text">{t('hero.ticker.location')}</span>
+        <span class="hero-ticker__star" aria-hidden="true">✦</span>
       </div>
       <!-- Loop 4 -->
       <div class="hero-ticker__content" aria-hidden="true">
-        <span>{t('hero.tickerText1')}</span>
-        <span class="hero-ticker__separator">✦</span>
-        <span>{t('hero.tickerText2')}</span>
-        <span class="hero-ticker__separator">✦</span>
-        <span>{t('hero.tickerText3')}</span>
-        <span class="hero-ticker__separator">✦</span>
+        <span class="hero-ticker__text">{t('hero.ticker.date')}</span>
+        <span class="hero-ticker__star" aria-hidden="true">✦</span>
+        <span class="hero-ticker__text">{t('hero.ticker.location')}</span>
+        <span class="hero-ticker__star" aria-hidden="true">✦</span>
+      </div>
+      <!-- Loop 5 -->
+      <div class="hero-ticker__content" aria-hidden="true">
+        <span class="hero-ticker__text">{t('hero.ticker.date')}</span>
+        <span class="hero-ticker__star" aria-hidden="true">✦</span>
+        <span class="hero-ticker__text">{t('hero.ticker.location')}</span>
+        <span class="hero-ticker__star" aria-hidden="true">✦</span>
+      </div>
+      <!-- Loop 6 -->
+      <div class="hero-ticker__content" aria-hidden="true">
+        <span class="hero-ticker__text">{t('hero.ticker.date')}</span>
+        <span class="hero-ticker__star" aria-hidden="true">✦</span>
+        <span class="hero-ticker__text">{t('hero.ticker.location')}</span>
+        <span class="hero-ticker__star" aria-hidden="true">✦</span>
+      </div>
+      <!-- Loop 7 -->
+      <div class="hero-ticker__content" aria-hidden="true">
+        <span class="hero-ticker__text">{t('hero.ticker.date')}</span>
+        <span class="hero-ticker__star" aria-hidden="true">✦</span>
+        <span class="hero-ticker__text">{t('hero.ticker.location')}</span>
+        <span class="hero-ticker__star" aria-hidden="true">✦</span>
+      </div>
+      <!-- Loop 8 -->
+      <div class="hero-ticker__content" aria-hidden="true">
+        <span class="hero-ticker__text">{t('hero.ticker.date')}</span>
+        <span class="hero-ticker__star" aria-hidden="true">✦</span>
+        <span class="hero-ticker__text">{t('hero.ticker.location')}</span>
+        <span class="hero-ticker__star" aria-hidden="true">✦</span>
       </div>
     </div>
   </div>
@@ -297,7 +323,7 @@ const spotifyPlaylistUrl =
   .hero__logo-container {
     position: absolute;
     z-index: 5;
-    top: 50%;
+    top: 35%;
     left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
@@ -309,10 +335,10 @@ const spotifyPlaylistUrl =
   .hero__logo {
     width: auto;
     height: clamp(
-      120px,
-      20vw,
-      280px
-    ); /* Responsivo: 120px (mobile) até 280px (desktop) */
+      320px,
+      35vw,
+      450px
+    ); /* Responsivo: 320px (mobile) até 450px (desktop) - reduzido no desktop */
     max-width: 90vw; /* Garante que não ultrapasse a largura da tela */
     object-fit: contain;
     user-select: none;
@@ -340,14 +366,12 @@ const spotifyPlaylistUrl =
     left: 0;
     z-index: 10;
     width: 100%;
-    background: var(--color-red);
-    color: var(--color-white);
-    padding: var(--spacing-md) 0;
+    padding: 0.5rem 0;
     overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
   }
 
-  /* Efeito de gradiente fade nas pontas laterais (esquerda e direita) */
+  /* Efeito de gradiente fade nas extremidades (esquerda e direita) */
   .hero-ticker::before,
   .hero-ticker::after {
     content: '';
@@ -363,8 +387,8 @@ const spotifyPlaylistUrl =
     left: 0;
     background: linear-gradient(
       to right,
-      rgba(255, 77, 45, 1) 0%,
-      rgba(255, 77, 45, 0) 100%
+      rgba(56, 150, 109, 1) 0%,
+      rgba(56, 150, 109, 0) 100%
     );
   }
 
@@ -372,52 +396,56 @@ const spotifyPlaylistUrl =
     right: 0;
     background: linear-gradient(
       to left,
-      rgba(255, 77, 45, 1) 0%,
-      rgba(255, 77, 45, 0) 100%
+      rgba(210, 170, 86, 1) 0%,
+      rgba(210, 170, 86, 0) 100%
     );
   }
 
   .hero-ticker__wrapper {
     display: flex;
-    width: fit-content;
-    animation: scroll-ticker 20s linear infinite;
+    width: max-content;
+    animation: scroll-ticker 60s linear infinite;
     will-change: transform;
     position: relative;
     z-index: 0;
-    gap: 0; /* Remove qualquer gap entre os blocos */
+    gap: 0;
   }
 
   .hero-ticker__content {
     display: flex;
     align-items: center;
     white-space: nowrap;
-    padding: 0; /* Remove padding lateral */
+    padding: 0;
+    flex-shrink: 0;
+    gap: 1.25rem;
+    min-width: max-content;
+    width: max-content;
+  }
+
+  .hero-ticker__text {
     font-family: var(--font-heading);
-    font-size: clamp(1.25rem, 3vw, 2rem);
+    font-size: clamp(1.125rem, 2.5vw, 1.5rem);
     font-weight: 700;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    flex-shrink: 0; /* Previne shrinking */
+    color: #fefbdf; /* Creme */
+    padding: 0 var(--spacing-xs);
   }
 
-  .hero-ticker__content > span:not(.hero-ticker__separator) {
-    padding: 0 var(--spacing-sm); /* Espaçamento interno nos textos */
-  }
-
-  .hero-ticker__separator {
-    margin: 0 var(--spacing-md);
-    opacity: 0.8;
-    font-size: 1.2em;
+  .hero-ticker__star {
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    color: #ff4d2d; /* Vermelho STL */
+    line-height: 1;
     flex-shrink: 0;
   }
 
-  /* Animação de scroll infinito */
+  /* Animação de scroll infinito seamless - 8 loops, translateX(-50%) move 4 loops */
   @keyframes scroll-ticker {
     0% {
       transform: translateX(0);
     }
     100% {
-      transform: translateX(-25%);
+      transform: translateX(-50%);
     }
   }
 
@@ -532,37 +560,40 @@ const spotifyPlaylistUrl =
       padding: var(--spacing-sm) 0;
     }
 
-    .hero-ticker__content {
-      font-size: clamp(1rem, 4vw, 1.5rem);
-      padding: 0 var(--spacing-md);
+    .hero-ticker__text {
+      font-size: clamp(1rem, 3vw, 1.5rem);
     }
 
-    .hero-ticker__separator {
-      margin: 0 var(--spacing-md);
+    .hero-ticker__star {
+      font-size: clamp(1.125rem, 3.5vw, 1.75rem);
     }
 
-    /* Logo menor em mobile */
+    /* Logo maior em mobile para destaque - DOBRADO */
     .hero__logo {
-      height: clamp(100px, 18vw, 160px);
+      height: clamp(280px, 44vw, 400px);
     }
   }
 
   /* Ajustes para telas muito pequenas */
   @media (max-width: 480px) {
-    .hero-ticker__content {
-      font-size: clamp(0.875rem, 4vw, 1.25rem);
+    .hero-ticker__text {
+      font-size: clamp(1rem, 3.5vw, 1.375rem);
     }
 
-    /* Logo ainda menor em telas pequenas */
+    .hero-ticker__star {
+      font-size: clamp(1.125rem, 4vw, 1.5rem);
+    }
+
+    /* Logo maior em telas pequenas para destaque - DOBRADO */
     .hero__logo {
-      height: clamp(80px, 20vw, 120px);
+      height: clamp(240px, 50vw, 360px);
     }
   }
 
-  /* Ajustes para desktop large */
+  /* Ajustes para desktop large - reduzido */
   @media (min-width: 1440px) {
     .hero__logo {
-      height: clamp(200px, 18vw, 320px);
+      height: clamp(350px, 30vw, 500px);
     }
   }
 </style>
