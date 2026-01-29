@@ -24,6 +24,10 @@
     "scrollText": "Scroll down",
     "spotifyLabel": "Listen to STL Festival's official playlist on Spotify"
   },
+  "preloader": {
+    "phraseTop": "Come join a world of vibes",
+    "phraseBottom": "Connection, music, nature and sustainability"
+  },
   "accessibility": {
     "badgeLabel": "Accessible event",
     "badgeAriaLabel": "Go to accessibility section - STL Festival is an inclusive event for everyone"
