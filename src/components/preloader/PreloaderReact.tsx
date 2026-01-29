@@ -177,11 +177,13 @@ export default function Preloader({
     };
 
     const handleTouchStart = (e: TouchEvent) => {
-      lastTouchY = e.touches[0].clientY;
+      if (e.touches[0]) {
+        lastTouchY = e.touches[0].clientY;
+      }
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      if (isComplete) return;
+      if (isComplete || !e.touches[0]) return;
 
       e.preventDefault();
 
