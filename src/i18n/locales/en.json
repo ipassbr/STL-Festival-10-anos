@@ -47,7 +47,8 @@
     }
   },
   "preloader": {
-    "text": "Be part of our history",
+    "phraseTop": "Be part of our history",
+    "phraseBottom": "connection, music, nature and sustainability",
     "ariaLabel": "Loading STL Festival content"
   }
 }

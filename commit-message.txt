@@ -1,0 +1,31 @@
+feat(preloader): implement vertical curtains with scroll interaction and glowing mouse indicator
+
+- Replace progress bar preloader with vertical curtains effect using Framer Motion
+- Add scroll virtual for desktop (mouse wheel controls curtain opening)
+- Add auto-play for mobile devices (automatic curtain opening)
+- Implement glowing mouse scroll indicator centered between curtains
+- Split inspirational phrase into two parts (phraseTop and phraseBottom)
+- Apply IDV trademark fonts (Superbusy Activity and Jairo)
+- Add sessionStorage to prevent re-display on internal navigation
+- Add development override (always render on localhost for testing)
+- Simplify Preloader.astro wrapper (remove PreloaderManager dependency)
+- Fix 404 errors (herosection.jpg, favicon.svg)
+- Improve mobile detection using pointer media queries
+- Consolidate development plans into single document
+- Create comprehensive plan following template standards
+
+Components:
+- src/components/preloader/PreloaderReact.tsx (React Island)
+- src/components/preloader/preloader.types.ts (TypeScript interfaces)
+- src/components/Preloader.astro (Astro wrapper)
+- public/favicon.svg (new)
+
+i18n updates:
+- Split phrase into phraseTop and phraseBottom in all locales (pt-BR, EN, ES)
+
+Technical details:
+- Spring physics (stiffness: 150, damping: 25)
+- Scroll delta: 8 for desktop, 12 for touch
+- GPU acceleration via transform and opacity
+- Event listeners with capture: true for priority
+- Custom events integration (preloader-progress, preloader-complete)

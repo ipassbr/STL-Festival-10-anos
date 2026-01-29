@@ -47,7 +47,8 @@
     }
   },
   "preloader": {
-    "text": "Sé parte de nuestra historia",
+    "phraseTop": "Sé parte de nuestra historia",
+    "phraseBottom": "conexión, música, naturaleza y sostenibilidad",
     "ariaLabel": "Cargando contenido de STL Festival"
   }
 }
