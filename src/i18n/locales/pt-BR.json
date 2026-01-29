@@ -45,5 +45,9 @@
       "en": "English",
       "es": "Español"
     }
+  },
+  "preloader": {
+    "text": "Venha fazer parte da nossa História, conexão, música, natureza e sustentabilidade",
+    "ariaLabel": "Carregando conteúdo do STL Festival"
   }
 }

@@ -45,5 +45,9 @@
       "en": "English",
       "es": "Español"
     }
+  },
+  "preloader": {
+    "text": "Come be part of our History, connection, music, nature and sustainability",
+    "ariaLabel": "Loading STL Festival content"
   }
 }

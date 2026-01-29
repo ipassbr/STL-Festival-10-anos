@@ -213,10 +213,16 @@ O Pre-loader é a **primeira impressão** do site, criando uma experiência de e
 
 - Nenhuma imagem necessária (design minimalista com texto apenas)
 
-### Fontes
+### Fontes IDV (Marca Registrada STL)
 
-- Fonte sans-serif simples e fina para o texto (pode usar fonte do sistema ou fonte customizada leve)
-- Sistema de fontes: `-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif` (fallback)
+- **Jairo (Condensed Rounded):** Fonte principal para o texto do preloader
+  - Path: `/assets/jairo-condensed-rounded-font-2025-04-09-21-46-58-utc (1)/`
+  - Formatos: .woff2, .woff, .ttf
+  - Uso: Texto inspirador centralizado
+- **Superbusy Activity:** Fonte decorativa (disponível mas não usada no preloader)
+  - Path: `/assets/superbusy-activity-fun-pairing-font-2024-09-21-02-56-52-utc/`
+  - Formatos: .woff2, .woff, .ttf
+- **Fallback:** Sistema de fontes como fallback
 
 ### Conteúdo
 
@@ -586,20 +592,31 @@ function updateTextProgress(progress: number) {
 **Arquitetura:**
 
 - Preloader será componente Astro com JavaScript inline (não React Island) para menor bundle size
-- Framer Motion será usado apenas se necessário para animações complexas, caso contrário CSS animations
+- CSS animations para animações simples (fade, opacity, width)
 - Eventos customizados (`preloader-progress`, `preloader-complete`) já estão sendo escutados no Hero Section
 
 **Preload Strategy:**
 
 - Vídeo hero: Preload apenas quando necessário (mobile vs desktop)
 - Imagem fallback: Preload imediato (mais leve)
-- Fontes: Preload críticas (Jairo, Superbusy Activity)
+- Fontes IDV: Preload críticas (Jairo, Superbusy Activity) - Marca Registrada STL
+
+**Velocidade e Timing:**
+
+- **Delay inicial:** 800ms antes de começar o preload (permite usuário ver o preloader)
+- **Tempo mínimo de exibição:** 2.5 segundos (garante que usuário sinta o preloader)
+- **Progresso limitado:** Máximo 90% até completar (cria pausa antes do fade out)
+- **Transições mais lentas:**
+  - Barra de progresso: 500ms (aumentado de 300ms)
+  - Texto fade: 400ms (aumentado de 300ms)
+  - Fade out: 500ms delay + 800ms animação (total 1.3s)
 
 **Progress Tracking:**
 
 - Rastrear progresso de cada asset individualmente
 - Calcular progresso total como média ponderada
-- Disparar eventos a cada 10% de progresso (otimização)
+- Disparar eventos a cada atualização de progresso
+- Limitar progresso visual a 90% até completar (garante tempo mínimo)
 
 ### Desafios Encontrados
 
@@ -711,7 +728,7 @@ Closes #X, Closes #Y, Closes #Z
 
 **Documento Criado em:** 29/01/2026
 **Última Atualização:** 29/01/2026
-**Versão:** 1.1
+**Versão:** 1.2
 
 **Mudanças na Versão 1.1:**
 
@@ -722,3 +739,13 @@ Closes #X, Closes #Y, Closes #Z
 - Especificado design visual detalhado (barra de progresso, tipografia fina)
 - Atualizado animações para texto progressivo sincronizado com barra de loader
 - Adicionadas traduções da frase (PT-BR, EN, ES)
+
+**Mudanças na Versão 1.2:**
+
+- Implementado tempo mínimo de exibição (2.5 segundos) para melhor experiência do usuário
+- Adicionado delay inicial de 800ms antes de começar o preload
+- Progresso limitado a 90% até completar (cria pausa antes do fade out)
+- Transições mais lentas (barra: 500ms, texto: 400ms, fade out: 1.3s total)
+- Integração com fontes IDV (Jairo e Superbusy Activity) - Marca Registrada STL
+- Fontes IDV adicionadas ao global.css com @font-face
+- Preloader usa fonte Jairo para texto inspirador
