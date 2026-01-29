@@ -1,0 +1,335 @@
+---
+alwaysApply: true
+---
+
+================================================================================
+rule-09-seo-structural.md
+LEI 09: SEO Estrutural & Schema Markup
+================================================================================
+
+MOTIVO:
+O PRD exige visibilidade orgânica no Google para "festival reggae SP", "STL Festival",
+"shows reggae 2026". Sem estrutura técnica correta (meta tags, schema.org, sitemap,
+Open Graph), o site não indexa bem e perde tráfego. SEO não é apenas conteúdo —
+é infraestrutura técnica que define como buscadores entendem o site.
+
+GATILHO:
+Ativado ao criar páginas .astro, adicionar conteúdo editável, configurar URLs,
+ou criar componentes que aparecem em resultados de busca (lineup, setores, about).
+
+METAS OBRIGATÓRIAS:
+Todas as páginas devem ter no `<head>`:
+
+```astro
+{/* src/layouts/Layout.astro */}
+---
+import { getI18nMeta } from '../i18n/utils'
+const { title, description, ogImage, canonical } = Astro.props
+
+const siteName = "STL Festival"
+const currentLocale = Astro.currentLocale || 'pt-BR'
+const siteUrl = import.meta.env.SITE
+---
+
+<head>
+  {/* Basic SEO */}
+  <title>{title} | {siteName}</title>
+  <meta name="description" content={description} />
+  <meta name="keywords" content="reggae, festival, STL, São Paulo, música, show, Edson Gomes, Vinícius Santos" />
+  
+  {/* Canonical URL — previne conteúdo duplicado */}
+  <link rel="canonical" href={`${siteUrl}${canonical}`} />
+  
+  {/* Open Graph (Facebook, WhatsApp) */}
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content={siteName} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:url" content={`${siteUrl}${canonical}`} />
+  <meta property="og:locale" content={currentLocale.replace('-', '_')} />
+  
+  {/* Twitter Card */}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImage} />
+  
+  {/* Robots */}
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  
+  {/* Language/Region */}
+  <html lang={currentLocale.toLowerCase()} />
+</head>
+```
+
+SCHEMA.ORG — STRUCTURED DATA:
+Adicionar JSON-LD no `<head>` de cada tipo de página:
+
+### Página Inicial (Event Schema):
+```astro
+{/* src/pages/index.astro */}
+---
+const eventSchema = {
+  "@context": "https://schema.org",
+  "@type": "MusicEvent",
+  "name": "STL Festival 10 Anos",
+  "description": "Comemorando uma década de cultura reggae no STL Valley — maior festival de reggae de São Paulo",
+  "startDate": "2026-06-06T20:00:00-03:00",
+  "endDate": "2026-06-06T23:59:59-03:00",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "location": {
+    "@type": "Place",
+    "name": "STL Valley",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Endereço do venue",
+      "addressLocality": "São Paulo",
+      "addressRegion": "SP",
+      "postalCode": "00000-000",
+      "addressCountry": "BR"
+    }
+  },
+  "image": [
+    `${import.meta.env.SITE}/og-image.jpg`
+  ],
+  "offers": {
+    "@type": "Offer",
+    "url": "https://ipass.com.br/stl-festival",
+    "price": "150.00",
+    "priceCurrency": "BRL",
+    "availability": "https://schema.org/InStock",
+    "validFrom": "2026-01-01T00:00:00-03:00"
+  },
+  "organizer": {
+    "@type": "Organization",
+    "name": "STL Production",
+    "url": import.meta.env.SITE
+  },
+  "performer": [
+    {
+      "@type": "MusicGroup",
+      "name": "Edson Gomes"
+    },
+    {
+      "@type": "Person",
+      "name": "Vinícius Santos"
+    }
+    // ... adicionar todos os artistas do lineup
+  ]
+}
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(eventSchema)} />
+```
+
+### Página de Artista (Person/MusicGroup Schema):
+```astro
+{/* src/pages/artistas/[slug].astro */}
+---
+const artistSchema = {
+  "@context": "https://schema.org",
+  "@type": artist.type === 'band' ? "MusicGroup" : "Person",
+  "name": artist.name,
+  "description": artist.bio,
+  "image": artist.imageUrl,
+  "genre": artist.genre,
+  "performerIn": {
+    "@type": "MusicEvent",
+    "name": "STL Festival 10 Anos",
+    "startDate": "2026-06-06T20:00:00-03:00",
+    "location": {
+      "@type": "Place",
+      "name": "STL Valley"
+    }
+  }
+}
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(artistSchema)} />
+```
+
+### Página de Organização (Organization Schema):
+```astro
+{/* src/pages/sobre.astro */}
+---
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "STL Festival",
+  "url": import.meta.env.SITE,
+  "logo": `${import.meta.env.SITE}/logo.svg`,
+  "description": "Festival de reggae em São Paulo celebrando 10 anos de cultura musical",
+  "sameAs": [
+    "https://instagram.com/stlfestival",
+    "https://facebook.com/stlfestival",
+    // ... outras redes sociais
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "São Paulo",
+    "addressRegion": "SP",
+    "addressCountry": "BR"
+  }
+}
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+```
+
+SITEMAP E ROBOTS.TXT:
+```typescript
+// src/pages/sitemap.xml.ts
+import type { APIRoute } from 'astro'
+
+export const GET: APIRoute = async () => {
+  const siteUrl = import.meta.env.SITE
+  
+  const pages = [
+    { url: '/', changefreq: 'daily', priority: 1.0 },
+    { url: '/lineup/', changefreq: 'weekly', priority: 0.8 },
+    { url: '/setores/', changefreq: 'weekly', priority: 0.8 },
+    { url: '/sobre/', changefreq: 'monthly', priority: 0.6 },
+    { url: '/contato/', changefreq: 'monthly', priority: 0.5 },
+    // Adicionar páginas de artistas dinamicamente
+  ]
+  
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  ${pages.map(page => `
+  <url>
+    <loc>${siteUrl}${page.url}</loc>
+    <changefreq>${page.changefreq}</changefreq>
+    <priority>${page.priority}</priority>
+  </url>`).join('')}
+</urlset>`
+
+  return new Response(sitemap, {
+    headers: { 'Content-Type': 'application/xml' }
+  })
+}
+```
+
+```typescript
+// src/pages/robots.txt.ts
+import type { APIRoute } from 'astro'
+
+export const GET: APIRoute = async () => {
+  const siteUrl = import.meta.env.SITE
+  
+  const robots = `User-agent: *
+Allow: /
+
+Sitemap: ${siteUrl}/sitemap.xml`
+
+  return new Response(robots, {
+    headers: { 'Content-Type': 'text/plain' }
+  })
+}
+```
+
+URL STRUCTURE (URLs amigáveis):
+| Página | URL | Padrão |
+|--------|-----|--------|
+| Home | / | root |
+| Lineup | /lineup/ | /[section]/ |
+| Artista | /artistas/edson-gomes/ | /artistas/[slug]/ |
+| Setores | /setores/ | /[section]/ |
+| Sobre | /sobre/ | /[section]/ |
+| Contato | /contato/ | /[section]/ |
+
+Regras:
+- Sempre com trailing slash (/) para consistência
+- Slugs em lowercase com hífens
+- Sem caracteres especiais ou acentos em URLs
+- Português para URLs públicas (não usar /lineup/ e sim /lineup/ ok nesse caso — é termo comum)
+
+HEADERS HTTP E REDIRECTS:
+```javascript
+// vercel.json (se usar Vercel)
+{
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/lineup",
+      "destination": "/lineup/",
+      "permanent": true
+    }
+  ]
+}
+```
+
+PROIBIÇÕES:
+- Meta tags genéricas ("Site do STL Festival" — ser específico em cada página)
+- Páginas sem title ou description
+- Imagens Open Graph sem dimensões recomendadas (1200x630px)
+- URLs com query params para filtros (usar /setores/vip/ não /setores?tipo=vip)
+- Conteúdo duplicado sem canonical
+- Schema.org faltando em páginas de evento/artistas
+- Sitemap não atualizado quando páginas novas são criadas
+- robots.txt bloqueando páginas importantes
+
+IMAGENS OPEN GRAPH:
+```astro
+{/* src/utils/ogImage.ts */}
+// Gerar via Cloudinary com texto overlaid
+const cloudName = import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME
+
+export function generateOgImage(title: string, section: string) {
+  const baseUrl = `https://res.cloudinary.com/${cloudName}/image/upload`
+  
+  // Transformação: overlay de texto sobre imagem base
+  const transformation = [
+    'w_1200,h_630,c_fill', // dimensões Open Graph
+    `l_text:Arial_60_bold:${encodeURIComponent(title)},co_rgb:fefbdf,g_center`,
+    'v1/stl-festival/og-base.jpg'
+  ].join('/')
+  
+  return `${baseUrl}/${transformation}`
+}
+```
+
+KEYWORDS ESTRATÉGICOS (usar em conteúdo e meta):
+Primários:
+- STL Festival
+- festival reggae São Paulo
+- show reggae 2026
+- Edson Gomes São Paulo
+
+Secundários:
+- reggae brasileiro
+- STL Valley
+- festival de música SP
+- shows junho 2026
+
+CHECKLIST PRE-PR:
+- [ ] Todas páginas têm title único e descritivo
+- [ ] Todas páginas têm meta description < 160 caracteres
+- [ ] Todas páginas têm canonical URL configurado
+- [ ] Open Graph tags presentes com imagem 1200x630px
+- [ ] Schema.org JSON-LD presente (Event, Person/MusicGroup conforme tipo)
+- [ ] Sitemap.xml acessível em /sitemap.xml
+- [ ] Robots.txt acessível em /robots.txt
+- [ ] URLs amigáveis (slugs lowercase com hífens)
+- [ ] Heading structure: apenas um h1 por página
+- [ ] Imagens com alt text descritivo
+- [ ] Site testado no Google Rich Results Test (schema validation)

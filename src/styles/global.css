@@ -2,40 +2,69 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Fontes IDV - Marca Registrada STL */
+@font-face {
+  font-family: 'Jairo';
+  src:
+    url('/assets/jairo-condensed-rounded-font-2025-04-09-21-46-58-utc (1)/Jairo.woff2')
+      format('woff2'),
+    url('/assets/jairo-condensed-rounded-font-2025-04-09-21-46-58-utc (1)/Jairo.woff')
+      format('woff'),
+    url('/assets/jairo-condensed-rounded-font-2025-04-09-21-46-58-utc (1)/Jairo.ttf')
+      format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Superbusy Activity';
+  src:
+    url('/assets/superbusy-activity-fun-pairing-font-2024-09-21-02-56-52-utc/Superbusy Activity/Web-TT/SuperbusyActivity-Regular.woff2')
+      format('woff2'),
+    url('/assets/superbusy-activity-fun-pairing-font-2024-09-21-02-56-52-utc/Superbusy Activity/Web-TT/SuperbusyActivity-Regular.woff')
+      format('woff'),
+    url('/assets/superbusy-activity-fun-pairing-font-2024-09-21-02-56-52-utc/Superbusy Activity/OpenType-TT/SuperbusyActivity-Regular.ttf')
+      format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @layer base {
   :root {
     /* ========== CORES OFICIAIS STL FESTIVAL ========== */
-    
+
     /* Verde Profundo (Primary) */
     --color-green: #006a47;
     --color-green-light: #009966;
     --color-green-dark: #004d33;
-    
+
     /* Vermelho-Alaranjado (Accent) */
     --color-red: #ff4d2d;
     --color-red-light: #ff7052;
     --color-red-dark: #e63d1f;
-    
+
     /* Laranja Intenso (Accent) */
     --color-orange: #ff9d28;
     --color-orange-light: #ffb34d;
     --color-orange-dark: #e68a1f;
-    
+
     /* Azul Teal (Secondary) */
     --color-blue: #007b9a;
     --color-blue-light: #009bb8;
     --color-blue-dark: #005f77;
-    
+
     /* Creme Claro (Neutral Light) */
     --color-cream: #fefbdf;
     --color-cream-light: #fffef0;
     --color-cream-dark: #f5f2c8;
-    
+
     /* Azul Índigo (Dark) */
     --color-indigo: #1e1876;
     --color-indigo-light: #2d2499;
     --color-indigo-dark: #15115a;
-    
+
     /* Grayscale */
     --color-white: #ffffff;
     --color-black: #000000;
@@ -49,57 +78,58 @@
     --color-gray-700: #616161;
     --color-gray-800: #424242;
     --color-gray-900: #212121;
-    
+
     /* ========== TIPOGRAFIA ========== */
-    
+
     --font-heading: 'Jairo', -apple-system, sans-serif;
     --font-decorative: 'Superbusy Activity', cursive;
-    --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    
+    --font-body:
+      -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
     /* ========== ESPAÇAMENTO ========== */
-    
-    --spacing-xs: 0.25rem;    /* 4px */
-    --spacing-sm: 0.5rem;     /* 8px */
-    --spacing-md: 1rem;       /* 16px */
-    --spacing-lg: 1.5rem;     /* 24px */
-    --spacing-xl: 2rem;       /* 32px */
-    --spacing-2xl: 3rem;      /* 48px */
-    --spacing-3xl: 4rem;      /* 64px */
-    
+
+    --spacing-xs: 0.25rem; /* 4px */
+    --spacing-sm: 0.5rem; /* 8px */
+    --spacing-md: 1rem; /* 16px */
+    --spacing-lg: 1.5rem; /* 24px */
+    --spacing-xl: 2rem; /* 32px */
+    --spacing-2xl: 3rem; /* 48px */
+    --spacing-3xl: 4rem; /* 64px */
+
     /* ========== ANIMAÇÕES ========== */
-    
+
     --duration-fast: 150ms;
     --duration-normal: 300ms;
     --duration-slow: 500ms;
-    
+
     --ease-out: cubic-bezier(0, 0, 0.2, 1);
     --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
-    
+
     /* ========== SOMBRAS ========== */
-    
+
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
     --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
     --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
     --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
-    
+
     /* ========== BORDER RADIUS ========== */
-    
-    --radius-sm: 0.25rem;     /* 4px */
-    --radius-md: 0.5rem;      /* 8px */
-    --radius-lg: 0.75rem;     /* 12px */
-    --radius-xl: 1rem;        /* 16px */
-    --radius-2xl: 1.5rem;     /* 24px */
+
+    --radius-sm: 0.25rem; /* 4px */
+    --radius-md: 0.5rem; /* 8px */
+    --radius-lg: 0.75rem; /* 12px */
+    --radius-xl: 1rem; /* 16px */
+    --radius-2xl: 1.5rem; /* 24px */
     --radius-full: 9999px;
   }
-  
+
   * {
     box-sizing: border-box;
   }
-  
+
   html {
     scroll-behavior: smooth;
   }
-  
+
   body {
     margin: 0;
     padding: 0;
@@ -111,7 +141,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-  
+
   h1,
   h2,
   h3,
@@ -123,7 +153,7 @@
     line-height: 1.2;
     margin: 0;
   }
-  
+
   /* Screen reader only class */
   .sr-only {
     position: absolute;
@@ -136,14 +166,14 @@
     white-space: nowrap;
     border-width: 0;
   }
-  
+
   /* Focus visible styles */
   *:focus-visible {
     outline: 3px solid var(--color-blue);
     outline-offset: 2px;
     border-radius: var(--radius-sm);
   }
-  
+
   /* Reduced motion support */
   @media (prefers-reduced-motion: reduce) {
     * {
@@ -163,13 +193,13 @@
     margin-inline: auto;
     padding-inline: var(--spacing-lg);
   }
-  
+
   @media (min-width: 768px) {
     .container {
       padding-inline: var(--spacing-xl);
     }
   }
-  
+
   @media (min-width: 1024px) {
     .container {
       padding-inline: var(--spacing-3xl);

@@ -1,0 +1,201 @@
+---
+alwaysApply: true
+---
+
+================================================================================
+rule-06-i18n.md
+LEI 06: Internacionalização (i18n)
+================================================================================
+
+MOTIVO:
+O projeto atende 3 idiomas (PT-BR padrão, EN, ES) com resolução no build-time.
+Sem estrutura rígida, strings duplicam, chaves ficam inconsistentes entre
+idiomas, e o fallback quebra silenciosamente.
+
+GATILHO:
+Ativado ao criar componentes com texto visível ao usuário, adicionar novas
+strings de interface, ou criar pages de novo locale.
+
+ESTRUTURA DE ARQUIVOS OBRIGATÓRIA:
+```
+src/
+├── i18n/
+│   ├── index.ts              # Re-exports e utility functions
+│   ├── types.ts              # Tipos compartilhados (DeepPartial, TranslationKey)
+│   ├── pt-BR/                # DEFAULT — fallback de último recurso
+│   │   ├── hero.ts
+│   │   ├── lineup.ts
+│   │   ├── setores.ts
+│   │   ├── about.ts
+│   │   ├── faq.ts
+│   │   └── ...               # Um arquivo por section
+│   ├── en/
+│   │   ├── hero.ts
+│   │   ├── lineup.ts
+│   │   └── ...               # Mesma estrutura que pt-BR
+│   └── es/
+│       ├── hero.ts
+│       ├── lineup.ts
+│       └── ...               # Mesma estrutura que pt-BR
+```
+
+CONVENÇÃO DE CHAVES:
+- Formato: `section.subsection.element`
+- Snake_case proibido — usar camelCase
+- Exemplos válidos:
+  - `hero.cta.buyTickets`
+  - `lineup.card.genre`
+  - `setores.pista.description`
+  - `faq.item1.question`
+- Exemplos inválidos:
+  - `buy_tickets` (sem hierarquia)
+  - `Hero CTA` (espaços)
+  - `heroCtaBuyTickets` (sem separador de section)
+
+REGRAS:
+- PT-BR é o idioma default e deve estar 100% completo sempre
+- EN e ES devem ter exatamente o mesmo número de chaves que PT-BR
+- Fallback: se chave não existe em EN ou ES, retorna valor de PT-BR (nunca a chave raw)
+- Nenhuma string de interface pode ser hardcoded em componentes
+- Parâmetros dinâmicos usam sintaxe `{variável}`: ex: `"Olá, {nome}!"`
+- Pluralização: usar chaves separadas `item` vs `items` quando necessário
+
+PROIBIÇÕES:
+- Hardcode de texto em componentes: `<h1>Compre seu ingresso</h1>` — NUNCA
+- Chaves sem hierarquia de section
+- Arquivos de tradução com números diferentes de chaves entre idiomas
+- Uso de libraries externas para i18n (resolução build-time via imports nativos)
+- Strings de tradução fora da pasta `src/i18n/`
+
+EXEMPLO ERRADO:
+```typescript
+// ❌ ERRADO: String hardcoded em componente
+// src/components/sections/Hero.astro
+---
+---
+<h1>STL Festival — 10 Anos</h1>
+<p>Compre seu ingresso agora!</p>
+<button>Ver Setores</button>
+
+// ❌ ERRADO: Chave sem hierarquia
+// src/i18n/pt-BR/misc.ts
+export default {
+  buyTickets: "Compre seu ingresso",      // ← sem section
+  festivalName: "STL Festival",           // ← sem section
+}
+
+// ❌ ERRADO: Tradução incompleta
+// src/i18n/en/hero.ts — faltam chaves que existem em pt-BR
+export default {
+  title: "STL Festival — 10 Years",
+  // cta e subtitle estão faltando!
+}
+```
+
+EXEMPLO CORRETO:
+```typescript
+// ✅ CORRETO: Definição de tradução com hierarquia clara
+// src/i18n/pt-BR/hero.ts
+export default {
+  title: "STL Festival — 10 Anos",
+  subtitle: "A maior festa do vale",
+  cta: {
+    buyTickets: "Compre seu ingresso",
+    viewSectors: "Ver Setores",
+  },
+  countdown: {
+    days: "dias",
+    hours: "horas",
+    minutes: "minutos",
+    seconds: "segundos",
+    label: "Faltam para o festival",
+  },
+} as const
+
+// src/i18n/en/hero.ts — mesma estrutura, todas as chaves presentes
+export default {
+  title: "STL Festival — 10 Years",
+  subtitle: "The biggest party in the valley",
+  cta: {
+    buyTickets: "Buy your ticket",
+    viewSectors: "View Sectors",
+  },
+  countdown: {
+    days: "days",
+    hours: "hours",
+    minutes: "minutes",
+    seconds: "seconds",
+    label: "Festival countdown",
+  },
+} as const
+
+// src/i18n/es/hero.ts — mesma estrutura
+export default {
+  title: "STL Festival — 10 Años",
+  subtitle: "La fiesta más grande del valle",
+  cta: {
+    buyTickets: "Compra tu entrada",
+    viewSectors: "Ver Sectores",
+  },
+  countdown: {
+    days: "días",
+    hours: "horas",
+    minutes: "minutos",
+    seconds: "segundos",
+    label: "Cuenta regresiva al festival",
+  },
+} as const
+
+// ✅ CORRETO: Utility de tradução com fallback para PT-BR
+// src/i18n/index.ts
+import ptBR from './pt-BR/hero'
+import en from './en/hero'
+import es from './es/hero'
+
+type Locale = 'pt-BR' | 'en' | 'es'
+
+const translations = { 'pt-BR': ptBR, en, es }
+
+export function t(locale: Locale, section: string, key: string): string {
+  const sectionData = translations[locale]?.[section] ?? translations['pt-BR'][section]
+  // Navega pela hierarquia de chaves com fallback para pt-BR
+  const value = getNestedValue(sectionData, key) ?? getNestedValue(translations['pt-BR'][section], key)
+  return value ?? key // key como último recurso nunca deve acontecer
+}
+```
+
+EXEMPLO USO EM COMPONENTE:
+```astro
+{/* ✅ CORRETO: Componente usando translations via props */}
+{/* src/components/sections/Hero.astro */}
+---
+import heroTranslations from '../../i18n/pt-BR/hero'
+// locale seria determinado pela page/route atual
+const locale = Astro.params.locale || 'pt-BR'
+import { getTranslations } from '../../i18n/index'
+const t = getTranslations(locale, 'hero')
+---
+
+<h1>{t('title')}</h1>
+<p>{t('subtitle')}</p>
+<a href="/setores">{t('cta.viewSectors')}</a>
+```
+
+PARÂMETROS DINÂMICOS:
+```typescript
+// src/i18n/pt-BR/setores.ts
+export default {
+  priceLabel: "R$ {price} por ingresso",
+  sectorCount: "{count} setores disponíveis",
+} as const
+
+// Uso: t('priceLabel', { price: '85.00' }) → "R$ 85.00 por ingresso"
+```
+
+CHECKLIST PRE-PR:
+- [ ] Todas as strings visíveis ao usuário são via translation functions
+- [ ] Chaves seguem formato `section.subsection.element`
+- [ ] PT-BR, EN e ES têm exatamente as mesmas chaves (verificar com script)
+- [ ] Fallback para PT-BR funciona quando chave mising em EN/ES
+- [ ] Parâmetros dinâmicos testados com valores edge case (vazios, longos)
+- [ ] Nenhuma library externa de i18n no package.json

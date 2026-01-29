@@ -45,5 +45,10 @@
       "en": "English",
       "es": "Español"
     }
+  },
+  "preloader": {
+    "phraseTop": "Faça parte da nossa história",
+    "phraseBottom": "conexão, música, natureza e sustentabilidade",
+    "ariaLabel": "Carregando conteúdo do STL Festival"
   }
 }

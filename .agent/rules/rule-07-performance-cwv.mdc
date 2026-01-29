@@ -1,0 +1,197 @@
+---
+alwaysApply: true
+---
+
+================================================================================
+rule-07-performance-cwv.md
+LEI 07: Performance & Core Web Vitals
+================================================================================
+
+MOTIVO:
+Os KPIs do projeto exigem LCP <2.5s, FID <100ms, CLS <0.1 e Lighthouse 90+.
+Esses targets não acontecem por acidente — requerem decisões técnicas deliberadas
+em cada componente, imagem e recurso externo.
+
+GATILHO:
+Ativado ao adicionar imagens, fontes customizadas, scripts externos,
+componentes React, ou qualquer recurso que impacta o carregamento da page.
+
+TARGETS OBRIGATÓRIOS:
+| Métrica | Target | Prioridade |
+|---------|--------|-----------|
+| Lighthouse Score | ≥ 90 | 🔴 Bloqueador de PR |
+| LCP (Largest Contentful Paint) | < 2.5s | 🔴 Bloqueador |
+| FID / INP (Interaction to Next Paint) | < 100ms | 🔴 Bloqueador |
+| CLS (Cumulative Layout Shift) | < 0.1 | 🔴 Bloqueador |
+| Total JS Bundle | < 50KB gzipped | 🟡 Warning |
+| Total Page Weight | < 200KB (sem imagens) | 🟡 Warning |
+
+REGRAS DE IMAGENS:
+1. Todas as imagens DEVEM usar Cloudinary com transformações automáticas
+2. Imagens no hero (above-the-fold): `loading="eager"` + `fetchpriority="high"`
+3. Imagens abaixo do fold: `loading="lazy"` obrigatório
+4. Formato: sempre usar `auto:format` (entrega WebP/AVIF automaticamente)
+5. Qualidade: usar `quality:auto` (otimiza por contexto)
+6. Responsividade: usar `srcset` com pelo menos 3 larguras (320, 768, 1200px)
+7. Dimensões explícitas obrigatórias (previne CLS)
+
+REGRAS DE FONTES:
+1. Custom fonts (Jairo, Superbusy Activity): carregar via `<link rel="preconnect">` + `<link rel="preload">`
+2. Usar `font-display: swap` para evitar FOIT (Flash of Invisible Text)
+3. Sistema fonts para body text (sem carregamento externo)
+4. Limitar custom fonts a headings apenas — body usa system font stack
+
+REGRAS DE CSS:
+1. Tailwind com `content` configurado (purge automático no build)
+2. Nenhum CSS unused no bundle final
+3. Critical CSS inline no `<head>` (Astro faz isso automaticamente)
+4. Sem imports de CSS que não sejam usados no componente
+
+REGRAS DE SCRIPTS:
+1. Scripts externos (Analytics): carregar com `defer` ou `async`
+2. Google Analytics: carregar após o LCP via script tag com `async`
+3. Nenhum script bloqueia o render
+4. Framer Motion: importar apenas os componentes usados (tree-shaking)
+
+PROIBIÇÕES:
+- Imagens sem dimensões explícitas (causa CLS)
+- Imagens sem Cloudinary em produção (sem otimização)
+- Fontes custom no body text
+- Scripts render-blocking no `<head>` sem defer/async
+- Import completo de libraries quando apenas um componente é usado
+- Lighthouse score abaixo de 90 mergeable para main
+
+EXEMPLO ERRADO:
+```astro
+{/* ❌ ERRADO: Imagem sem otimização, sem dimensões, sem lazy loading */}
+<img src="/images/artist-photo.jpg" alt="Edson Gomes" />
+
+{/* ❌ ERRADO: Fonte custom no body */}
+<style>
+  body { font-family: 'Jairo', serif; }
+</style>
+
+{/* ❌ ERRADO: Script render-blocking */}
+<script src="https://www.google-analytics.com/analytics.js"></script>
+
+{/* ❌ ERRADO: Import completo do Framer Motion */}
+import { motion, AnimatePresence, LazyMotion, m, features } from 'framer-motion'
+```
+
+EXEMPLO CORRETO:
+```astro
+{/* ✅ CORRETO: Imagem hero com todas as otimizações */}
+{/* src/components/sections/Hero.astro */}
+---
+const cloudName = import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME
+const heroImageBase = `https://res.cloudinary.com/${cloudName}/image/upload`
+
+// Transformações Cloudinary: formato auto, qualidade auto, crop fit
+const heroImage = {
+  src: `${heroImageBase}/v1/stl-festival/hero-bg.jpg`,
+  srcset: [
+    `${heroImageBase}/w_320,f_auto,q_auto/v1/stl-festival/hero-bg.jpg 320w`,
+    `${heroImageBase}/w_768,f_auto,q_auto/v1/stl-festival/hero-bg.jpg 768w`,
+    `${heroImageBase}/w_1200,f_auto,q_auto/v1/stl-festival/hero-bg.jpg 1200w`,
+  ].join(', '),
+  width: 1200,
+  height: 800,
+}
+---
+
+{/* Hero: eager + high priority para LCP */}
+<img
+  src={heroImage.src}
+  srcset={heroImage.srcset}
+  sizes="(max-width: 768px) 100vw, 1200px"
+  width={heroImage.width}
+  height={heroImage.height}
+  alt="STL Festival 2026 — Vista do STL Valley"
+  loading="eager"
+  fetchpriority="high"
+  decoding="async"
+/>
+
+{/* ✅ CORRETO: Imagem below-the-fold com lazy loading */}
+{/* src/components/sections/Lineup.astro */}
+---
+const artistImageBase = `https://res.cloudinary.com/${cloudName}/image/upload`
+---
+
+{artists.map(artist => (
+  <img
+    src={`${artistImageBase}/w_400,f_auto,q_auto/v1/stl-festival/artists/${artist.slug}.jpg`}
+    srcset={`
+      ${artistImageBase}/w_200,f_auto,q_auto/v1/stl-festival/artists/${artist.slug}.jpg 200w,
+      ${artistImageBase}/w_400,f_auto,q_auto/v1/stl-festival/artists/${artist.slug}.jpg 400w
+    `}
+    sizes="(max-width: 640px) 100vw, 400px"
+    width={400}
+    height={400}
+    alt={`${artist.name} — ${artist.genre}`}
+    loading="lazy"
+    decoding="async"
+  />
+))}
+```
+
+```astro
+{/* ✅ CORRETO: Font loading otimizado */}
+{/* src/layouts/Layout.astro */}
+<head>
+  {/* Preconnect para font CDN */}
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  {/* Preload das fontes critical */}
+  <link
+    rel="preload"
+    href="https://fonts.googleapis.com/css2?family=Jairo&display=swap"
+    as="style"
+  />
+
+  {/* Font display swap previne FOIT */}
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Jairo&display=swap');
+
+    :root {
+      --font-heading: 'Jairo', serif;
+      --font-body: system-ui, -apple-system, sans-serif; {/* system fonts para body */}
+    }
+
+    h1, h2, h3 { font-family: var(--font-heading); }
+    body { font-family: var(--font-body); } {/* NUNCA custom font no body */}
+  </style>
+
+  {/* ✅ Google Analytics com defer — não bloqueia render */}
+  <script async src="https://www.google-analytics.com/gtag/js?id={PUBLIC_GA_ID}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '{PUBLIC_GA_ID}');
+  </script>
+</head>
+```
+
+```typescript
+// ✅ CORRETO: Import específico do Framer Motion (tree-shakeable)
+// src/components/islands/FAQAccordion.tsx
+import { motion, AnimatePresence } from 'framer-motion'
+// Apenas os components usados — não import { * }
+
+// ❌ ERRADO:
+// import * as framerMotion from 'framer-motion'  // pega tudo no bundle
+```
+
+CHECKLIST PRE-PR:
+- [ ] Lighthouse score ≥ 90 no deploy preview
+- [ ] Todas imagens com width + height explícitos
+- [ ] Imagens hero: loading="eager" fetchpriority="high"
+- [ ] Imagens below-fold: loading="lazy"
+- [ ] Todas imagens via Cloudinary com f_auto,q_auto
+- [ ] Custom fonts apenas em headings, body usa system-ui
+- [ ] Font loading com preconnect + preload + font-display: swap
+- [ ] Scripts externos com async ou defer
+- [ ] No import completo de libraries (tree-shaking verificado)
+- [ ] CLS < 0.1 verificado via PageSpeed Insights

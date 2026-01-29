@@ -1,0 +1,154 @@
+---
+alwaysApply: true
+---
+
+================================================================================
+rule-05-islands-architecture.md
+LEI 05: Arquitetura de Ilhas & Budget de Hidratação
+================================================================================
+
+MOTIVO:
+O Astro entrega performance através de zero JavaScript por padrão. Cada
+componente com directiva client:* adiciona JavaScript ao bundle e aumenta
+o tempo de interatividade. Sem limites claros, a premissa do framework
+(90% HTML estático, 10% JS interativo) é destruída.
+
+GATILHO:
+Ativado ao criar componentes .astro, usar componentes React, ou adicionar
+qualquer directiva client:load, client:visible, client:media, client:idle.
+
+CLASSIFICAÇÃO OBRIGATÓRIA:
+
+| Tipo | Directiva | Uso | Exemplo |
+|------|-----------|-----|---------|
+| Estático | (nenhuma) | DEFAULT para todo componente | Hero, Lineup, Setores, About, Footer |
+| Ilha Interativa | client:visible | Componentes abaixo do fold que precisam de state/events | FAQ Accordion, Carousel |
+| Ilha Crítica | client:load | Apenas componentes visíveis no viewport inicial que precisam de interatividade imediata | CountdownTimer |
+| Never | client:only | Proibido — quebra SSR e SEO | — |
+
+ILHAS PERMITIDAS (lista exhaustiva):
+- CountdownTimer (client:load) — visível no hero, requer state reativo
+- Carousel/Slider (client:visible) — abaixo do fold, lazy hydration
+- FAQ Accordion (client:visible) — abaixo do fold, toggle state
+
+PROIBIÇÕES:
+- Usar client:load em componentes sem state ou event handlers
+- Usar client:only em qualquer componente (quebra SEO)
+- Criar React islands não listadas acima sem aprovação via PR review
+- Passar props complexos (arrays grandes, objetos aninhados) para ilhas — manta dados via data attributes ou API calls
+- Budget: bundle JavaScript total deve permanecer abaixo de 50KB gzipped
+
+EXEMPLO ERRADO:
+```astro
+{/* ❌ ERRADO: Componente estático usando client:load desnecessariamente */}
+{/* src/components/sections/Lineup.astro */}
+---
+import LineupCard from '../LineupCard.tsx'
+---
+
+<section>
+  {artists.map(artist => (
+    <LineupCard client:load artist={artist} />
+  ))}
+</section>
+
+{/* ❌ ERRADO: client:only quebra SSR e SEO */}
+<CountdownTimer client:only="react" targetDate={eventDate} />
+
+{/* ❌ ERRADO: Nova ilha não listada sem justificativa */}
+<SocialShareButtons client:load links={socialLinks} />
+```
+
+EXEMPLO CORRETO:
+```astro
+{/* ✅ CORRETO: Seção estática — sem directiva, zero JS */}
+{/* src/components/sections/Lineup.astro */}
+---
+import type { Artist } from '../types/artist'
+const artists: Artist[] = await fetchArtists()
+---
+
+<section aria-label="Lineup">
+  {artists.map(artist => (
+    <div class="lineup-card">
+      <img src={artist.imageUrl} alt={artist.name} />
+      <h3>{artist.name}</h3>
+      <span>{artist.genre}</span>
+    </div>
+  ))}
+</section>
+
+{/* ✅ CORRETO: Ilha crítica no hero com client:load */}
+{/* src/components/sections/Hero.astro */}
+---
+import CountdownTimer from '../islands/CountdownTimer.tsx'
+const eventDate = new Date('2026-06-06T20:00:00-03:00')
+---
+
+<section>
+  <h1>STL Festival — 10 Anos</h1>
+  <CountdownTimer client:load targetDate={eventDate.toISOString()} />
+</section>
+
+{/* ✅ CORRETO: Ilhas below-the-fold com client:visible (lazy hydration) */}
+{/* src/components/sections/FAQ.astro */}
+---
+import FAQAccordion from '../islands/FAQAccordion.tsx'
+import { questions } from '../../i18n/pt-BR/faq'
+---
+
+<section>
+  <h2>Perguntas Frequentes</h2>
+  <FAQAccordion client:visible questions={questions} />
+</section>
+```
+
+EXEMPLO ILHA REACT (CountdownTimer):
+```typescript
+// src/components/islands/CountdownTimer.tsx
+'use client'
+import { useState, useEffect } from 'react'
+
+interface CountdownTimerProps {
+  targetDate: string // ISO string — serializable para Astro
+}
+
+export default function CountdownTimer({ targetDate }: CountdownTimerProps) {
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(targetDate))
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimeLeft(calculateTimeLeft(targetDate))
+    }, 1000)
+    return () => clearInterval(interval)
+  }, [targetDate])
+
+  return (
+    <div role="timer" aria-live="polite">
+      <span>{timeLeft.days}d</span>
+      <span>{timeLeft.hours}h</span>
+      <span>{timeLeft.minutes}m</span>
+      <span>{timeLeft.seconds}s</span>
+    </div>
+  )
+}
+
+function calculateTimeLeft(targetDate: string) {
+  const diff = new Date(targetDate).getTime() - Date.now()
+  return {
+    days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+    hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
+    minutes: Math.floor((diff / (1000 * 60)) % 60),
+    seconds: Math.floor((diff / 1000) % 60),
+  }
+}
+```
+
+CHECKLIST PRE-PR:
+- [ ] Todos os componentes sem state/events são estáticos (sem directiva client:*)
+- [ ] client:load usado apenas para ilhas críticas no viewport inicial
+- [ ] client:visible usado para ilhas below-the-fold
+- [ ] client:only não existe em nenhum arquivo
+- [ ] Props para ilhas são serializáveis (strings, números, arrays planos)
+- [ ] Bundle JS total verificado no build: < 50KB gzipped
+- [ ] Novas ilhas não listadas acima documentadas no PR com justificativa

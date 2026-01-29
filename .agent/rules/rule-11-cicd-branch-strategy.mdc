@@ -1,0 +1,395 @@
+---
+alwaysApply: true
+---
+
+================================================================================
+rule-11-cicd-branch-strategy.md
+LEI 11: CI/CD & Branch Strategy
+================================================================================
+
+MOTIVO:
+O projeto usa Vercel para deploy com preview environments automáticos. Sem
+estratégia clara de branches e CI/CD, código quebrado vai pra produção, PRs
+não são validados, e rollbacks viram pesadelo. Precisamos de pipeline confiável
+que previne bugs antes do merge.
+
+GATILHO:
+Ativado ao criar branches, abrir PRs, fazer merge, ou configurar workflows
+de CI/CD (GitHub Actions, Vercel). Também ao adicionar testes ou validações
+que devem rodar no pipeline.
+
+BRANCH STRATEGY (Git Flow Simplificado):
+```
+main (protected)
+  ├── develop (protected)
+  │   ├── feature/countdown-timer
+  │   ├── feature/lineup-section
+  │   ├── feature/i18n-pt-en
+  │   ├── bugfix/carousel-mobile
+  │   └── hotfix/production-env-leak
+  └── (direct hotfixes apenas em emergência)
+```
+
+TIPOS DE BRANCHES:
+| Tipo | Prefixo | Base | Merge para | Exemplo |
+|------|---------|------|------------|---------|
+| Feature | `feature/` | develop | develop | `feature/faq-accordion` |
+| Bugfix | `bugfix/` | develop | develop | `bugfix/mobile-menu-z-index` |
+| Hotfix | `hotfix/` | main | main + develop | `hotfix/cloudinary-secret-leak` |
+| Release | `release/` | develop | main + develop | `release/v1.0.0` |
+| Chore | `chore/` | develop | develop | `chore/update-deps` |
+
+NAMING CONVENTIONS:
+- Lowercase com hífens: `feature/countdown-timer` ✅
+- Descritivo e conciso: `feature/add-timer` ❌ (vago) vs `feature/countdown-timer` ✅
+- Sem números de issue obrigatórios (mas pode incluir): `feature/123-carousel` ✅
+- Máximo 50 caracteres no nome da branch
+
+PROTECTED BRANCHES:
+```yaml
+# .github/branch-protection.yml (configurar no GitHub Settings)
+main:
+  required_reviews: 1
+  require_codeowner_review: true
+  dismiss_stale_reviews: true
+  require_status_checks:
+    - "Vercel Preview Build"
+    - "Lighthouse CI"
+    - "ESLint"
+    - "TypeScript Check"
+  require_branches_up_to_date: true
+  enforce_admins: false
+  restrict_push: true
+
+develop:
+  required_reviews: 1
+  require_status_checks:
+    - "Build Check"
+    - "ESLint"
+  require_branches_up_to_date: false
+  enforce_admins: false
+```
+
+CI/CD PIPELINE (GitHub Actions):
+```yaml
+# .github/workflows/ci.yml
+name: CI
+
+on:
+  pull_request:
+    branches: [develop, main]
+  push:
+    branches: [develop, main]
+
+jobs:
+  # Job 1: Lint & Type Check
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run ESLint
+        run: npm run lint
+      
+      - name: TypeScript Check
+        run: npm run typecheck
+
+  # Job 2: Build
+  build:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build Astro
+        run: npm run build
+        env:
+          SITE: ${{ secrets.SITE }}
+          PUBLIC_CLOUDINARY_CLOUD_NAME: ${{ secrets.PUBLIC_CLOUDINARY_CLOUD_NAME }}
+      
+      - name: Check bundle size
+        run: |
+          SIZE=$(du -sb dist | cut -f1)
+          MAX_SIZE=10485760  # 10MB
+          if [ $SIZE -gt $MAX_SIZE ]; then
+            echo "Bundle size $SIZE exceeds max $MAX_SIZE"
+            exit 1
+          fi
+
+  # Job 3: Lighthouse CI
+  lighthouse:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build site
+        run: npm run build
+      
+      - name: Run Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v10
+        with:
+          urls: |
+            http://localhost:4321
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+          configPath: './.lighthouserc.json'
+
+  # Job 4: Accessibility Check
+  a11y:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build site
+        run: npm run build
+      
+      - name: Run axe-core
+        run: npm run test:a11y
+```
+
+LIGHTHOUSE CI CONFIG:
+```json
+// .lighthouserc.json
+{
+  "ci": {
+    "collect": {
+      "numberOfRuns": 3,
+      "startServerCommand": "npm run preview",
+      "url": ["http://localhost:4321/"]
+    },
+    "assert": {
+      "preset": "lighthouse:recommended",
+      "assertions": {
+        "categories:performance": ["error", {"minScore": 0.9}],
+        "categories:accessibility": ["error", {"minScore": 0.9}],
+        "categories:best-practices": ["error", {"minScore": 0.9}],
+        "categories:seo": ["error", {"minScore": 0.9}],
+        "first-contentful-paint": ["warn", {"maxNumericValue": 2000}],
+        "largest-contentful-paint": ["error", {"maxNumericValue": 2500}],
+        "cumulative-layout-shift": ["error", {"maxNumericValue": 0.1}],
+        "total-blocking-time": ["warn", {"maxNumericValue": 300}]
+      }
+    },
+    "upload": {
+      "target": "temporary-public-storage"
+    }
+  }
+}
+```
+
+VERCEL CONFIGURATION:
+```json
+// vercel.json
+{
+  "framework": "astro",
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "outputDirectory": "dist",
+  "regions": ["gru1"],
+  "github": {
+    "silent": false,
+    "autoAlias": true
+  },
+  "env": {
+    "SITE": "https://stlfestival.com.br"
+  },
+  "build": {
+    "env": {
+      "SITE": "https://stlfestival.com.br",
+      "PUBLIC_CLOUDINARY_CLOUD_NAME": "@stl_cloudinary_cloud_name"
+    }
+  }
+}
+```
+
+COMMIT MESSAGE CONVENTION (Conventional Commits):
+```
+<type>(<scope>): <subject>
+
+<body (opcional)>
+
+<footer (opcional)>
+```
+
+Tipos permitidos:
+- `feat`: Nova feature
+- `fix`: Bug fix
+- `docs`: Mudanças em documentação
+- `style`: Formatação, missing semi colons, etc (não muda lógica)
+- `refactor`: Refatoração sem mudar comportamento
+- `perf`: Melhoria de performance
+- `test`: Adicionar/corrigir testes
+- `chore`: Manutenção (build, deps, config)
+- `ci`: Mudanças em CI/CD
+
+Exemplos:
+```bash
+# ✅ CORRETO
+feat(countdown): add countdown timer to hero section
+fix(carousel): fix swipe gesture on mobile devices
+docs(readme): update installation instructions
+perf(images): optimize Cloudinary transformations
+
+# ❌ ERRADO
+added countdown timer           # sem tipo/scope
+Fix bug                          # tipo não em lowercase
+feat: countdown timer component  # poderia ter scope mais específico
+```
+
+PR TEMPLATE:
+```markdown
+# .github/pull_request_template.md
+## Descrição
+<!-- Descreva o que esse PR faz e por quê -->
+
+## Tipo de mudança
+- [ ] 🚀 Feature nova
+- [ ] 🐛 Bug fix
+- [ ] 📝 Documentação
+- [ ] ♻️ Refactoring
+- [ ] ⚡ Performance
+- [ ] 🎨 Estilo/UI
+
+## Checklist (obrigatório)
+### Performance
+- [ ] Lighthouse score ≥ 90 no Vercel preview
+- [ ] Bundle JavaScript < 50KB gzipped (verificar em build)
+- [ ] Imagens via Cloudinary com f_auto,q_auto
+- [ ] Imagens têm width/height para prevenir CLS
+
+### Acessibilidade
+- [ ] Testado navegação via keyboard
+- [ ] aria-labels presentes em componentes interativos
+- [ ] Contrastes de cores verificados (WCAG AA)
+- [ ] Headings em ordem hierárquica
+
+### Code Quality
+- [ ] ESLint passou sem errors
+- [ ] TypeScript passou sem errors
+- [ ] Sem console.log ou debuggers esquecidos
+- [ ] Code review self-review feito
+
+### Islands & Hydration
+- [ ] Componentes estáticos sem directiva client:*
+- [ ] client:visible usado para componentes below-fold
+- [ ] client:load apenas para ilhas críticas
+- [ ] Nenhum client:only presente
+
+### SEO & Meta
+- [ ] Meta tags atualizadas (title, description)
+- [ ] Open Graph image presente
+- [ ] Schema.org JSON-LD adequado ao tipo de página
+
+## Deploy Preview
+<!-- Vercel vai comentar automaticamente o link do preview -->
+
+## Screenshots (se aplicável)
+<!-- Adicionar screenshots de UI changes -->
+
+## Breaking Changes
+<!-- Lista qualquer breaking change ou migration needed -->
+```
+
+DEPLOYMENT FLOW:
+```
+1. Developer cria branch feature/nome-feature
+2. Developer commita com conventional commits
+3. Developer abre PR para develop
+4. GitHub Actions roda CI (lint, build, lighthouse)
+5. Vercel cria preview deployment automático
+6. Code review aprovado (1+ reviewer)
+7. PR merged para develop via squash merge
+8. Vercel atualiza preview de develop
+
+--- Release Flow ---
+9. PM decide fazer release
+10. Branch release/v1.0.0 criada de develop
+11. Testes finais e ajustes em release branch
+12. PR de release/v1.0.0 para main
+13. Code review + final checks
+14. Merge para main (squash)
+15. Vercel faz deploy automático para produção
+16. Tag v1.0.0 criada no main
+17. Merge de main de volta para develop (fast-forward)
+```
+
+PROIBIÇÕES:
+- Push direto para main ou develop (sempre via PR)
+- Merge sem aprovação de code review
+- Merge com CI falhando
+- Branch nomes sem convenção (feature-countdown, fix_bug)
+- Commits sem mensagem descritiva ("fix", "update", "wip")
+- Merge de feature branches diretamente para main
+- Hotfix sem criar branch hotfix/* (commit direto em main)
+- Deploy manual sem passar pelo CI
+
+ROLLBACK STRATEGY:
+```bash
+# Em caso de bug crítico em produção:
+
+# Opção 1: Revert via Vercel Dashboard
+# - Acessar dashboard.vercel.com
+# - Ir em Deployments
+# - Selecionar deployment anterior estável
+# - Clicar em "Promote to Production"
+
+# Opção 2: Revert via Git
+git checkout main
+git revert <commit-hash>  # reverte commit problemático
+git push origin main      # Vercel detecta e faz redeploy
+
+# Opção 3: Hotfix urgente
+git checkout -b hotfix/critical-fix main
+# fazer fix
+git commit -m "hotfix: fix critical production bug"
+git push origin hotfix/critical-fix
+# abrir PR para main com fast-track review
+```
+
+CHECKLIST PRE-PR:
+- [ ] Branch nomeada com convenção (feature/, bugfix/, etc.)
+- [ ] Commits seguem Conventional Commits
+- [ ] PR description completa com contexto
+- [ ] Todos checks de CI passaram (lint, build, lighthouse)
+- [ ] Vercel preview deployment ok e testado
+- [ ] Self-review feito no código
+- [ ] Screenshots adicionados para UI changes
+- [ ] Breaking changes documentados (se houver)
+
+CHECKLIST PRE-MERGE TO MAIN:
+- [ ] Todos os PR checks passaram
+- [ ] Code review aprovado por pelo menos 1 reviewer
+- [ ] Lighthouse score ≥ 90 no preview
+- [ ] No console errors no preview deployment
+- [ ] Funcionalidade testada manualmente no preview
+- [ ] SEO/meta tags verificadas (via view source)
+- [ ] Mobile responsiveness verificada

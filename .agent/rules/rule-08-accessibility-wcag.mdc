@@ -1,0 +1,190 @@
+---
+alwaysApply: true
+---
+
+================================================================================
+rule-08-accessibility-wcag.md
+LEI 08: Acessibilidade — WCAG 2.1 Level AA
+================================================================================
+
+MOTIVO:
+O PRD exige compliance WCAG 2.1 Level AA como requisito não-negociável.
+Acessibilidade não é feature — é infraestrutura base de cada componente.
+Sem regras explícitas, fica ad-hoc e fails no lançamento.
+
+GATILHO:
+Ativado ao criar qualquer componente com texto, imagens, botões, links,
+formulários, ou interações (modals, accordions, carousels, timers).
+
+CONTRASTE DE CORES (WCAG 1.4.3 / 1.4.6):
+| Tipo de texto | Ratio mínimo |
+|---------------|-------------|
+| Texto normal (< 18pt ou < 14pt bold) | 4.5:1 |
+| Texto grande (≥ 18pt ou ≥ 14pt bold) | 3:1 |
+| Componentes UI e borders | 3:1 |
+
+Verificar contrastes da palette do projeto:
+- Verde #006a47 sobre Creme #fefbdf ✅ (passa AA)
+- Laranja #ff4d2d sobre Creme #fefbdf ⚠️ (verificar — pode falhar para texto pequeno)
+- Azul-Índigo #1e1876 sobre Creme #fefbdf ✅ (passa AA)
+- SEMPRE verificar via ferramenta (WebAIM Contrast Checker) antes de usar combinação
+
+SEMÂNTICA HTML OBRIGATÓRIA:
+1. Landmarks: toda page deve ter `<nav>`, `<main>`, `<footer>` e sections com `<section>`
+2. Headings: hierarquia estrita — um único `<h1>` por page, h2 para sections, h3 dentro de sections
+3. Lists: usar `<ul>/<ol>` para listas, nunca divs com estilo de lista
+4. Botões: usar `<button>` para ações, `<a>` para navegação — nunca intercambiar
+5. Imagens decorativas: usar `alt=""` (string vazia) ou `role="presentation"`
+6. Imagens informativas: alt descritivo e conciso (máximo 125 caracteres)
+
+COMPONENTES INTERATIVOS:
+
+### Accordion (FAQ):
+```typescript
+// ✅ CORRETO: FAQ Accordion acessível
+// src/components/islands/FAQAccordion.tsx
+'use client'
+import { useState } from 'react'
+
+interface FAQItem { question: string; answer: string; id: string }
+
+export default function FAQAccordion({ questions }: { questions: FAQItem[] }) {
+  const [openId, setOpenId] = useState<string | null>(null)
+
+  return (
+    <div role="list">
+      {questions.map((item) => (
+        <div role="listitem" key={item.id}>
+          <h3>
+            <button
+              aria-expanded={openId === item.id}
+              aria-controls={`faq-panel-${item.id}`}
+              id={`faq-trigger-${item.id}`}
+              onClick={() => setOpenId(openId === item.id ? null : item.id)}
+            >
+              {item.question}
+              <span aria-hidden="true">{openId === item.id ? '−' : '+'}</span>
+            </button>
+          </h3>
+          <div
+            id={`faq-panel-${item.id}`}
+            role="region"
+            aria-labelledby={`faq-trigger-${item.id}`}
+            hidden={openId !== item.id}
+          >
+            <p>{item.answer}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+```
+
+### Carousel:
+```typescript
+// ✅ CORRETO: Carousel acessível com controles
+// src/components/islands/Carousel.tsx
+'use client'
+import { useState, useRef, useEffect } from 'react'
+
+interface CarouselProps { items: { content: React.ReactNode; label: string }[] }
+
+export default function Carousel({ items }: CarouselProps) {
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const liveRegion = useRef<HTMLDivElement>(null)
+
+  // Anuncia mudanças para screen readers
+  useEffect(() => {
+    if (liveRegion.current) {
+      liveRegion.current.textContent = `Slide ${currentIndex + 1} de ${items.length}: ${items[currentIndex].label}`
+    }
+  }, [currentIndex, items])
+
+  const goTo = (index: number) => setCurrentIndex(index)
+
+  return (
+    <div role="region" aria-label="Carrossel de experiências">
+      {/* Live region para anúncios */}
+      <div ref={liveRegion} aria-live="polite" aria-atomic="true" className="sr-only" />
+
+      {/* Slides */}
+      <div aria-hidden="true">
+        {items[currentIndex].content}
+      </div>
+
+      {/* Controles com keyboard support */}
+      <nav aria-label="Controles do carrossel">
+        <button
+          aria-label="Slide anterior"
+          onClick={() => goTo((currentIndex - 1 + items.length) % items.length)}
+        >
+          ←
+        </button>
+        <button
+          aria-label="Próximo slide"
+          onClick={() => goTo((currentIndex + 1) % items.length)}
+        >
+          →
+        </button>
+      </nav>
+
+      {/* Indicadores */}
+      <ul role="tablist" aria-label="Slides">
+        {items.map((item, i) => (
+          <li key={i} role="presentation">
+            <button
+              role="tab"
+              aria-selected={i === currentIndex}
+              aria-label={`Ir para slide ${i + 1}: ${item.label}`}
+              onClick={() => goTo(i)}
+            />
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+```
+
+### Links e CTAs:
+```astro
+{/* ✅ CORRETO: Links com contexto claro */}
+<a href="https://ipass.com.br/stl-festival" aria-label="Compre ingresso STL Festival no iPass">
+  Compre seu ingresso
+</a>
+
+{/* ❌ ERRADO: Link sem contexto */}
+<a href="https://ipass.com.br/stl-festival">Aqui</a>
+
+{/* ❌ ERRADO: Botão usado como link */}
+<button onclick="window.location.href='/setores'">Ver Setores</button>
+```
+
+FOCUS MANAGEMENT:
+- Usuário deve conseguir navegar toda a page apenas com teclado
+- Focus visível obrigatório (nunca `outline: none` sem alternative visual)
+- Modals/drawers: focus trap dentro do componente
+- Skip navigation link no topo da page: `<a href="#main">Pular para conteúdo</a>`
+
+PROIBIÇÕES:
+- `aria-hidden="true"` em elementos focusáveis
+- Texto apenas em cores (sem icon/pattern alternativo)
+- Auto-play de vídeo com áudio sem controle do usuário
+- Timeout que impossibilita interação sem warning
+- Links e botões sem texto acessível (aria-label ou texto visível)
+- `outline: none` sem outline:focused alternativo visível
+- Imagens informativas sem alt text
+- Heading order quebrada (h1 → h3 pulando h2)
+
+CHECKLIST PRE-PR:
+- [ ] Page tem `<nav>`, `<main>`, `<footer>` com landmarks
+- [ ] Apenas um `<h1>` por page, headings em ordem hierárquica
+- [ ] Todas imagens têm alt (descritivo ou vazio para decorativas)
+- [ ] Botões e links têm texto acessível (aria-label ou visível)
+- [ ] Componentes interativos: aria-expanded, aria-controls, aria-label
+- [ ] Focus visível em todos os elementos focusáveis
+- [ ] Skip navigation link presente
+- [ ] Contrastes de cores verificados via WebAIM para todas combinações usadas
+- [ ] axe-core rodado no CI sem erros críticos
+- [ ] Testado com screen reader (NVDA/VoiceOver) no mínimo manualmente

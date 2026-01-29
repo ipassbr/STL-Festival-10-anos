@@ -1,0 +1,27 @@
+---
+/**
+ * Preloader Wrapper
+ * Wrapper Astro que integra o componente React PreloaderReact
+ */
+import { getLangFromUrl, useTranslations } from '@/i18n/utils';
+import PreloaderReact from './preloader/PreloaderReact';
+
+interface Props {
+  videoUrl?: string;
+  fallbackImage?: string;
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+// Logo URL (mesma do HeroSection)
+const logoUrl =
+  'https://res.cloudinary.com/dazkdemvu/image/upload/v1769622514/stl-festival/logos/logo-stl_ydnwga.svg';
+---
+
+<PreloaderReact
+  client:load
+  logoSrc={logoUrl}
+  phraseTop={t('preloader.phraseTop')}
+  phraseBottom={t('preloader.phraseBottom')}
+/>

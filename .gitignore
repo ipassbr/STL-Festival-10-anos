@@ -4,11 +4,14 @@
 !.env.example
 
 # IDE / Agent
-.agent/
 .vscode/
 .idea/
 *.swp
 *.swo
+
+# Allow .agent/ and .cursor/plans/ to be tracked
+!.agent/
+!.cursor/plans/
 
 # Dependencies
 node_modules/
