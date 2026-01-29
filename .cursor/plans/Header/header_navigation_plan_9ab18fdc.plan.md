@@ -61,8 +61,8 @@ todos:
       - header-mobile-menu
       - header-sticky
   - id: header-glass-border-fix
-    content: Remover traço/linha divisória durante estado glass (pendente correção via DevTools)
-    status: pending
+    content: Remover traço/linha divisória durante estado glass
+    status: completed
   - id: header-preloader-integration
     content: Integrar header com preloader quando preloader for implementado
     status: pending
@@ -77,6 +77,15 @@ todos:
     status: completed
   - id: header-cta-spotify-green
     content: Atualizar cor do botão Ingressos para verde Spotify (#1DB954)
+    status: completed
+  - id: header-size-reduction
+    content: Reduzir tamanho geral do header (padding, min-height, logo)
+    status: completed
+  - id: header-blur-conditional
+    content: Implementar blur condicional (apenas após scroll, não inicial)
+    status: completed
+  - id: header-bottom-trace-removal
+    content: Remover completamente o traço/linha na parte inferior do header
     status: completed
 isProject: false
 ---
@@ -165,11 +174,22 @@ O Header é o **ponto de entrada principal** da navegação do site, proporciona
 - **User Story:** Como usuário mobile, eu quero acessar todas as opções de navegação através de um menu mobile intuitivo
 - **Prioridade:** 🔴 Must Have
 
-### RF-06: Header Sticky/Fixed
+### RF-06: Header Sticky/Fixed com Blur Condicional
 
-- **Descrição:** Header fixo no topo durante scroll, com transição de estilo (transparente → sólido)
-- **User Story:** Como usuário, eu quero que o header permaneça acessível durante o scroll da página
-- **Prioridade:** 🟡 Should Have
+- **Descrição:** Header fixo no topo, inicialmente transparente (sem blur), com blur aplicado apenas após scroll
+- **User Story:** Como usuário, eu quero que o header permaneça acessível durante o scroll da página, sem bloquear visualmente o hero section no carregamento inicial
+- **Prioridade:** 🔴 Must Have
+- **Detalhamento:**
+  - **Estado Inicial (sem scroll):**
+    - Background: `transparent` (totalmente transparente)
+    - `backdrop-filter: none` (sem blur)
+    - Permite visualização completa do hero section
+  - **Estado Após Scroll:**
+    - Background: `rgba(0, 0, 0, 0.15)` (semi-transparente escuro)
+    - `backdrop-filter: blur(10px) saturate(180%)` (blur aplicado)
+    - Box-shadow: `0 4px 12px rgba(0, 0, 0, 0.3)`
+  - **Transição:** Suave de 0.3s entre estados
+  - **Sem linha divisória:** Traço/borda inferior removido em ambos os estados
 
 ### RF-07: Navegação por Âncoras
 
@@ -467,12 +487,17 @@ O Header é o **ponto de entrada principal** da navegação do site, proporciona
 ### Design
 
 - Visual conforme Design System
-- Cores da paleta oficial STL (#ff4d2d para CTA)
+- Cores da paleta oficial STL (#1DB954 verde Spotify para CTA)
 - Tipografia correta (sistema para texto do header)
+- **Tamanho reduzido:** Padding e altura minimizados para menos invasão
+  - `padding: 0.75rem 1.25rem` (reduzido)
+  - `min-height: 56px` (reduzido)
+  - Logo: `height: 32px` (reduzido)
 - Espaçamento consistente (gap: 1rem entre elementos)
 - Alinhamento correto (flex justify-between)
-- Logo responsivo (40px desktop, 44px tablet, 32px mobile, 28px mobile pequeno)
-- ⚠️ Traço/linha divisória durante estado glass (PENDENTE - CSS já tem regras, mas traço ainda aparece)
+- Logo responsivo (32px desktop, 44px tablet, 32px mobile, 28px mobile pequeno)
+- ✅ **Sem traço/linha divisória:** Borda inferior completamente removida
+- ✅ **Blur condicional:** Apenas após scroll, não no estado inicial
 
 ### Performance
 
@@ -749,9 +774,13 @@ Closes #X, Closes #Y, Closes #Z
 
 | Botão Verde Spotify | - | ~0.1h | ✅ Concluído (28/01/2026) |
 
-| Correção Traço Glass | - | - | ⚠️ Pendente |
+| Correção Traço Glass | - | ~0.3h | ✅ Concluído (29/01/2026) |
 
-| **TOTAL** | **25h** | **~13.1h** | ✅ ~85% concluído (tarefas essenciais + extras) |
+| Redução Tamanho Header | - | ~0.3h | ✅ Concluído (29/01/2026) |
+
+| Blur Condicional Header | - | ~0.2h | ✅ Concluído (29/01/2026) |
+
+| **TOTAL** | **25h** | **~13.9h** | ✅ ~95% concluído (tarefas essenciais + extras) |
 
 ---
 
@@ -879,13 +908,31 @@ Closes #X, Closes #Y, Closes #Z
 - Sombras ajustadas
 - Alinhamento visual com badge
 
+### ✅ Recentemente Concluído (29/01/2026)
+
+1. **Redução do Tamanho do Header:**
+
+- Padding reduzido: `0.75rem 1.25rem`
+- Min-height reduzido: `56px`
+- Logo height reduzido: `32px` (desktop)
+- Menos invasão do hero section
+
+1. **Blur Condicional:**
+
+- Estado inicial: `background: transparent`, `backdrop-filter: none`
+- Após scroll: `background: rgba(0, 0, 0, 0.15)`, `backdrop-filter: blur(10px)`
+- Transição suave de 0.3s
+- Permite visualização completa do hero ao carregar
+
+1. **Remoção Completa do Traço Inferior:**
+
+- Traço/linha divisória removido em todos os estados
+- CSS ajustado para não criar bordas ou sombras divisórias
+- Header se integra perfeitamente ao hero section
+
 ### ⚠️ Pendente
 
-1. **Traço durante estado glass:**
-
-- Status: CSS tem regras para remover, mas traço ainda aparece
-- Ação: Identificar origem via DevTools e corrigir
-- Prioridade: Média (visual, não bloqueia funcionalidade)
+Nenhum item pendente crítico.
 
 1. **Integração com Preloader:**
 
@@ -967,7 +1014,6 @@ Closes #X, Closes #Y, Closes #Z
 
 **Sistema de Cores (baseado no Design System STL):**
 
-
 | Seção          | Cor Principal                 | Cor Secundária | RGB (Shadow) |
 | -------------- | ----------------------------- | -------------- | ------------ |
 | **Hero**       | #1DB954 (Verde Spotify)       | #1ed760        | 29, 185, 84  |
@@ -976,7 +1022,6 @@ Closes #X, Closes #Y, Closes #Z
 | **Sobre**      | #007b9a (Azul Teal)           | #009bb8        | 0, 123, 154  |
 | **STL Valley** | #006a47 (Verde Profundo)      | #009966        | 0, 106, 71   |
 | **FAQ**        | #1e1876 (Azul Índigo)         | #2d2499        | 30, 24, 118  |
-
 
 **Tecnologia:**
 
@@ -1035,8 +1080,49 @@ Closes #X, Closes #Y, Closes #Z
 
 ---
 
+---
+
+## 🎨 Atualizações Mais Recentes
+
+### 29/01/2026 - Header Otimizado e Refinado
+
+**Implementação:** Redução de tamanho, blur condicional e remoção completa do traço inferior
+
+**Mudanças:**
+
+1. **Redução de Tamanho:**
+   - Padding reduzido: `0.75rem 1.25rem` (era maior)
+   - Min-height reduzido: `56px` (era ~64-72px)
+   - Logo height reduzido: `32px` desktop (era 40px)
+   - Header menos invasivo ao hero section
+
+2. **Blur Condicional:**
+   - **Estado Inicial (sem scroll):**
+     - `background: transparent` (totalmente transparente)
+     - `backdrop-filter: none` (sem blur)
+     - Permite visualização completa do hero section
+   - **Estado Após Scroll:**
+     - `background: rgba(0, 0, 0, 0.15)` (semi-transparente)
+     - `backdrop-filter: blur(10px) saturate(180%)` (blur aplicado)
+     - `box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3)`
+   - Transição suave de 0.3s entre estados
+
+3. **Remoção do Traço Inferior:**
+   - Traço/linha divisória completamente removido
+   - Sem bordas ou sombras que marquem o hero section
+   - Integração visual perfeita
+
+**Impacto:**
+
+- ✅ Header mais limpo e menos invasivo
+- ✅ Visualização completa do hero ao carregar
+- ✅ Transição visual elegante ao scrollar
+- ✅ Sem elementos visuais indesejados
+
+---
+
 **Documento Criado em:** 28/01/2026
 
-**Última Atualização:** 28/01/2026 - 23:50
+**Última Atualização:** 29/01/2026 - Refinamentos Finais
 
-**Versão:** 1.3
+**Versão:** 1.4

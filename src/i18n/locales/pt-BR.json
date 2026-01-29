@@ -13,10 +13,20 @@
     "tickerText1": "STL FESTIVAL 2026",
     "tickerText2": "10 ANOS",
     "tickerText3": "SÃO THOME DAS LETRAS",
+    "ticker": {
+      "date": "06 de Junho de 2026",
+      "location": "STL FESTIVAL",
+      "edition": "10ª Edição",
+      "ariaLabel": "Informações do evento: 06 de Junho de 2026 - STL FESTIVAL"
+    },
     "imageAlt": "STL Festival 2026 - Cenário do festival na Montanha Mágica",
     "scrollLabel": "Rolar para ver mais conteúdo",
     "scrollText": "Role para baixo",
     "spotifyLabel": "Ouça a playlist oficial do STL Festival no Spotify"
+  },
+  "preloader": {
+    "phraseTop": "Venha participar de um mundo de vibes",
+    "phraseBottom": "Conexão, música, natureza e sustentabilidade"
   },
   "accessibility": {
     "badgeLabel": "Evento acessível",
@@ -45,10 +55,5 @@
       "en": "English",
       "es": "Español"
     }
-  },
-  "preloader": {
-    "phraseTop": "Faça parte da nossa história",
-    "phraseBottom": "conexão, música, natureza e sustentabilidade",
-    "ariaLabel": "Carregando conteúdo do STL Festival"
   }
 }

@@ -8,6 +8,12 @@ export default {
           DEFAULT: '#006a47',
           light: '#009966',
           dark: '#004d33',
+          ticker: '#38966d', // Verde do ticker
+        },
+        'stl-gold': {
+          DEFAULT: '#d2aa56', // Dourado do ticker
+          light: '#e5c47a',
+          dark: '#b8923e',
         },
         'stl-red': {
           DEFAULT: '#ff4d2d',
@@ -34,6 +40,9 @@ export default {
           light: '#2d2499',
           dark: '#15115a',
         },
+      },
+      backgroundImage: {
+        'ticker-gradient': 'linear-gradient(90deg, #38966d 0%, #d2aa56 100%)',
       },
       fontFamily: {
         jairo: ['Jairo', 'system-ui', 'sans-serif'],

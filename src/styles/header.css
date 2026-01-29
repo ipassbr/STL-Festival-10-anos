@@ -1,6 +1,6 @@
 /**
  * Header Styles - STL Festival
- * Efeito glass sobre Hero Section, transição para opaco após scroll
+ * Header transparente sobre Hero Section, transição para opaco com blur após scroll
  */
 
 /* ========================================
@@ -40,47 +40,19 @@
   opacity: 1;
   visibility: visible;
 
-  /* Background semi-transparente */
-  background: rgba(0, 0, 0, 0.15);
+  /* Background transparente no início */
+  background: transparent;
 
   /* Transições suaves */
   transition: all 0.3s ease;
-
-  /* SOLUÇÃO: Extender levemente para baixo para cobrir artefato do blur */
-  padding-bottom: 2px;
-  margin-bottom: -2px;
 }
 
-/* Pseudo-elemento para aplicar blur (evita artefato de borda) */
-.header::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  backdrop-filter: blur(10px) saturate(180%);
-  -webkit-backdrop-filter: blur(10px) saturate(180%);
-  z-index: -1;
-
-  /* Extender o blur para baixo para cobrir completamente */
-  bottom: -2px;
-}
-
-/* Estado após scroll - Opaco */
+/* Estado após scroll - Opaco com blur */
 .header.header-scrolled {
   background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-
-  /* Remover extensão quando opaco */
-  padding-bottom: 0;
-  margin-bottom: 0;
-}
-
-/* Remover blur do pseudo-elemento quando scrolled */
-.header.header-scrolled::before {
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
 }
 
 /* ========================================
@@ -90,11 +62,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 1.5rem;
+  padding: 0.75rem 1.25rem;
   gap: 1rem;
   max-width: 1920px;
   margin: 0 auto;
-  min-height: 64px;
+  min-height: 56px;
   position: relative;
 }
 
@@ -120,7 +92,7 @@
 }
 
 .header-logo-img {
-  height: 40px;
+  height: 32px;
   width: auto;
   object-fit: contain;
   user-select: none;
@@ -251,14 +223,12 @@
    ======================================== */
 .header-mobile-menu {
   position: fixed;
-  top: 64px;
+  top: 56px;
   left: 0;
   right: 0;
   bottom: 0;
-  /* Estado glass (padrão) - semi-transparente com blur */
-  background: rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(10px) saturate(180%);
-  -webkit-backdrop-filter: blur(10px) saturate(180%);
+  /* Estado inicial - semi-transparente */
+  background: rgba(0, 0, 0, 0.85);
   z-index: 40;
   transform: translateX(-100%);
   transition:
@@ -269,11 +239,11 @@
   padding: 2rem 0;
 }
 
-/* Estado após scroll - Opaco (sincronizado com header-scrolled) */
+/* Estado após scroll - Opaco com blur (sincronizado com header-scrolled) */
 .header-mobile-menu.menu-scrolled {
   background: rgba(0, 0, 0, 0.98);
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
 }
 
 .header-mobile-menu[aria-hidden='false'] {
@@ -294,11 +264,6 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-/* Ajustar opacidade da borda quando em modo opaco */
-.header-mobile-menu.menu-scrolled .header-mobile-menu-item {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
 .header-mobile-menu-link {
   display: block;
   color: var(--color-white);
@@ -307,19 +272,11 @@
   text-decoration: none;
   padding: 1.25rem 1.5rem;
   transition: background 0.2s ease;
-  /* Melhor legibilidade em glass */
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 .header-mobile-menu-link:hover,
 .header-mobile-menu-link:focus {
   background: rgba(255, 255, 255, 0.08);
-}
-
-/* Hover mais sutil quando em modo opaco */
-.header-mobile-menu.menu-scrolled .header-mobile-menu-link:hover,
-.header-mobile-menu.menu-scrolled .header-mobile-menu-link:focus {
-  background: rgba(255, 255, 255, 0.05);
 }
 
 .header-mobile-menu-link:focus-visible {
@@ -464,16 +421,16 @@ body.menu-open {
 /* Desktop Large */
 @media (min-width: 1440px) {
   .header-container {
-    padding: 1.25rem 2rem;
+    padding: 0.875rem 1.75rem;
   }
 
   .header-logo-img {
-    height: 48px;
+    height: 36px;
   }
 
   .header-cta-button {
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
+    padding: 0.625rem 1.25rem;
+    font-size: 0.875rem;
   }
 }
 

@@ -56,12 +56,17 @@ A Hero Section é o primeiro impacto visual do STL Festival, estabelecendo imedi
 **Detalhamento:**
 
 - Posição: `bottom: 10%` (quase no final da hero section)
-- Background: `#ff4d2d` (vermelho-alaranjado vibrante - cor oficial STL)
-- Animação CSS seamless (sem cortes) - efeito marquee horizontal
-- Conteúdo: Data → Separador → Local → Logo → Loop
+- Background: Gradiente linear de `#38966d` (verde) a `#d2aa56` (dourado)
+- Texto: `#fefbdf` (creme) para legibilidade
+- Separador (estrelas): `✦` em `#ff4d2d` (vermelho-alaranjado STL)
+- Animação CSS seamless (sem cortes) - efeito marquee horizontal contínuo
+- Conteúdo: Data → ✦ → Local (STL FESTIVAL) → ✦ → Loop (8x duplicados para looping perfeito sem espaços vazios)
+- Velocidade: 60s linear infinite (ajustado para 8 loops)
+- Efeito fade nas extremidades (esquerda e direita) usando gradientes
 - Pausa no hover para leitura
 - Suporte a reduced motion (pausar animação)
-- Tipografia: Bold, uppercase, letter-spacing aumentado
+- Tipografia: Bold (700), uppercase, letter-spacing aumentado (0.1em)
+- Espessura reduzida: `padding: 0.5rem 0`
 
 ### RF-03: Badge do Spotify Interativo
 
@@ -125,13 +130,14 @@ A Hero Section é o primeiro impacto visual do STL Festival, estabelecendo imedi
 
 - Logo SVG do Cloudinary otimizada
 - Tamanho responsivo via clamp():
-  - Mobile pequeno (≤480px): 80-120px
-  - Mobile (≤768px): 100-160px
-  - Desktop: 120-280px
-  - Desktop large (≥1440px): 200-320px
-- Centralização perfeita (vertical e horizontal)
+  - Mobile pequeno (≤480px): 240-360px (AUMENTADO para destaque)
+  - Mobile (≤768px): 280-400px (AUMENTADO para destaque)
+  - Desktop: 320-450px (REDUZIDO para equilíbrio)
+  - Desktop large (≥1440px): 350-500px (REDUZIDO ligeiramente)
+- Posicionamento: `top: 35%` (movido para cima), `left: 50%` (centralizado horizontalmente)
+- Transform: `translate(-50%, -50%)` para centralização perfeita
 - Animação fade-in + scale (1.2s)
-- Drop shadow para contraste sobre vídeo
+- Drop shadow para contraste sobre vídeo: `0 8px 32px rgba(0, 0, 0, 0.4)`
 - z-index: 5 (acima do overlay, abaixo do ticker)
 - Suporte a prefers-reduced-motion
 - Loading eager para performance
@@ -207,8 +213,16 @@ A Hero Section é o primeiro impacto visual do STL Festival, estabelecendo imedi
 ### Cores
 
 ```css
---color-red: #ff4d2d; /* Ticker background - Vermelho-alaranjado vibrante (cor oficial) */
---color-white: #ffffff; /* Ticker text */
+/* Ticker */
+--ticker-bg-gradient: linear-gradient(
+  90deg,
+  #38966d 0%,
+  #d2aa56 100%
+); /* Verde → Dourado */
+--ticker-text: #fefbdf; /* Creme */
+--ticker-star: #ff4d2d; /* Vermelho-alaranjado STL */
+
+/* Hero Section */
 --overlay-opacity: 0.2; /* Overlay escuro */
 ```
 
@@ -216,8 +230,14 @@ A Hero Section é o primeiro impacto visual do STL Festival, estabelecendo imedi
 
 ```css
 --font-heading: 'Jairo'; /* Ticker text */
---text-xl: clamp(1.25rem, 3vw, 1.5rem); /* Mobile */
---text-3xl: clamp(2rem, 3vw, 3rem); /* Desktop */
+/* Ticker text */
+--ticker-text-size: clamp(1.125rem, 2.5vw, 1.5rem); /* Responsivo */
+--ticker-text-size-mobile: clamp(1rem, 3vw, 1.5rem); /* Mobile */
+--ticker-text-size-small: clamp(1rem, 3.5vw, 1.375rem); /* Mobile pequeno */
+/* Ticker star (separador) */
+--ticker-star-size: clamp(1.25rem, 3vw, 1.75rem); /* Responsivo */
+--ticker-star-size-mobile: clamp(1.125rem, 3.5vw, 1.75rem); /* Mobile */
+--ticker-star-size-small: clamp(1.125rem, 4vw, 1.5rem); /* Mobile pequeno */
 ```
 
 ### Espaçamento
@@ -338,13 +358,13 @@ z-index: 50 → Spotify Badge (via SpotifyBadge.astro) - fixed position
 .hero__logo-container {
   position: absolute;
   z-index: 5;
-  top: 50%;
+  top: 35%; /* Movido para cima - mais alto na seção */
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
 .hero__logo {
-  height: clamp(120px, 20vw, 280px);
+  height: clamp(320px, 35vw, 450px); /* Reduzido no desktop para equilíbrio */
   max-width: 90vw;
   filter: drop-shadow(0 8px 32px rgba(0, 0, 0, 0.4));
   animation: logo-fade-in 1.2s ease-out forwards;
@@ -353,19 +373,27 @@ z-index: 50 → Spotify Badge (via SpotifyBadge.astro) - fixed position
 /* Responsivo */
 @media (max-width: 768px) {
   .hero__logo {
-    height: clamp(100px, 18vw, 160px);
+    height: clamp(280px, 44vw, 400px); /* Aumentado para destaque mobile */
   }
 }
 
 @media (max-width: 480px) {
   .hero__logo {
-    height: clamp(80px, 20vw, 120px);
+    height: clamp(
+      240px,
+      50vw,
+      360px
+    ); /* Aumentado para destaque mobile pequeno */
   }
 }
 
 @media (min-width: 1440px) {
   .hero__logo {
-    height: clamp(200px, 18vw, 320px);
+    height: clamp(
+      350px,
+      30vw,
+      500px
+    ); /* Reduzido ligeiramente no desktop large */
   }
 }
 ```
@@ -389,6 +417,8 @@ z-index: 50 → Spotify Badge (via SpotifyBadge.astro) - fixed position
 
 **Posição:** `bottom: 10%` (quase no final da hero section)
 
+**Background:** Gradiente linear de `#38966d` a `#d2aa56`
+
 **Animação CSS:**
 
 ```css
@@ -397,12 +427,51 @@ z-index: 50 → Spotify Badge (via SpotifyBadge.astro) - fixed position
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translateX(
+      -50%
+    ); /* 8 loops duplicados: -50% move 4 loops (metade) */
   }
+}
+
+.hero-ticker__wrapper {
+  animation: scroll-ticker 60s linear infinite; /* 60s para 8 loops = mesma velocidade visual */
+  will-change: transform;
+  gap: 0; /* Sem gap entre loops para evitar espaços */
 }
 ```
 
-**Efeito:** Marquee horizontal infinito, seamless loop
+**Efeito Fade nas Extremidades:**
+
+```css
+.hero-ticker::before {
+  left: 0;
+  background: linear-gradient(
+    to right,
+    rgba(56, 150, 109, 1) 0%,
+    /* Verde início do gradiente */ rgba(56, 150, 109, 0) 100%
+  );
+}
+
+.hero-ticker::after {
+  right: 0;
+  background: linear-gradient(
+    to left,
+    rgba(210, 170, 86, 1) 0%,
+    /* Dourado fim do gradiente */ rgba(210, 170, 86, 0) 100%
+  );
+}
+```
+
+**Efeito:** Marquee horizontal infinito, seamless loop (8x duplicação sem espaços vazios)
+
+**Como funciona:**
+
+- 8 loops duplicados do conteúdo (Data → ✦ → STL FESTIVAL → ✦)
+- translateX(-50%) move exatamente 4 loops (metade do total)
+- Quando 4 loops saem pela esquerda, 4 novos entram pela direita
+- Looping perfeito e contínuo sem espaços visíveis
+- `width: max-content` em cada loop para prevenir shrinking
+- `gap: 0` entre loops para eliminar espaços vazios
 
 **Interação:** Pause no hover (ux melhoria)
 
@@ -504,8 +573,19 @@ O código fornecido já implementa:
 
 ### Design
 
-- Ticker: background `#ff4d2d` (vermelho-alaranjado vibrante - cor oficial STL), texto branco
+- Ticker:
+  - Background: gradiente linear `#38966d` (verde) → `#d2aa56` (dourado)
+  - Texto: `#fefbdf` (creme) para legibilidade
+  - Separador (✦): `#ff4d2d` (vermelho-alaranjado STL)
+  - Espessura reduzida: `padding: 0.5rem 0`
+  - Efeito fade nas extremidades (esquerda e direita)
+  - Looping seamless sem espaços vazios (8x duplicação, 60s duração)
+  - Garantias: `gap: 0`, `width: max-content`, `flex-shrink: 0`
 - Ticker position: `bottom: 10%` (quase no final da hero section)
+- Logo STL:
+  - Posição: `top: 35%` (mais alto)
+  - Tamanho mobile: 240-400px (AUMENTADO)
+  - Tamanho desktop: 320-500px (REDUZIDO ligeiramente)
 - Font: Jairo (heading) para ticker
 - Overlay: rgba(0,0,0,0.2) sobre vídeo
 - Espaçamento: sistema 8px aplicado
@@ -1148,9 +1228,42 @@ gh issue create \
 
 **Última atualização:** 28/01/2026
 
-**Versão:** 1.3
+**Versão:** 1.6
 
-**Status:** 📝 Atualizado com Logo STL Centralizada
+**Status:** 📝 Atualizado com refinamentos finais do Ticker e Logo
+
+**Changelog v1.6 (29/01/2026):**
+
+- 🎨 **Ticker - Cores Finais Implementadas:**
+  - Background: gradiente linear de `#38966d` (verde) a `#d2aa56` (dourado)
+  - Texto: `#fefbdf` (creme) para alta legibilidade
+  - Separador (✦): `#ff4d2d` (vermelho-alaranjado STL)
+  - Texto alterado de "STL VALLEY" para "STL FESTIVAL"
+  - Símbolo separador voltou para `✦` (losango)
+- 📏 **Ticker - Design Refinado:**
+  - Espessura reduzida: `padding: 0.5rem 0`
+  - Efeito fade restaurado nas extremidades (esquerda e direita)
+  - Looping seamless perfeito com 8x duplicação (ZERO espaços vazios)
+  - Velocidade: 60s linear infinite (ajustado para 8 loops)
+  - `transform: translateX(-50%)` move 4 loops (metade) para looping perfeito
+  - `gap: 0` entre loops para eliminar espaços
+  - `width: max-content` e `min-width: max-content` para prevenir shrinking
+- 📱 **Ticker - Responsividade Aprimorada:**
+  - Font-size aumentado em mobile: `clamp(1rem, 3vw, 1.5rem)`
+  - Font-size mobile pequeno: `clamp(1rem, 3.5vw, 1.375rem)`
+  - Star size mobile: `clamp(1.125rem, 3.5vw, 1.75rem)`
+  - Star size mobile pequeno: `clamp(1.125rem, 4vw, 1.5rem)`
+- 🎯 **Logo STL - Reposicionamento e Tamanhos:**
+  - Posição vertical alterada: `top: 50%` → `top: 35%` (movido para cima)
+  - **Mobile AUMENTADO para destaque:**
+    - Mobile: `clamp(280px, 44vw, 400px)` (era 100-160px)
+    - Mobile pequeno: `clamp(240px, 50vw, 360px)` (era 80-120px)
+  - **Desktop REDUZIDO para equilíbrio:**
+    - Desktop: `clamp(320px, 35vw, 450px)` (era 120-280px)
+    - Desktop large: `clamp(350px, 30vw, 500px)` (era 200-320px)
+- 🌐 **i18n - Traduções Atualizadas:**
+  - `hero.ticker.location`: "STL FESTIVAL" (PT-BR, EN, ES)
+  - `hero.ticker.ariaLabel` adicionado em todos os idiomas
 
 **Changelog v1.5 (28/01/2026):**
 
