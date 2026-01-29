@@ -84,12 +84,13 @@ O Pre-loader é a **primeira impressão** do site, criando uma experiência de e
 - **User Story:** Como usuário, eu quero ver uma animação de carregamento profissional ao invés de uma tela em branco
 - **Prioridade:** 🔴 Must Have
 
-### RF-02: Animação de Progresso com Frase
+### RF-02: Animação de Progresso com Frase e Barra de Loader
 
 - **Descrição:** Preloader deve exibir a frase progressivamente conforme o carregamento avança (texto aparece palavra por palavra ou letra por letra)
 - **Eventos:** Deve disparar eventos `preloader-progress` com valor de 0-100% para comunicação com Hero Section
-- **Visual:** Linhas horizontais finas brancas no topo e na parte inferior (cerca de 5% de cada borda) como elementos decorativos
-- **User Story:** Como usuário, eu quero ver o progresso do carregamento através da exibição progressiva da frase inspiradora
+- **Barra de Loader:** Barra de progresso horizontal na parte inferior da tela, animando de 0% a 100% conforme carregamento
+- **Sincronização:** Frase aparece progressivamente sincronizada com o progresso da barra de loader
+- **User Story:** Como usuário, eu quero ver o progresso do carregamento através da exibição progressiva da frase inspiradora e da barra de loader
 - **Prioridade:** 🔴 Must Have
 
 ### RF-03: Frase Inspiradora Centralizada
@@ -249,16 +250,19 @@ O preloader segue um design **minimalista e elegante**, inspirado em estética m
 
 ### Elementos Visuais
 
-#### 1. Linhas Decorativas Horizontais
+#### 1. Barra de Loader (Progress Bar)
 
-- **Posicionamento:**
-  - Linha superior: `top: 5%` (ou `top: calc(100vh * 0.05)`)
-  - Linha inferior: `bottom: 5%` (ou `bottom: calc(100vh * 0.05)`)
+- **Posicionamento:** Parte inferior da tela (`bottom: 0` ou `bottom: 2-4%` para espaçamento)
 - **Estilo:**
-  - Espessura: `1px` ou `0.5px` (muito fina)
-  - Cor: Branco (`#FFFFFF`)
-  - Largura: `100%` (full width)
-- **Animação:** Fade in suave ao aparecer (200ms)
+  - Altura: `2px` a `4px` (fina e elegante)
+  - Cor: Branco (`#FFFFFF`) ou cor do design system STL (ex: `#ff4d2d` - vermelho-alaranjado)
+  - Largura inicial: `0%` (inicia vazia)
+  - Largura final: `100%` (preenche conforme progresso)
+  - Background: Opcional - linha sutil indicando o caminho completo (opacidade baixa)
+- **Animação:**
+  - Width anima de `0%` a `100%` conforme progresso do carregamento
+  - Sincronizada com eventos `preloader-progress` (0-100%)
+  - Transição suave (ease-out ou linear)
 
 #### 2. Texto Centralizado
 
@@ -270,7 +274,7 @@ O preloader segue um design **minimalista e elegante**, inspirado em estética m
   - Tamanho: Responsivo usando `clamp(1rem, 4vw, 1.5rem)` ou similar
   - Cor: Branco (`#FFFFFF`)
   - Alinhamento: `center`
-- **Espaçamento:** Padding adequado para não tocar nas linhas decorativas
+- **Espaçamento:** Padding adequado para não tocar na barra de loader inferior
 
 #### 3. Fundo
 
@@ -281,8 +285,8 @@ O preloader segue um design **minimalista e elegante**, inspirado em estética m
 ### Hierarquia Visual
 
 1. **Fundo preto** (camada base)
-2. **Linhas decorativas** (elementos de estrutura/arquitetura)
-3. **Texto** (elemento principal, foco visual)
+2. **Texto** (elemento principal, foco visual - centralizado)
+3. **Barra de loader** (indicador de progresso - parte inferior)
 
 ---
 
@@ -291,34 +295,38 @@ O preloader segue um design **minimalista e elegante**, inspirado em estética m
 ### Design Visual Minimalista
 
 - **Fundo:** Preto sólido (`#000000` ou `#1e1876` - azul índigo escuro do design system)
-- **Linhas decorativas:** Duas linhas horizontais finas brancas:
-  - Linha superior: posicionada a ~5% do topo
-  - Linha inferior: posicionada a ~5% da parte inferior
-  - Espessura: 1px ou 0.5px
-  - Cor: Branco (`#FFFFFF`)
+- **Barra de loader:** Barra horizontal na parte inferior:
+  - Posicionamento: `bottom: 0` ou `bottom: 2-4%` (com pequeno espaçamento)
+  - Altura: `2px` a `4px` (fina e elegante)
+  - Cor: Branco (`#FFFFFF`) ou cor do design system (`#ff4d2d` - vermelho-alaranjado)
+  - Largura: Anima de `0%` a `100%` conforme progresso
 - **Texto centralizado:** Vertical e horizontalmente no centro da tela
 
 ### Animações de Entrada
 
 - Fade in do preloader (0ms - instantâneo ao carregar página)
-- Linhas decorativas aparecem com fade in suave (200ms)
+- Barra de loader aparece imediatamente (visível desde o início, mas com largura 0%)
 - Texto inicia oculto ou com opacidade muito baixa
 
 ### Animações de Progresso
 
+- **Barra de loader:**
+  - Largura anima de `0%` a `100%` conforme progresso (0-100%)
+  - Sincronizada com eventos `preloader-progress`
+  - Transição suave (ease-out ou linear)
 - **Texto progressivo:** Frase aparece progressivamente conforme carregamento:
   - Opção 1: Palavra por palavra (cada palavra aparece com fade in conforme progresso)
   - Opção 2: Letra por letra (typewriter effect)
   - Opção 3: Texto completo com fade in gradual baseado no progresso (0-100%)
-- **Sincronização:** Progresso do texto sincronizado com eventos `preloader-progress`
-- **Efeito visual:** Texto branco fino, elegante, sem distrações
+- **Sincronização:** Progresso do texto sincronizado com a barra de loader e eventos `preloader-progress`
+- **Efeito visual:** Texto branco fino, elegante, sem distrações. Barra de loader discreta na parte inferior
 
 ### Animações de Saída
 
 - Fade out suave do texto (300-500ms ease-out)
-- Fade out das linhas decorativas (200ms)
+- Fade out da barra de loader (200ms)
 - Fade out do fundo (300-500ms ease-out)
-- Sequência: Texto → Linhas → Fundo (stagger animation)
+- Sequência: Texto → Barra de loader → Fundo (stagger animation)
 
 ### Transições
 
@@ -402,13 +410,14 @@ function updateTextProgress(progress: number) {
 
 ### Issue #X: [Pre-loader] Implementação do Design Minimalista
 
-- **Descrição:** Implementar design minimalista com fundo preto, linhas decorativas e frase inspiradora
+- **Descrição:** Implementar design minimalista com fundo preto, barra de loader inferior e frase inspiradora
 - **Tarefas:**
-  - Criar estrutura HTML/CSS do preloader (fundo preto, linhas, texto)
-  - Implementar linhas decorativas horizontais (topo e fundo, ~5% das bordas)
+  - Criar estrutura HTML/CSS do preloader (fundo preto, barra de loader, texto)
+  - Implementar barra de loader horizontal na parte inferior (altura 2-4px)
   - Centralizar texto vertical e horizontalmente
   - Aplicar tipografia simples e fina (sans-serif)
-  - Integrar com design system STL (cores: preto ou azul índigo escuro)
+  - Integrar com design system STL (cores: preto ou azul índigo escuro, barra branca ou vermelho-alaranjado)
+  - Animar largura da barra de 0% a 100% conforme progresso
   - Testar visual em diferentes tamanhos de tela
 - **Tempo:** 3 horas
 
@@ -424,14 +433,15 @@ function updateTextProgress(progress: number) {
   - Disparar eventos `preloader-progress` (0-100%)
 - **Tempo:** 3 horas
 
-### Issue #X: [Pre-loader] Animações de Texto Progressivo
+### Issue #X: [Pre-loader] Animações de Texto Progressivo e Barra de Loader
 
-- **Descrição:** Implementar animação de texto progressivo conforme carregamento
+- **Descrição:** Implementar animação de texto progressivo e barra de loader sincronizadas
 - **Tarefas:**
-  - Animação de entrada: fade in do preloader e linhas decorativas
-  - Animação de progresso: texto aparece progressivamente (palavra por palavra ou letra por letra)
-  - Sincronizar progresso do texto com eventos `preloader-progress` (0-100%)
-  - Animação de saída: fade out suave (texto → linhas → fundo)
+  - Animação de entrada: fade in do preloader e barra de loader (largura 0%)
+  - Animação de progresso da barra: largura anima de 0% a 100% conforme eventos `preloader-progress`
+  - Animação de progresso do texto: frase aparece progressivamente (palavra por palavra ou letra por letra)
+  - Sincronizar progresso do texto com a barra de loader e eventos `preloader-progress` (0-100%)
+  - Animação de saída: fade out suave (texto → barra de loader → fundo)
   - Integrar com `prefers-reduced-motion` (simplificar animações)
   - Otimizar performance (CSS animations preferidas sobre JS quando possível)
 - **Tempo:** 4 horas
@@ -466,7 +476,7 @@ function updateTextProgress(progress: number) {
   - Testar em tablet (768px, 1024px)
   - Testar em desktop (1280px, 1440px, 1920px)
   - Ajustar tamanho da fonte do texto proporcionalmente (usar clamp())
-  - Validar posicionamento das linhas decorativas em todos os tamanhos
+  - Validar posicionamento da barra de loader em todos os tamanhos
   - Validar legibilidade do texto em diferentes resoluções
   - Validar animações em diferentes tamanhos
 - **Tempo:** 2 horas
@@ -506,8 +516,8 @@ function updateTextProgress(progress: number) {
 - Preloader aparece imediatamente ao carregar página
 - Frase inspiradora exibida centralizada
 - Texto aparece progressivamente conforme carregamento (palavra por palavra ou letra por letra)
-- Linhas decorativas visíveis (topo e fundo, ~5% das bordas)
-- Progresso visual sincronizado com carregamento real
+- Barra de loader visível na parte inferior, animando de 0% a 100%
+- Progresso visual sincronizado: texto progressivo + barra de loader sincronizados com carregamento real
 - Eventos `preloader-progress` e `preloader-complete` disparados corretamente
 - Transição suave para Hero Section (sem flash)
 - Preload de assets críticos funcionando
@@ -517,12 +527,12 @@ function updateTextProgress(progress: number) {
 ### Design
 
 - **Fundo:** Preto sólido ou azul índigo escuro (`#1e1876` do design system)
-- **Linhas decorativas:** Duas linhas horizontais finas brancas (topo e fundo, ~5% de cada borda)
+- **Barra de loader:** Barra horizontal fina (2-4px) na parte inferior, branca ou vermelho-alaranjado (`#ff4d2d`)
 - **Texto:** Fonte sans-serif simples e fina, branca, centralizada vertical e horizontalmente
 - **Frase:** "Venha fazer parte da nossa História, conexão, música, natureza e sustentabilidade" (PT-BR)
 - **Tipografia:** Sistema de fontes leve (não Jairo ou Superbusy - muito pesadas para este design minimalista)
-- **Espaçamento:** Texto centralizado, linhas posicionadas a ~5% das bordas
-- **Animações:** Suaves, elegantes, sem distrações (fade in/out, texto progressivo)
+- **Espaçamento:** Texto centralizado, barra de loader na parte inferior (bottom: 0 ou 2-4%)
+- **Animações:** Suaves, elegantes, sem distrações (fade in/out, texto progressivo, barra de loader animada)
 
 ### Performance
 
@@ -705,8 +715,10 @@ Closes #X, Closes #Y, Closes #Z
 
 **Mudanças na Versão 1.1:**
 
-- Atualizado design para estilo minimalista (fundo preto, linhas decorativas, texto centralizado)
+- Atualizado design para estilo minimalista (fundo preto, barra de loader inferior, texto centralizado)
 - Removido logo STL, adicionada frase inspiradora progressiva
-- Especificado design visual detalhado (linhas horizontais, tipografia fina)
-- Atualizado animações para texto progressivo (palavra por palavra ou letra por letra)
+- Removidas linhas decorativas superior e inferior
+- Adicionada barra de loader na parte inferior (anima de 0% a 100%)
+- Especificado design visual detalhado (barra de progresso, tipografia fina)
+- Atualizado animações para texto progressivo sincronizado com barra de loader
 - Adicionadas traduções da frase (PT-BR, EN, ES)
