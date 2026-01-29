@@ -1,10 +1,10 @@
 # ✅ Implementação Completa: Badge de Acessibilidade
 
-## 📋 Status: Completo
+## 📋 Status: Completo e Atualizado
 
-Data: 28/01/2026  
-Versão: 1.0  
-Baseado no padrão do Badge Spotify
+Data: 29/01/2026  
+Versão: 2.0 - **Design Visual Atualizado**  
+Paridade completa com Badge Spotify
 
 ---
 
@@ -17,17 +17,28 @@ Baseado no padrão do Badge Spotify
 **Features implementadas:**
 
 - ✅ Ícone universal de acessibilidade (♿ / wheelchair symbol)
+- ✅ **Texto "ACESSIBILIDADE"** em desktop (espelhando "PLAYLIST" do Spotify)
+- ✅ **Design visual idêntico ao Spotify Badge:**
+  - **Gradient background:** `linear-gradient(135deg, #007b9a 0%, #009bb8 100%)`
+  - **Box-shadow elaborado:** Dupla camada com blur e spread
+  - **Backdrop-filter:** `blur(4px)` para efeito glass sutil
+  - **Border-radius:** `16px` (mais arredondado)
+  - **Hover animation:** `scale(1.05) + translateX(-4px)` com cubic-bezier
+  - **Filter brightness:** `brightness(1.1)` no hover
+  - **Drop-shadow no ícone:** `0 2px 4px rgba(0, 0, 0, 0.2)`
+  - **Text-shadow no texto:** `0 1px 2px rgba(0, 0, 0, 0.1)`
+  - **Animações:** `badge-pulse` e `icon-bounce` no load (mobile)
 - ✅ Design responsivo completo:
-  - **Desktop (≥1024px):** 44×44px, canto superior direito
-  - **Tablet (768-1023px):** 48×48px, canto superior direito
-  - **Mobile (<768px):** 44×44px, canto superior direito
+  - **Desktop (≥1024px):** Texto + Ícone, canto superior direito
+  - **Tablet (768-1023px):** 52×52px, apenas ícone
+  - **Mobile (<768px):** 44×44px, apenas ícone
 - ✅ Posicionamento adaptativo:
   - Desktop: `bottom: 28%, right: 0` (mesma altura do Spotify)
   - Mobile: `bottom: 18%, right: 0`
 - ✅ **Auto-hide em mobile** (mesmo comportamento do Spotify)
 - ✅ **Smooth scroll** ao clicar para seção #accessibility
 - ✅ Tap area mínima 44x44px (WCAG)
-- ✅ Focus states acessíveis
+- ✅ Focus states acessíveis com outline branco
 - ✅ Suporte a `prefers-reduced-motion`
 - ✅ Tradução i18n completa (PT-BR, EN, ES)
 
@@ -45,6 +56,116 @@ interface Props {
 ```astro
 <AccessibilityBadge targetSection="#accessibility" />
 ```
+
+---
+
+### 🎨 **Melhorias Visuais - v2.0** ✨
+
+**Atualizado em: 29/01/2026**
+
+O AccessibilityBadge foi completamente redesenhado para ter **paridade visual total** com o SpotifyBadge, criando uma experiência consistente e profissional.
+
+#### Mudanças Visuais Implementadas:
+
+**1. Background Gradient (antes: cor sólida)**
+
+```css
+/* Antes */
+background: #007b9a;
+
+/* Depois */
+background: linear-gradient(135deg, #007b9a 0%, #009bb8 100%);
+```
+
+**2. Box-shadow Elaborado (antes: shadow simples)**
+
+```css
+/* Antes */
+box-shadow: 0 4px 12px rgba(0, 123, 154, 0.25);
+
+/* Depois - Dupla camada */
+box-shadow:
+  0 8px 24px rgba(0, 123, 154, 0.4),
+  0 4px 8px rgba(0, 0, 0, 0.2);
+```
+
+**3. Border-radius Aumentado**
+
+```css
+/* Antes */
+border-radius: 12px 0 0 12px;
+
+/* Depois */
+border-radius: 16px 0 0 16px;
+```
+
+**4. Backdrop Filter (novo)**
+
+```css
+backdrop-filter: blur(4px); /* Efeito glass sutil */
+```
+
+**5. Hover Animation Melhorado**
+
+```css
+/* Antes */
+transform: scale(1.02);
+
+/* Depois - com cubic-bezier e translateX */
+transform: scale(1.05) translateX(-4px);
+filter: brightness(1.1);
+transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+```
+
+**6. Ícone com Drop-shadow e Rotação**
+
+```css
+/* Drop-shadow */
+filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+
+/* Hover - rotação animada */
+.accessibility-badge:hover .accessibility-icon {
+  transform: rotate(8deg) scale(1.1);
+}
+```
+
+**7. Texto "ACESSIBILIDADE" em Desktop**
+
+- Desktop mostra: `"ACESSIBILIDADE" + ♿`
+- Mobile/Tablet: apenas `♿`
+- Text-shadow para legibilidade
+- Typography matching Spotify Badge
+
+**8. Animações no Load (Mobile)**
+
+```css
+@keyframes badge-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+@keyframes icon-bounce {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+}
+```
+
+#### Resultado Visual:
+
+- **Consistência:** Ambos badges (Spotify e Acessibilidade) têm design idêntico
+- **Simetria:** Posicionamento espelhado (esquerda/direita)
+- **Profissionalismo:** Shadows, gradients e animações suaves
+- **Acessibilidade mantida:** Todos os requisitos WCAG preservados
 
 ---
 

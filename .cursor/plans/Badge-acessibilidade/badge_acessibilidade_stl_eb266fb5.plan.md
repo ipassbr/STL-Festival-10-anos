@@ -2,15 +2,63 @@
 
 ## 📋 Informações Básicas
 
-| Campo              | Valor                         |
-| ------------------ | ----------------------------- |
-| **Seção**          | Badge de Acessibilidade       |
-| **Prioridade**     | 🟡 Alta                       |
-| **Branch**         | `feature/accessibility-badge` |
-| **Responsável**    | [Nome]                        |
-| **Tempo Estimado** | 2 dias                        |
-| **Data Início**    | 28/01/2026                    |
-| **Data Entrega**   | 30/01/2026                    |
+| Campo              | Valor                                                    |
+| ------------------ | -------------------------------------------------------- |
+| **Seção**          | Badge de Acessibilidade                                  |
+| **Prioridade**     | 🟡 Alta                                                  |
+| **Branch**         | `feature/accessibility-badge`                            |
+| **Responsável**    | [Nome]                                                   |
+| **Tempo Estimado** | 2 dias                                                   |
+| **Data Início**    | 28/01/2026                                               |
+| **Data Entrega**   | 30/01/2026                                               |
+| **Status**         | ✅ Completo - v2.0 (29/01/2026)                          |
+| **Atualização**    | Design visual atualizado para paridade com Spotify Badge |
+
+---
+
+## 📝 Changelog
+
+### v2.0 - 29/01/2026 - **Atualização Visual Completa**
+
+**Objetivo:** Criar paridade visual total com SpotifyBadge para experiência consistente
+
+**Mudanças Implementadas:**
+
+✅ **Design Visual Atualizado:**
+
+- Gradient background: `linear-gradient(135deg, #007b9a 0%, #009bb8 100%)`
+- Box-shadow elaborado com dupla camada
+- Border-radius aumentado: `16px` (antes: `12px`)
+- Backdrop-filter: `blur(4px)` adicionado
+- Hover animation com cubic-bezier: `scale(1.05) translateX(-4px)`
+- Filter brightness no hover: `brightness(1.1)`
+
+✅ **Texto "ACESSIBILIDADE" Adicionado:**
+
+- Desktop: Mostra texto + ícone (igual ao Spotify "PLAYLIST")
+- Mobile/Tablet: Apenas ícone ♿
+- Text-shadow: `0 1px 2px rgba(0, 0, 0, 0.1)`
+
+✅ **Efeitos Avançados:**
+
+- Drop-shadow no ícone: `0 2px 4px rgba(0, 0, 0, 0.2)`
+- Rotação do ícone no hover: `rotate(8deg) scale(1.1)`
+- Animações no load (mobile): `badge-pulse` + `icon-bounce`
+
+✅ **Resultado:**
+
+- 100% paridade visual com SpotifyBadge
+- Simetria perfeita (esquerda/direita)
+- Experiência premium e consistente
+
+### v1.0 - 28/01/2026 - Implementação Inicial
+
+**Features:**
+
+- Badge básico com ícone ♿
+- Auto-hide em mobile
+- Smooth scroll
+- i18n completo
 
 ---
 
@@ -219,29 +267,40 @@ Não necessário
 
 ## 🎬 Animações e Interações
 
-### Animações de Entrada
+### Animações de Entrada (v2.0)
 
-- [ ] Fade in: opacity 0 → 1 (300ms ease-out)
-- [ ] Sincronizado com carregamento da página
+- [x] **badge-pulse**: Scale animation (1 → 1.02 → 1) - 1.5s, 2 iterações
+- [x] **icon-bounce**: Ícone bounce (1 → 1.08 → 1) - 1.5s, 2 iterações
+- [x] Aplicado apenas em mobile (<1024px)
+- [x] Respects `prefers-reduced-motion: reduce`
 
-### Hover States
+### Hover States (v2.0)
 
-- [ ] Desktop hover: scale 1.02 + background teal-dark + shadow aumenta
-- [ ] Mobile hover: mantém scale 1 (sem escala)
-- [ ] Cursor pointer em todos os estados
+- [x] **Desktop hover:**
+  - `transform: scale(1.05) translateX(-4px)` com `cubic-bezier(0.34, 1.56, 0.64, 1)`
+  - `filter: brightness(1.1)`
+  - Box-shadow aumenta: `0 12px 32px rgba(0, 123, 154, 0.5)`
+  - Ícone rota: `rotate(8deg) scale(1.1)`
+- [x] **Mobile hover:**
+  - `transform: scale(1.05)`
+  - `filter: brightness(1.15)`
+  - Shadow intensificado
+- [x] Cursor pointer em todos os estados
 
-### Transições
+### Transições (v2.0)
 
-- [ ] Opacity: 0.3s ease (auto-hide)
-- [ ] Transform: 0.2s ease (hover scale)
-- [ ] Background-color: 0.2s ease (hover)
-- [ ] Box-shadow: 0.2s ease (hover)
+- [x] Opacity: 0.3s ease (auto-hide)
+- [x] Transform: 0.3s `cubic-bezier(0.34, 1.56, 0.64, 1)` (bounce effect)
+- [x] Background: 0.6s ease (smooth gradient transition)
+- [x] Box-shadow: 0.6s ease (shadow growth)
+- [x] Filter: 0.2s ease (brightness)
 
-### Auto-hide Mobile
+### Auto-hide Mobile (v2.0)
 
-- [ ] Idle → hidden: opacity 0.85 → 0.4 (0.5s ease)
-- [ ] Hidden → active: opacity 0.4 → 0.85 (0.3s ease)
-- [ ] Debounce: 150ms
+- [x] Idle → hidden: opacity 0.9 → 0.5 (0.5s ease)
+- [x] Hidden → active: opacity 0.5 → 0.9 (0.3s ease)
+- [x] Debounce: 150ms
+- [x] Timeout: 3s de inatividade
 
 **Biblioteca:** Vanilla CSS (sem Framer Motion necessário)
 
