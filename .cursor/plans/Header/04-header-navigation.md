@@ -85,16 +85,18 @@ O Header é o **ponto de entrada principal** da navegação do site, proporciona
 - **Prioridade:** 🔴 Must Have
 - **Status no código base:** ✅ Implementado (precisa validar e ajustar estilos)
 
-### RF-06: Header Sticky/Fixed com Efeito Glass e Transição
+### RF-06: Header Sticky/Fixed com Blur Condicional
 
-- **Descrição:** Header fixo no topo, posicionado SOBRE o Hero Section (vídeo/imagem de fundo)
-- **Estado Normal (sobre Hero):** Efeito glass (glassmorphism) - transparente com `backdrop-filter: blur()` para permitir visualização do vídeo/imagem do hero através do header
-- **Estado Após Scroll (sobre conteúdo sólido):** Opaco com cor escura (preto/preto escuro) - melhor legibilidade quando não está sobre hero
-- **Z-index:** 50+ (acima do hero que tem z-index: 0-10)
+- **Descrição:** Header fixo no topo, posicionado SOBRE o Hero Section (vídeo/imagem de fundo), com blur aplicado apenas após scroll
+- **Estado Inicial (sem scroll):** Transparente total (`background: transparent`, `backdrop-filter: none`) - permite visualização completa do hero section ao carregar
+- **Estado Após Scroll:** Semi-transparente escuro (`background: rgba(0, 0, 0, 0.15)`) com blur (`backdrop-filter: blur(10px)`) - melhor legibilidade quando scrolla
+- **Z-index:** 50 (acima do hero que tem z-index: 0-10)
 - **Transição:** Suave entre os dois estados (0.3s ease)
-- **User Story:** Como usuário, eu quero que o header permaneça acessível durante o scroll da página, com visual moderno que não bloqueie completamente o vídeo do hero
-- **Prioridade:** 🟡 Should Have
-- **Status no código base:** ✅ Lógica implementada (precisa criar estilos CSS com glassmorphism)
+- **Sem linha divisória:** Traço/borda inferior completamente removido
+- **Tamanho reduzido:** Padding e altura minimizados (`min-height: 56px`, `padding: 0.75rem 1.25rem`, logo `32px`) para menos invasão do hero
+- **User Story:** Como usuário, eu quero que o header permaneça acessível durante o scroll da página, sem bloquear visualmente o hero section no carregamento inicial
+- **Prioridade:** 🔴 Must Have
+- **Status no código base:** ✅ Implementado completamente (29/01/2026)
 
 ### RF-07: Espaçamento e Tipografia
 
@@ -226,37 +228,44 @@ Header (z-index: 50+)
 
 ### Estados Visuais
 
-#### Estado Normal (Sobre Hero Section) - Glassmorphism
+#### Estado Inicial (Sobre Hero Section - Sem Scroll) - Totalmente Transparente
 
-**Razão:** Header fica sobre vídeo/imagem do hero, precisa de transparência com blur para não bloquear completamente o conteúdo.
+**Razão:** Header fica sobre vídeo/imagem do hero, deve ser totalmente transparente no carregamento para não bloquear a visualização.
 
 ```css
 - Position: fixed
 - Top: 0
-- Z-index: 50+ (acima do hero que tem z-index: 0-10)
-- Background: rgba(0, 0, 0, 0.1) ou rgba(0, 0, 0, 0.2)
-- Backdrop-filter: blur(10px) saturate(180%)
-- -webkit-backdrop-filter: blur(10px) saturate(180%) /* Safari */
-- Border-bottom: 1px solid rgba(255, 255, 255, 0.1) (opcional)
-- Box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
+- Z-index: 50 (acima do hero que tem z-index: 0-10)
+- Background: transparent /* TOTALMENTE TRANSPARENTE */
+- Backdrop-filter: none /* SEM BLUR NO ESTADO INICIAL */
+- -webkit-backdrop-filter: none /* Safari */
+- Border-bottom: none /* SEM LINHA DIVISÓRIA */
+- Box-shadow: none /* SEM SOMBRA */
 - Texto: Branco/claro (#ffffff) para contraste sobre vídeo
+- Min-height: 56px /* REDUZIDO */
+- Padding: 0.75rem 1.25rem /* REDUZIDO */
+- Logo height: 32px /* REDUZIDO */
 ```
 
-**Nota:** O `backdrop-filter: blur()` cria o efeito glass que permite ver o vídeo/imagem do hero através do header de forma suave e elegante.
+**Nota:** No estado inicial, o header é apenas os elementos (logo, botão, seletor) sem qualquer background ou efeito visual que bloqueie o hero.
 
-#### Estado Após Scroll (Sobre Conteúdo Sólido) - Opaco Escuro
+#### Estado Após Scroll - Semi-transparente com Blur
 
-**Razão:** Quando scrolla, o header não está mais sobre o hero, então pode ser opaco para melhor legibilidade.
+**Razão:** Quando scrolla, aplica-se blur e background semi-transparente para melhor legibilidade e efeito visual elegante.
 
 ```css
-- Background: rgba(0, 0, 0, 0.95) ou #0a0a0a
-- Backdrop-filter: none (remove blur quando opaco)
+- Background: rgba(0, 0, 0, 0.15) /* SEMI-TRANSPARENTE (não opaco total) */
+- Backdrop-filter: blur(10px) saturate(180%) /* BLUR APLICADO APENAS APÓS SCROLL */
+- -webkit-backdrop-filter: blur(10px) saturate(180%) /* Safari */
 - Box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3)
 - Texto: Branco/claro mantido (#ffffff)
 - Transição: 0.3s ease (transição suave entre estados)
+- Border-bottom: none /* SEM LINHA DIVISÓRIA */
 ```
 
 **Classe CSS:** `.header-scrolled` aplicada quando `window.scrollY > threshold`
+
+**Nota:** O blur é aplicado APENAS após scroll, não no estado inicial, criando uma transição elegante.
 
 ### Elementos Individuais
 
@@ -312,11 +321,12 @@ Header (z-index: 50+)
 
 ### Scroll Animations
 
-- [ ] Header muda de glass (transparente com blur) para opaco escuro ao fazer scroll
-- [ ] **Razão:** No topo está sobre o Hero Section (vídeo), após scroll está sobre conteúdo sólido
-- [ ] Sombra sutil aparece no header após scroll
-- [ ] Transição suave entre estados (0.3s ease)
-- **Status no código base:** ✅ Lógica implementada (precisa criar estilos CSS com glassmorphism)
+- [x] Header muda de transparente total (sem blur) para semi-transparente com blur ao fazer scroll
+- [x] **Razão:** No topo, totalmente transparente para visualização do Hero Section; após scroll, blur para legibilidade
+- [x] Sombra sutil aparece no header após scroll (`0 4px 12px rgba(0, 0, 0, 0.3)`)
+- [x] Transição suave entre estados (0.3s ease)
+- [x] **Sem linha divisória:** Traço/borda inferior completamente removido
+- **Status no código base:** ✅ Implementado completamente (29/01/2026)
 
 ### Transições
 
@@ -535,16 +545,18 @@ Header (z-index: 50+)
 
 ### Design
 
-- [ ] Visual conforme Design System
-- [ ] Cores da paleta oficial STL (#ff4d2d para CTA, etc.)
-- [ ] Tipografia correta (Jairo para logo/títulos)
-- [ ] Espaçamento consistente (sistema 8px)
-- [ ] Alinhamento correto
-- [ ] Logo responsivo (tamanhos adequados)
-- [ ] **Efeito glass funcionando:** Header transparente com blur sobre Hero Section
-- [ ] **Z-index correto:** Header (z-index: 50+) acima do Hero (z-index: 0-10)
-- [ ] **Transição suave:** Glass → Opaco escuro ao scrollar
-- [ ] **Legibilidade:** Texto branco/claro legível em ambos os estados (glass e opaco)
+- [x] Visual conforme Design System
+- [x] Cores da paleta oficial STL (#1DB954 verde Spotify para CTA)
+- [x] Tipografia correta (sistema para texto do header)
+- [x] Espaçamento consistente (gap: 1rem entre elementos)
+- [x] Alinhamento correto (flex justify-between)
+- [x] Logo responsivo (32px desktop, 44px tablet, 32px mobile, 28px mobile pequeno)
+- [x] **Tamanho reduzido:** Padding `0.75rem 1.25rem`, min-height `56px`, logo `32px`
+- [x] **Estado inicial transparente:** Header totalmente transparente sem blur ao carregar
+- [x] **Z-index correto:** Header (z-index: 50) acima do Hero (z-index: 0-10)
+- [x] **Transição suave:** Transparente → Semi-transparente com blur ao scrollar
+- [x] **Legibilidade:** Texto branco/claro legível em ambos os estados
+- [x] **Sem linha divisória:** Traço/borda inferior completamente removido
 
 ### Performance
 
