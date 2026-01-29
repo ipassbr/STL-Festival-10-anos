@@ -532,13 +532,14 @@ function updateTextProgress(progress: number) {
 
 ### Design
 
-- **Fundo:** Preto sólido ou azul índigo escuro (`#1e1876` do design system)
-- **Barra de loader:** Barra horizontal fina (2-4px) na parte inferior, branca ou vermelho-alaranjado (`#ff4d2d`)
-- **Texto:** Fonte sans-serif simples e fina, branca, centralizada vertical e horizontalmente
+- **Fundo:** Preto sólido (`#000000`)
+- **Barra de loader:** Barra horizontal fina (3px) na parte inferior, branca (`#ffffff`)
+- **Texto:** Fonte IDV Jairo (Marca Registrada STL), branca, centralizada vertical e horizontalmente
 - **Frase:** "Venha fazer parte da nossa História, conexão, música, natureza e sustentabilidade" (PT-BR)
-- **Tipografia:** Sistema de fontes leve (não Jairo ou Superbusy - muito pesadas para este design minimalista)
-- **Espaçamento:** Texto centralizado, barra de loader na parte inferior (bottom: 0 ou 2-4%)
+- **Tipografia:** Jairo (Condensed Rounded) - fonte IDV oficial do STL Festival
+- **Espaçamento:** Texto centralizado, barra de loader na parte inferior (bottom: 0)
 - **Animações:** Suaves, elegantes, sem distrações (fade in/out, texto progressivo, barra de loader animada)
+- **Velocidade:** Preloader mais lento (tempo mínimo 2.5s, delay inicial 800ms, transições mais lentas)
 
 ### Performance
 
