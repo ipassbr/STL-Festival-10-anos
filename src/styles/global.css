@@ -65,6 +65,21 @@
     --color-indigo-light: #2d2499;
     --color-indigo-dark: #15115a;
 
+    /* Dourado/Gold (Accent) */
+    --color-gold: #d2aa56;
+    --color-gold-light: #e0bf75;
+    --color-gold-dark: #b8934a;
+
+    /* Verde STL (Gradient Accent) */
+    --color-green-stl: #38966d;
+    --color-green-stl-light: #4aab80;
+    --color-green-stl-dark: #2d7a59;
+
+    /* Spotify Brand (External) */
+    --color-spotify: #1db954;
+    --color-spotify-light: #1ed760;
+    --color-spotify-dark: #1aa34a;
+
     /* Grayscale */
     --color-white: #ffffff;
     --color-black: #000000;

@@ -141,7 +141,11 @@ const { playlistUrl, class: className = '' } = Astro.props;
     z-index: 50;
 
     /* Visual - Design moderno */
-    background: linear-gradient(135deg, #1db954 0%, #1ed760 100%);
+    background: linear-gradient(
+      135deg,
+      var(--color-spotify) 0%,
+      var(--color-spotify-light) 100%
+    );
     color: white;
     border-radius: 0 16px 16px 0; /* Mais arredondado */
     padding: 0;
@@ -262,7 +266,11 @@ const { playlistUrl, class: className = '' } = Astro.props;
 
   /* Hero - Spotify Green (padrão) */
   .spotify-badge[data-section='hero'] {
-    background: linear-gradient(135deg, #1db954 0%, #1ed760 100%);
+    background: linear-gradient(
+      135deg,
+      var(--color-spotify) 0%,
+      var(--color-spotify-light) 100%
+    );
     box-shadow:
       0 8px 24px rgba(29, 185, 84, 0.4),
       0 4px 8px rgba(0, 0, 0, 0.2);
@@ -270,7 +278,11 @@ const { playlistUrl, class: className = '' } = Astro.props;
 
   /* Lineup - Laranja Intenso */
   .spotify-badge[data-section='lineup'] {
-    background: linear-gradient(135deg, #ff9d28 0%, #ffb34d 100%);
+    background: linear-gradient(
+      135deg,
+      var(--color-orange) 0%,
+      var(--color-orange-light) 100%
+    );
     box-shadow:
       0 8px 24px rgba(255, 157, 40, 0.4),
       0 4px 8px rgba(0, 0, 0, 0.2);
@@ -278,7 +290,11 @@ const { playlistUrl, class: className = '' } = Astro.props;
 
   /* Setores - Vermelho-Alaranjado */
   .spotify-badge[data-section='setores'] {
-    background: linear-gradient(135deg, #ff4d2d 0%, #ff7052 100%);
+    background: linear-gradient(
+      135deg,
+      var(--color-red) 0%,
+      var(--color-red-light) 100%
+    );
     box-shadow:
       0 8px 24px rgba(255, 77, 45, 0.4),
       0 4px 8px rgba(0, 0, 0, 0.2);
@@ -286,7 +302,11 @@ const { playlistUrl, class: className = '' } = Astro.props;
 
   /* Sobre - Azul Teal */
   .spotify-badge[data-section='sobre'] {
-    background: linear-gradient(135deg, #007b9a 0%, #009bb8 100%);
+    background: linear-gradient(
+      135deg,
+      var(--color-blue) 0%,
+      var(--color-blue-light) 100%
+    );
     box-shadow:
       0 8px 24px rgba(0, 123, 154, 0.4),
       0 4px 8px rgba(0, 0, 0, 0.2);
@@ -294,7 +314,11 @@ const { playlistUrl, class: className = '' } = Astro.props;
 
   /* STL Valley - Verde Profundo */
   .spotify-badge[data-section='stl-valley'] {
-    background: linear-gradient(135deg, #006a47 0%, #009966 100%);
+    background: linear-gradient(
+      135deg,
+      var(--color-green) 0%,
+      var(--color-green-light) 100%
+    );
     box-shadow:
       0 8px 24px rgba(0, 106, 71, 0.4),
       0 4px 8px rgba(0, 0, 0, 0.2);
@@ -302,7 +326,11 @@ const { playlistUrl, class: className = '' } = Astro.props;
 
   /* FAQ - Azul Índigo */
   .spotify-badge[data-section='faq'] {
-    background: linear-gradient(135deg, #1e1876 0%, #2d2499 100%);
+    background: linear-gradient(
+      135deg,
+      var(--color-indigo) 0%,
+      var(--color-indigo-light) 100%
+    );
     box-shadow:
       0 8px 24px rgba(30, 24, 118, 0.4),
       0 4px 8px rgba(0, 0, 0, 0.2);

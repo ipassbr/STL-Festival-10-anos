@@ -15,6 +15,9 @@ interface PreloaderProps {
   phraseBottom: string;
 }
 
+// Flag global para prevenir múltiplas instâncias
+let preloaderInstance: boolean = false;
+
 export default function Preloader({
   logoSrc,
   phraseTop,
@@ -23,20 +26,18 @@ export default function Preloader({
   const [isComplete, setIsComplete] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
-  // Verificar sessionStorage no mount
-  // Em desenvolvimento (localhost), sempre renderizar para facilitar testes
+  // Sempre renderizar o preloader (mas verificar instância única)
   const [shouldRender] = useState(() => {
     if (typeof window === 'undefined') return true;
 
-    const PRELOADER_KEY = 'stl-festival-preloader-shown';
-    const hasShown = sessionStorage.getItem(PRELOADER_KEY) === 'true';
+    // Se já existe uma instância, não renderizar outra
+    if (preloaderInstance) {
+      console.warn('[Preloader] Instância duplicada detectada e bloqueada');
+      return false;
+    }
 
-    // Em desenvolvimento, sempre renderizar (ignorar sessionStorage)
-    const isDevelopment =
-      window.location.hostname === 'localhost' ||
-      window.location.hostname === '127.0.0.1';
-
-    return isDevelopment ? true : !hasShown;
+    preloaderInstance = true;
+    return true;
   });
 
   // Initialize reducedMotion with the current value
@@ -94,7 +95,13 @@ export default function Preloader({
   useEffect(() => {
     if (!isMobile || reducedMotion || isComplete || !shouldRender) return;
 
+    // Flag para prevenir múltiplas execuções
+    let hasStarted = false;
+
     const autoPlayTimer = setTimeout(() => {
+      if (hasStarted) return;
+      hasStarted = true;
+
       let currentProgress = 0;
       const autoPlayInterval = setInterval(() => {
         currentProgress += 2;
@@ -114,10 +121,6 @@ export default function Preloader({
           setIsComplete(true);
           window.dispatchEvent(new CustomEvent('preloader-complete'));
 
-          // Marcar como exibido no sessionStorage
-          const PRELOADER_KEY = 'stl-festival-preloader-shown';
-          sessionStorage.setItem(PRELOADER_KEY, 'true');
-
           setTimeout(() => {
             document.body.style.overflow = '';
             window.scrollTo(0, 0);
@@ -128,7 +131,10 @@ export default function Preloader({
       return () => clearInterval(autoPlayInterval);
     }, 500);
 
-    return () => clearTimeout(autoPlayTimer);
+    return () => {
+      clearTimeout(autoPlayTimer);
+      hasStarted = false;
+    };
   }, [isMobile, reducedMotion, isComplete, shouldRender, progressMotion]);
 
   // Capturar eventos de scroll e controlar progresso (apenas desktop)
@@ -136,8 +142,11 @@ export default function Preloader({
     if (isComplete || reducedMotion || isMobile || !shouldRender) return;
 
     let lastTouchY = 0;
+    let isProcessing = false; // Flag para prevenir execuções simultâneas
 
     const updateProgress = (newProgress: number) => {
+      if (isProcessing) return;
+
       progressRef.current = newProgress;
       progressMotion.set(newProgress);
       window.dispatchEvent(
@@ -145,17 +154,15 @@ export default function Preloader({
       );
 
       if (newProgress >= 100 && !isComplete) {
+        isProcessing = true;
         setIsComplete(true);
         window.dispatchEvent(new CustomEvent('preloader-complete'));
-
-        // Marcar como exibido no sessionStorage
-        const PRELOADER_KEY = 'stl-festival-preloader-shown';
-        sessionStorage.setItem(PRELOADER_KEY, 'true');
 
         // Garantir que usuário permanece no topo (seção Hero)
         window.scrollTo(0, 0);
         setTimeout(() => {
           document.body.style.overflow = '';
+          isProcessing = false;
         }, 500);
       }
     };
@@ -204,6 +211,11 @@ export default function Preloader({
     // Garantir que usuário permanece no topo durante toda a animação
     window.scrollTo(0, 0);
 
+    // Remover listeners existentes antes de adicionar novos (prevenir duplicatas)
+    window.removeEventListener('wheel', handleWheel);
+    window.removeEventListener('touchstart', handleTouchStart);
+    window.removeEventListener('touchmove', handleTouchMove);
+
     // Adicionar listeners
     window.addEventListener('wheel', handleWheel, { passive: false });
     window.addEventListener('touchstart', handleTouchStart, { passive: false });
@@ -217,6 +229,7 @@ export default function Preloader({
       window.removeEventListener('touchstart', handleTouchStart);
       window.removeEventListener('touchmove', handleTouchMove);
       document.body.style.overflow = '';
+      isProcessing = false;
     };
   }, [isComplete, reducedMotion, isMobile, shouldRender, progressMotion]);
 
@@ -228,11 +241,21 @@ export default function Preloader({
       const preloader = document.getElementById('stl-preloader-root');
       if (preloader) {
         preloader.remove();
+        // Resetar flag global após remover
+        preloaderInstance = false;
       }
     }, 1000);
 
     return () => clearTimeout(removalTimer);
   }, [isComplete]);
+
+  // Cleanup global ao desmontar componente
+  useEffect(() => {
+    return () => {
+      // Resetar flag quando componente é desmontado
+      preloaderInstance = false;
+    };
+  }, []);
 
   // Se reduced motion, completo, ou já foi exibido (em produção), não renderizar preloader
   if (reducedMotion || isComplete || !shouldRender) {
@@ -277,7 +300,7 @@ export default function Preloader({
 
           {/* Primeira parte da frase - Fonte Superbusy Activity (IDV) */}
           <motion.p
-            className="max-w-xl px-4 text-center text-xl font-light text-white sm:text-2xl md:text-3xl"
+            className="max-w-xl px-4 text-center text-2xl font-light text-white sm:text-3xl md:text-4xl lg:text-5xl"
             style={{
               fontFamily:
                 "var(--font-decorative, 'Superbusy Activity'), cursive, sans-serif",
@@ -297,7 +320,7 @@ export default function Preloader({
       >
         {/* Segunda parte da frase - Fonte Jairo (IDV) */}
         <motion.p
-          className="pointer-events-none max-w-2xl px-6 text-center text-base leading-relaxed text-white sm:text-lg md:px-8 md:text-xl"
+          className="pointer-events-none max-w-2xl px-6 text-center text-lg leading-relaxed text-white sm:text-xl md:px-8 md:text-2xl lg:text-3xl"
           style={{
             opacity: phraseOpacity,
             fontFamily:

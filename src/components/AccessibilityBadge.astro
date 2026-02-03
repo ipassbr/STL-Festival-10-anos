@@ -97,7 +97,11 @@ const t = useTranslations(lang);
     z-index: 50;
 
     /* Visual - Design moderno com gradient */
-    background: linear-gradient(135deg, #007b9a 0%, #009bb8 100%);
+    background: linear-gradient(
+      135deg,
+      var(--color-blue) 0%,
+      var(--color-blue-light) 100%
+    );
     color: white;
     border-radius: 16px 0 0 16px; /* Mais arredondado, igual ao Spotify */
     padding: 0;
