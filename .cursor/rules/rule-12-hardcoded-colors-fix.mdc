@@ -1,0 +1,343 @@
+---
+alwaysApply: true
+---
+
+================================================================================
+rule-12-hardcoded-colors-fix.md
+LEI 12: Auditoria & Correção de Cores Hardcoded
+================================================================================
+
+MOTIVO:
+Cores hardcoded (valores hex diretos como #006a47) espalhados pelo código
+quebram a consistência visual, dificultam manutenção e impedem temas dinâmicos.
+Esta rule define o processo sistemático para identificar, mapear e corrigir
+cores hardcoded substituindo-as por tokens CSS definidos em `global.css`.
+
+GATILHO:
+Ativado ao revisar código existente, fazer refatoração visual, ou quando
+detectar padrões de cores hardcoded em arquivos CSS, Astro, TSX, ou Tailwind.
+
+PALETA OFICIAL DE TOKENS (Mapeamento):
+| Cor Hardcoded | Token CSS | Uso Semântico |
+|---------------|-----------|---------------|
+| `#006a47` | `var(--color-green)` | Verde primário |
+| `#009966` | `var(--color-green-light)` | Verde claro |
+| `#004d33` | `var(--color-green-dark)` | Verde escuro |
+| `#ff4d2d` | `var(--color-red)` | Vermelho-alaranjado accent |
+| `#ff7052` | `var(--color-red-light)` | Vermelho claro |
+| `#e63d1f` | `var(--color-red-dark)` | Vermelho escuro |
+| `#ff9d28` | `var(--color-orange)` | Laranja intenso |
+| `#ffb34d` | `var(--color-orange-light)` | Laranja claro |
+| `#e68a1f` | `var(--color-orange-dark)` | Laranja escuro |
+| `#007b9a` | `var(--color-blue)` | Azul teal secundário |
+| `#009bb8` | `var(--color-blue-light)` | Azul claro |
+| `#005f77` | `var(--color-blue-dark)` | Azul escuro |
+| `#fefbdf` | `var(--color-cream)` | Creme base (background) |
+| `#fffef0` | `var(--color-cream-light)` | Creme claro |
+| `#f5f2c8` | `var(--color-cream-dark)` | Creme escuro |
+| `#1e1876` | `var(--color-indigo)` | Azul índigo (dark) |
+| `#2d2499` | `var(--color-indigo-light)` | Índigo claro |
+| `#15115a` | `var(--color-indigo-dark)` | Índigo escuro |
+| `#ffffff` | `var(--color-white)` | Branco puro |
+| `#000000` | `var(--color-black)` | Preto puro |
+| `#fafafa` | `var(--color-gray-50)` | Cinza 50 |
+| `#f5f5f5` | `var(--color-gray-100)` | Cinza 100 |
+| `#eeeeee` | `var(--color-gray-200)` | Cinza 200 |
+| `#e0e0e0` | `var(--color-gray-300)` | Cinza 300 |
+| `#bdbdbd` | `var(--color-gray-400)` | Cinza 400 |
+| `#9e9e9e` | `var(--color-gray-500)` | Cinza 500 |
+| `#757575` | `var(--color-gray-600)` | Cinza 600 |
+| `#616161` | `var(--color-gray-700)` | Cinza 700 |
+| `#424242` | `var(--color-gray-800)` | Cinza 800 |
+| `#212121` | `var(--color-gray-900)` | Cinza 900 |
+| `#d2aa56` | `var(--color-gold)` | Dourado/Gold |
+| `#e0bf75` | `var(--color-gold-light)` | Dourado claro |
+| `#b8934a` | `var(--color-gold-dark)` | Dourado escuro |
+| `#38966d` | `var(--color-green-stl)` | Verde STL (gradient) |
+| `#4aab80` | `var(--color-green-stl-light)` | Verde STL claro |
+| `#2d7a59` | `var(--color-green-stl-dark)` | Verde STL escuro |
+| `#1db954` | `var(--color-spotify)` | Verde Spotify |
+| `#1ed760` | `var(--color-spotify-light)` | Verde Spotify claro |
+| `#1aa34a` | `var(--color-spotify-dark)` | Verde Spotify escuro |
+
+DETECÇÃO — COMANDOS DE AUDITORIA:
+```bash
+# Buscar TODOS os hex codes hardcoded no src/
+grep -rn --include="*.astro" --include="*.css" --include="*.tsx" --include="*.ts" \
+  -E "#[0-9a-fA-F]{3,8}" src/
+
+# Buscar hex codes específicos (case insensitive)
+grep -rin --include="*.{astro,css,tsx,ts}" "#006a47\|#ff4d2d\|#fefbdf" src/
+
+# Buscar valores arbitrários Tailwind com cores
+grep -rn --include="*.astro" --include="*.tsx" -E "\[#[0-9a-fA-F]+\]" src/
+
+# Buscar inline styles com cores
+grep -rn --include="*.astro" --include="*.tsx" -E "style=.*color.*#" src/
+
+# Buscar background-color hardcoded em CSS
+grep -rn --include="*.css" -E "background(-color)?:\s*#" src/
+
+# Contar ocorrências por arquivo
+grep -rc --include="*.{astro,css,tsx}" -E "#[0-9a-fA-F]{6}" src/ | grep -v ":0$"
+```
+
+PADRÕES PROBLEMÁTICOS A IDENTIFICAR:
+
+### 1. Inline Styles com Hex
+```astro
+{/* ❌ ERRADO: Inline style com cor hardcoded */}
+<div style="background-color: #006a47; color: #fefbdf;">
+  Conteúdo
+</div>
+
+{/* ✅ CORRETO: Usar classes ou CSS com tokens */}
+<div class="bg-primary text-cream">
+  Conteúdo
+</div>
+```
+
+### 2. Classes Tailwind Arbitrárias
+```astro
+{/* ❌ ERRADO: Valor arbitrário Tailwind */}
+<button class="bg-[#ff4d2d] text-[#fefbdf] hover:bg-[#e63d1f]">
+  CTA
+</button>
+
+{/* ✅ CORRETO: Usar cores do tema Tailwind */}
+<button class="bg-red text-cream hover:bg-red-dark">
+  CTA
+</button>
+```
+
+### 3. CSS com Valores Hex Diretos
+```css
+/* ❌ ERRADO: Cor hardcoded no CSS */
+.hero-section {
+  background: linear-gradient(135deg, #006a47 0%, #004d33 100%);
+  color: #fefbdf;
+}
+
+/* ✅ CORRETO: Usar CSS custom properties */
+.hero-section {
+  background: linear-gradient(135deg, var(--color-green) 0%, var(--color-green-dark) 100%);
+  color: var(--color-cream);
+}
+```
+
+### 4. SVG com Fill/Stroke Hardcoded
+```astro
+{/* ❌ ERRADO: SVG com cores fixas */}
+<svg fill="#006a47" stroke="#ff4d2d">
+  <path d="..."/>
+</svg>
+
+{/* ✅ CORRETO: Usar currentColor ou tokens */}
+<svg fill="currentColor" stroke="var(--color-red)">
+  <path d="..."/>
+</svg>
+
+{/* OU via classe */}
+<svg class="fill-green stroke-red">
+  <path d="..."/>
+</svg>
+```
+
+### 5. JavaScript/TypeScript com Cores
+```typescript
+// ❌ ERRADO: Cor hardcoded em JS/TS
+const styles = {
+  backgroundColor: '#006a47',
+  color: '#fefbdf'
+}
+
+// ✅ CORRETO: Usar CSS variable via getComputedStyle ou constantes
+const styles = {
+  backgroundColor: 'var(--color-green)',
+  color: 'var(--color-cream)'
+}
+
+// OU se precisar do valor real:
+const getCssVar = (name: string) =>
+  getComputedStyle(document.documentElement).getPropertyValue(name).trim()
+
+const greenColor = getCssVar('--color-green')
+```
+
+PROCESSO DE CORREÇÃO SISTEMÁTICA:
+
+### Passo 1: Auditoria Inicial
+```bash
+# Gerar relatório de todas cores hardcoded
+grep -rn --include="*.astro" --include="*.css" --include="*.tsx" \
+  -E "#[0-9a-fA-F]{6}" src/ > color-audit.txt
+
+# Contar total de ocorrências
+wc -l color-audit.txt
+```
+
+### Passo 2: Classificar por Prioridade
+- 🔴 **Alta**: Cores da paleta oficial hardcoded (green, red, cream, etc.)
+- 🟡 **Média**: Cores de grayscale hardcoded (white, black, grays)
+- 🟢 **Baixa**: Cores em definições de gradientes complexos
+
+### Passo 3: Substituição Arquivo por Arquivo
+```bash
+# Exemplo de substituição usando sed (macOS/Linux)
+# Verde primário
+sed -i 's/#006a47/var(--color-green)/g' src/components/Example.astro
+
+# Creme base
+sed -i 's/#fefbdf/var(--color-cream)/g' src/components/Example.astro
+
+# Vermelho accent
+sed -i 's/#ff4d2d/var(--color-red)/g' src/components/Example.astro
+```
+
+### Passo 4: Validação Visual
+- Verificar se o componente mantém a aparência esperada
+- Testar em diferentes temas se aplicável
+- Validar contraste de cores para acessibilidade
+
+EXCEÇÕES PERMITIDAS (cores que podem ser hardcoded):
+- Cores em `global.css` dentro de `:root` (definição dos próprios tokens)
+- Cores em comentários de documentação
+- Cores em arquivos de configuração externos (ex: tailwind.config.mjs referenciando tokens)
+- Valores transparentes (`transparent`, `currentColor`)
+- Valores RGB/RGBA/HSL quando necessário para opacidade dinâmica
+
+CONFIGURAÇÃO TAILWIND RECOMENDADA:
+```javascript
+// tailwind.config.mjs — Mapear tokens CSS para classes Tailwind
+export default {
+  theme: {
+    extend: {
+      colors: {
+        // Primárias
+        green: {
+          DEFAULT: 'var(--color-green)',
+          light: 'var(--color-green-light)',
+          dark: 'var(--color-green-dark)',
+        },
+        red: {
+          DEFAULT: 'var(--color-red)',
+          light: 'var(--color-red-light)',
+          dark: 'var(--color-red-dark)',
+        },
+        orange: {
+          DEFAULT: 'var(--color-orange)',
+          light: 'var(--color-orange-light)',
+          dark: 'var(--color-orange-dark)',
+        },
+        blue: {
+          DEFAULT: 'var(--color-blue)',
+          light: 'var(--color-blue-light)',
+          dark: 'var(--color-blue-dark)',
+        },
+        cream: {
+          DEFAULT: 'var(--color-cream)',
+          light: 'var(--color-cream-light)',
+          dark: 'var(--color-cream-dark)',
+        },
+        indigo: {
+          DEFAULT: 'var(--color-indigo)',
+          light: 'var(--color-indigo-light)',
+          dark: 'var(--color-indigo-dark)',
+        },
+        gold: {
+          DEFAULT: 'var(--color-gold)',
+          light: 'var(--color-gold-light)',
+          dark: 'var(--color-gold-dark)',
+        },
+        'green-stl': {
+          DEFAULT: 'var(--color-green-stl)',
+          light: 'var(--color-green-stl-light)',
+          dark: 'var(--color-green-stl-dark)',
+        },
+        spotify: {
+          DEFAULT: 'var(--color-spotify)',
+          light: 'var(--color-spotify-light)',
+          dark: 'var(--color-spotify-dark)',
+        },
+        // Grayscale
+        gray: {
+          50: 'var(--color-gray-50)',
+          100: 'var(--color-gray-100)',
+          200: 'var(--color-gray-200)',
+          300: 'var(--color-gray-300)',
+          400: 'var(--color-gray-400)',
+          500: 'var(--color-gray-500)',
+          600: 'var(--color-gray-600)',
+          700: 'var(--color-gray-700)',
+          800: 'var(--color-gray-800)',
+          900: 'var(--color-gray-900)',
+        },
+      },
+    },
+  },
+}
+```
+
+PROIBIÇÕES:
+- Adicionar NOVAS cores hardcoded em qualquer arquivo
+- Usar valores Tailwind arbitrários para cores da paleta (`bg-[#006a47]`)
+- Definir cores inline em style attributes
+- Hardcode de cores em componentes React/TSX
+- Ignorar cores hardcoded durante code review
+- Usar `!important` para sobrescrever cores — refatorar a cascade
+
+REGEX PARA LINT/PRE-COMMIT HOOK:
+```javascript
+// .eslintrc.js ou eslint.config.js
+// Adicionar plugin para detectar cores hardcoded
+{
+  rules: {
+    'no-restricted-syntax': [
+      'error',
+      {
+        selector: 'Literal[value=/^#[0-9a-fA-F]{3,8}$/]',
+        message: 'Cores hex hardcoded não são permitidas. Use tokens CSS: var(--color-*)'
+      }
+    ]
+  }
+}
+```
+
+```bash
+# Pre-commit hook para bloquear cores hardcoded
+#!/bin/bash
+# .husky/pre-commit
+
+# Verificar cores hardcoded (excluindo global.css)
+HARDCODED=$(grep -rn --include="*.astro" --include="*.tsx" --include="*.ts" \
+  -E "#[0-9a-fA-F]{6}" src/ | grep -v "global.css" | head -5)
+
+if [ -n "$HARDCODED" ]; then
+  echo "❌ Cores hardcoded detectadas:"
+  echo "$HARDCODED"
+  echo ""
+  echo "Use tokens CSS: var(--color-*) ou classes Tailwind."
+  exit 1
+fi
+```
+
+CHECKLIST PRE-PR:
+- [ ] Executar auditoria de cores: `grep -rn -E "#[0-9a-fA-F]{6}" src/`
+- [ ] Nenhuma cor hardcoded nova introduzida
+- [ ] Cores existentes migradas para tokens CSS
+- [ ] Tailwind config usa referências aos tokens (não hex direto)
+- [ ] SVGs usam `currentColor` ou `var(--color-*)`
+- [ ] Inline styles eliminados — usar classes CSS
+- [ ] Valores arbitrários Tailwind `[#...]` removidos
+- [ ] Validação visual após substituições
+- [ ] Contraste de cores verificado (WCAG AA)
+
+WORKFLOW DE MIGRAÇÃO GRADUAL:
+```
+1. Identificar → Executar grep para mapear todas ocorrências
+2. Priorizar → Cores da paleta oficial primeiro
+3. Substituir → Um arquivo por vez, testar visualmente
+4. Validar → Verificar que UI permanece idêntica
+5. Commitar → Commits pequenos e focados por componente
+6. Prevenir → Adicionar pre-commit hook para bloquear novos hardcodes
+```

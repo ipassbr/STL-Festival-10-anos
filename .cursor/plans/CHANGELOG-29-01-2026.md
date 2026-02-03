@@ -483,7 +483,7 @@ o efeito visual é contínuo sem corte!
 
 ---
 
-**Documento criado em:** 29/01/2026  
-**Versão:** 1.0  
-**Autor:** Equipe de Desenvolvimento STL Festival  
+**Documento criado em:** 29/01/2026
+**Versão:** 1.0
+**Autor:** Equipe de Desenvolvimento STL Festival
 **Status:** ✅ Implementação Completa

@@ -108,7 +108,7 @@ const spotifyPlaylistUrl =
     role="marquee"
     aria-live="off"
     aria-label={t('hero.ticker.ariaLabel')}
-    style="background: linear-gradient(90deg, #38966d 0%, #d2aa56 100%);"
+    style="background: linear-gradient(90deg, var(--color-green-stl) 0%, var(--color-gold) 100%);"
   >
     <div class="hero-ticker__wrapper">
       <!-- Loop 1 -->
@@ -428,13 +428,13 @@ const spotifyPlaylistUrl =
     font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: #fefbdf; /* Creme */
+    color: var(--color-cream); /* Creme */
     padding: 0 var(--spacing-xs);
   }
 
   .hero-ticker__star {
     font-size: clamp(1.25rem, 3vw, 1.75rem);
-    color: #ff4d2d; /* Vermelho STL */
+    color: var(--color-red); /* Vermelho STL */
     line-height: 1;
     flex-shrink: 0;
   }
