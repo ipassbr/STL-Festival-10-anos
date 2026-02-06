@@ -64,10 +64,10 @@ alwaysApply: true
 
 ### Componentes
 
-- Usar componentes shadcn/ui quando disponíveis
-- Estender componentes adequadamente
+- Usar componentes Astro (`.astro`) para conteúdo estático - sem JS no cliente
+- Usar componentes React (`.tsx`) apenas para interatividade com diretivas de hidratação (`client:load`, `client:idle`, `client:visible`, `client:only="react"`)
+- Usar Framer Motion para animações em componentes React
 - Manter variantes de componentes consistentes
-- Implementar animações adequadas
 - Usar utilitários de transição adequadamente
 - Manter acessibilidade em mente
 

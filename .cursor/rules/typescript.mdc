@@ -1,5 +1,35 @@
 ---
 description: Aplica configurações rigorosas do TypeScript, garantindo segurança de tipos em todo o projeto.
-globs: *.ts
+globs: "**/*.{ts,tsx}"
 ---
-- Aplicar configurações rigorosas do TypeScript, garantindo segurança de tipos em todo o projeto.
+
+# Diretrizes TypeScript
+
+## Configuração Rigorosa
+
+- Aplicar configurações rigorosas do TypeScript, garantindo segurança de tipos em todo o projeto
+- Manter `strict: true` habilitado no `tsconfig.json`
+
+## Tipagem
+
+- Preferir `interface` para tipos de objetos
+- Evitar `any` — usar `unknown` quando o tipo não for conhecido
+- Sempre tipar props de componentes React e Astro
+- Usar tipos utilitários do TypeScript quando apropriado (`Partial`, `Pick`, `Omit`, etc.)
+
+## Boas Práticas
+
+- Usar type narrowing ao invés de type assertions (`as`)
+- Preferir `const` assertions para valores literais imutáveis
+- Tipar retornos de funções explicitamente em funções exportadas
+- Usar enums apenas quando necessário — preferir union types (`type Status = 'active' | 'inactive'`)
+- Não ignorar erros de tipo com `@ts-ignore` — usar `@ts-expect-error` com justificativa se necessário
+
+## Aliases de Caminho
+
+- Usar aliases configurados no `tsconfig.json`:
+  - `@/*` → `src/*`
+  - `@components/*` → `src/components/*`
+  - `@i18n/*` → `src/i18n/*`
+  - `@layouts/*` → `src/layouts/*`
+  - `@styles/*` → `src/styles/*`
