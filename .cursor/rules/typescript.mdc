@@ -1,0 +1,5 @@
+---
+description: Aplica configurações rigorosas do TypeScript, garantindo segurança de tipos em todo o projeto.
+globs: *.ts
+---
+- Aplicar configurações rigorosas do TypeScript, garantindo segurança de tipos em todo o projeto.

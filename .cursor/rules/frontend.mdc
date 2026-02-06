@@ -1,0 +1,99 @@
+---
+description: Diretrizes de desenvolvimento frontend para projetos Astro, incluindo TypeScript rigoroso, TailwindCSS e melhores práticas de componentes UI.
+globs: **/*.css, **/*.tsx, **/*.jsx, **/*.ts, **/*.astro, tailwind.config.js, tailwind.config.ts
+alwaysApply: true
+---
+
+# Diretrizes Frontend
+
+## Diretrizes TypeScript
+
+- Aplicar configurações rigorosas do TypeScript, garantindo segurança de tipos em todo o projeto.
+
+## Diretrizes Astro
+
+- Usar TailwindCSS para toda a estilização, mantendo a abordagem utility-first em mente.
+- Garantir que os componentes Astro sejam modulares, reutilizáveis e mantenham uma clara separação de responsabilidades.
+
+## Melhores Práticas do Tailwind CSS
+
+### Configuração do Projeto
+
+- Usar configuração adequada do Tailwind
+- Configurar extensão de tema corretamente
+- Configurar purge adequadamente
+- Usar integração adequada de plugins
+- Configurar espaçamento e breakpoints customizados
+- Configurar paleta de cores adequadamente
+
+### Estilização de Componentes
+
+- Usar classes utilitárias ao invés de CSS customizado
+- Agrupar utilitários relacionados com @apply quando necessário
+- Usar utilitários de design responsivo adequadamente
+- Implementar modo escuro corretamente
+- Usar variantes de estado adequadas
+- Manter estilos de componentes consistentes
+
+### Layout
+
+- Usar utilitários de Flexbox e Grid efetivamente
+- Implementar sistema de espaçamento adequado
+- Usar container queries quando necessário
+- Implementar breakpoints responsivos adequados
+- Usar utilitários de padding e margin adequadamente
+- Implementar utilitários de alinhamento adequados
+
+### Tipografia
+
+- Usar utilitários de tamanho de fonte adequados
+- Implementar altura de linha adequada
+- Usar utilitários de peso de fonte adequados
+- Configurar fontes customizadas corretamente
+- Usar alinhamento de texto adequado
+- Implementar decoração de texto adequada
+
+### Cores
+
+- Usar nomenclatura semântica de cores
+- Implementar contraste de cores adequado
+- Usar utilitários de opacidade efetivamente
+- Configurar cores customizadas corretamente
+- Usar utilitários de gradiente adequadamente
+- Implementar estados de hover adequados
+
+### Componentes
+
+- Usar componentes shadcn/ui quando disponíveis
+- Estender componentes adequadamente
+- Manter variantes de componentes consistentes
+- Implementar animações adequadas
+- Usar utilitários de transição adequadamente
+- Manter acessibilidade em mente
+
+### Design Responsivo
+
+- Usar abordagem mobile-first
+- Implementar breakpoints adequados
+- Usar container queries efetivamente
+- Lidar com diferentes tamanhos de tela adequadamente
+- Implementar tipografia responsiva adequada
+- Usar espaçamento responsivo adequado
+
+### Performance
+
+- Usar configuração de purge adequada
+- Minimizar CSS customizado
+- Usar estratégias de cache adequadas
+- Implementar code splitting adequado
+- Otimizar para produção
+- Monitorar tamanho do bundle
+
+### Melhores Práticas
+
+- Seguir convenções de nomenclatura
+- Manter estilos organizados
+- Usar documentação adequada
+- Implementar testes adequados
+- Seguir diretrizes de acessibilidade
+- Usar controle de versão adequado

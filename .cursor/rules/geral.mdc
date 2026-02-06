@@ -1,0 +1,152 @@
+---
+description: Regras globais que se aplicam a todo o projeto. Foca em padrões específicos do projeto e ferramentas MCP.
+globs: "**/*"
+alwaysApply: true
+---
+
+# Regras Gerais do Projeto
+
+> **📝 Nota**: Este arquivo contém regras globais. Para regras específicas, consulte:
+
+> - [Regras de Frontend](mdc:frontend.md) - Padrões específicos de frontend
+
+## MCP (Model Context Protocol)
+
+**SEMPRE** use as seguintes ferramentas MCP ao trabalhar com assistentes de IA:
+
+- **Context7** - **SEMPRE** use Context7 para buscar documentação atualizada de bibliotecas, frameworks e código de terceiros.
+- **Serena** - **SEMPRE** use Serena para semantic retrieval e editing tools. Use para busca semântica de código e operações inteligentes de edição.
+
+**Quando usar:**
+
+- Buscar documentação de bibliotecas/frameworks → Context7
+- Buscar padrões de código semanticamente → Serena
+- Realizar edições inteligentes de código → Serena
+- Recuperar contexto de codebases → Serena
+
+## Convenções Git
+
+### Commits
+
+Siga **Conventional Commits**: `<type>(<scope>): <subject>`
+
+**Escopos comuns**: `hero`, `lineup`, `preloader`, `i18n`, `config`, `types`, `utils`, `ui`, `styles`
+
+**Exemplo**: `feat(hero): adiciona video de fundo com lazy loading`
+
+> Para detalhes completos, consulte: [Conventional Commits](https://www.conventionalcommits.org/pt-br/v1.0.0-beta.4/)
+
+### ⚠️ Importante: Caracteres Especiais
+
+**NÃO use** caracteres especiais em mensagens de commit (acentos, ç, til, etc.):
+
+❌ **Errado**: `feat: adiciona configuração`
+✅ **Correto**: `feat: adiciona configuracao`
+
+**Motivo**: O GitHub pode exibir caracteres corrompidos (ex: "configuraĂÂ£es" ao invés de "configurações").
+
+**Caracteres a evitar**: `á é í ó ú ã õ â ê ô ç ñ à`
+
+### 🌐 Idioma dos Commits
+
+**SEMPRE escreva commits em português brasileiro (pt-br)**:
+
+✅ **Correto**: `feat: adiciona autenticacao de usuarios`
+❌ **Errado**: `feat: add user authentication`
+
+**Motivo**: Este é um repositório de estudo em pt-br. Manter consistência no idioma facilita a leitura e compreensão do histórico.
+
+## Estrutura do Projeto
+
+Landing page do 10º Aniversário do STL Festival - site estático multilíngue (PT-BR, EN, ES) construído com Astro 5.x, React 18 e Tailwind CSS.
+
+```text
+project-root/
+├── src/
+│   ├── components/     # Componentes Astro (.astro) e React (.tsx)
+│   ├── layouts/        # Layouts Astro
+│   ├── i18n/           # Sistema de internacionalização
+│   │   └── locales/    # Arquivos de tradução (pt-BR, en, es)
+│   ├── styles/         # Estilos globais
+│   └── ...
+├── public/             # Assets estáticos
+└── docs/               # Documentação
+```
+
+### Aliases de Caminho (tsconfig.json)
+
+- `@/*` → `src/*`
+- `@components/*` → `src/components/*`
+- `@i18n/*` → `src/i18n/*`
+- `@layouts/*` → `src/layouts/*`
+- `@styles/*` → `src/styles/*`
+
+## Padrões Específicos do Projeto
+
+### Arquitetura de Ilhas (Astro)
+
+- **Componentes Astro** (`.astro`) para conteúdo estático - sem JS no cliente
+- **Componentes React** (`.tsx`) apenas para interatividade, usando diretivas de hidratação:
+  - `client:load` - hidratação imediata
+  - `client:idle` - hidrata quando o navegador estiver ocioso
+  - `client:visible` - hidrata quando visível
+  - `client:only="react"` - pula SSR completamente
+
+### Internacionalização
+
+- Idioma padrão: Português (`/`) - oculto da URL
+- Inglês: `/en/`
+- Espanhol: `/es/`
+- Sistema de tradução em `src/i18n/` com arquivos JSON aninhados
+
+### Tokens de Design
+
+#### ⚠️ REGRA CRÍTICA: Cores Hardcoded são PROIBIDAS
+
+NUNCA use valores hexadecimais diretos no código. Sempre utilize os tokens do Tailwind:
+
+- Cores da marca: `stl-green`, `stl-gold`, `stl-red`, `stl-orange`, `stl-teal`, `stl-cream`, `stl-indigo`
+- Fontes customizadas: `font-jairo` (títulos), `font-superbusy` (destaque)
+
+```astro
+<!-- ❌ ERRADO -->
+<div class="bg-[#006a47]">
+
+<!-- ✅ CORRETO -->
+<div class="bg-stl-green">
+```
+
+### Nomenclatura de Arquivos
+
+- Componentes: PascalCase (`Button.tsx`, `HeroSection.astro`)
+- Utilitários: kebab-case (`api-client.ts`)
+- Hooks: camelCase com prefixo `use` (`useCounter.ts`)
+
+### TypeScript
+
+- Preferir `interface` para tipos de objetos
+- Evitar `any`, usar `unknown` quando necessário
+- Sempre tipar props de componentes
+
+### Padrões de Performance
+
+- **Tratamento de eventos de scroll**: Usa RAF (requestAnimationFrame) com flag de ticking
+- **Animação do Preloader**: Componente React com Framer Motion, respeita `prefers-reduced-motion`, instância única via flag global
+- **Otimização de mídia**: Variáveis de ambiente para URLs do Cloudinary com suporte a transformações
+
+### Git Hooks (Husky)
+
+- **Pre-commit**: ESLint + Prettier em arquivos staged (bloqueia em erros)
+- **Pre-push**: Verificação de tipos completa do projeto (bloqueia em erros de tipo)
+
+## Referências
+
+- [Astro Documentation](https://docs.astro.build/)
+- [React Documentation](https://react.dev/)
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+- [Framer Motion Documentation](https://www.framer.com/motion/)
+- [Conventional Commits](https://www.conventionalcommits.org/pt-br/v1.0.0-beta.4/)
+
+---
+
+**Última Atualização**: Fevereiro 2026
