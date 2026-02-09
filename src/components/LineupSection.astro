@@ -134,14 +134,10 @@ const artists: Artist[] = [
               width="377.249"
               height="465.024"
             >
-              <div
-                xmlns="http://www.w3.org/1999/xhtml"
-                class="lineup-artist-container"
-                id="lineup-artist-left"
-              >
+              <div class="lineup-artist-container" id="lineup-artist-left">
                 <img
-                  src={artists[0].imageUrl}
-                  alt={artists[0].name}
+                  src={artists[0]?.imageUrl ?? ''}
+                  alt={artists[0]?.name ?? ''}
                   class="lineup-artist-image"
                   loading="eager"
                 />
@@ -267,11 +263,7 @@ const artists: Artist[] = [
               width="794.389"
               height="1654.15"
             >
-              <div
-                xmlns="http://www.w3.org/1999/xhtml"
-                class="lineup-video-container"
-                id="lineup-video-wrapper"
-              >
+              <div class="lineup-video-container" id="lineup-video-wrapper">
                 <img
                   src={videoPlaceholder}
                   alt={t('lineup.videoPlaceholder')}
@@ -351,14 +343,10 @@ const artists: Artist[] = [
               width="377.249"
               height="465.024"
             >
-              <div
-                xmlns="http://www.w3.org/1999/xhtml"
-                class="lineup-artist-container"
-                id="lineup-artist-left"
-              >
+              <div class="lineup-artist-container" id="lineup-artist-left">
                 <img
-                  src={artists[0].imageUrl}
-                  alt={artists[0].name}
+                  src={artists[0]?.imageUrl ?? ''}
+                  alt={artists[0]?.name ?? ''}
                   class="lineup-artist-image"
                   loading="eager"
                 />
