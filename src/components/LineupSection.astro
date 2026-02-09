@@ -448,7 +448,7 @@ const artists: Artist[] = [
   /* Grid dos mockups */
   .lineup-mockups-grid {
     display: grid;
-    gap: var(--spacing-xl);
+    gap: var(--spacing-md); /* Reduzido para deixar mais próximos */
     align-items: center;
     justify-items: center;
     margin-top: var(--spacing-3xl);
@@ -557,17 +557,18 @@ const artists: Artist[] = [
     }
 
     .lineup-mockups-grid {
-      grid-template-columns: 1fr 1.5fr 1fr;
-      gap: var(--spacing-lg);
+      grid-template-columns: auto auto auto;
+      gap: var(--spacing-sm); /* Reduzido para proximidade */
+      justify-content: center;
     }
 
     .lineup-mockup--left,
     .lineup-mockup--right {
-      max-width: 220px;
+      max-width: 200px;
     }
 
     .lineup-mockup--center {
-      max-width: 350px;
+      max-width: 320px;
     }
   }
 
@@ -578,20 +579,21 @@ const artists: Artist[] = [
     }
 
     .lineup-mockups-grid {
-      grid-template-columns: 25% 50% 25%;
-      gap: var(--spacing-2xl);
+      grid-template-columns: auto auto auto;
+      gap: var(--spacing-md); /* Reduzido para deixar próximos como na imagem */
       align-items: start;
+      justify-content: center;
     }
 
     .lineup-mockup--left,
     .lineup-mockup--right {
-      max-width: 300px;
+      max-width: 280px; /* Reduzido um pouco */
       position: sticky;
       top: 10vh;
     }
 
     .lineup-mockup--center {
-      max-width: 500px;
+      max-width: 480px; /* Reduzido um pouco */
       position: sticky;
       top: 5vh;
     }
@@ -605,16 +607,16 @@ const artists: Artist[] = [
   /* Large desktop (>= 1440px) */
   @media (min-width: 1440px) {
     .lineup-mockups-grid {
-      gap: var(--spacing-3xl);
+      gap: var(--spacing-lg); /* Mantém proximidade mesmo em telas grandes */
     }
 
     .lineup-mockup--center {
-      max-width: 600px;
+      max-width: 540px;
     }
 
     .lineup-mockup--left,
     .lineup-mockup--right {
-      max-width: 350px;
+      max-width: 320px;
     }
   }
 
