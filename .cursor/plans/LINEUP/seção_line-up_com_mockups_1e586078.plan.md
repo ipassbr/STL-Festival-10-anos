@@ -310,12 +310,22 @@ Replicar para `en.json` e `es.json` com traduções adequadas.
 - Mockups em tamanhos médios
 - Altura: `min-h-[150vh]`
 
-**Desktop (> 1024px):**
+**Desktop (>= 1024px):**
 
-- Grid 3 colunas: Post (25%) | iPhone (50%) | Post (25%)
-- Mockups em tamanho máximo
-- Altura: `min-h-[120vh]`
-- Adicionar `position: sticky` nos mockups para efeito parallax
+**AJUSTES FINAIS (correção de proporção):**
+
+- Grid: `auto auto auto` com `justify-content: center` e **`align-items: center`** (centraliza Posts verticalmente com iPhone)
+- Posts: `max-width: 380px` (aumentados para melhor proporção visual)
+- iPhone: `max-width: 480px` (mantém tamanho moderado)
+- Gap: `var(--spacing-md)` (proximidade conforme referência)
+- Posts com `position: sticky` e `top: 50%` + `transform: translateY(-50%)` para centralização vertical perfeita
+- Altura: `min-h-[150vh]`
+
+**Large Desktop (>= 1440px):**
+
+- Posts: `max-width: 420px`
+- iPhone: `max-width: 520px`
+- Gap: `var(--spacing-lg)`
 
 ## 9. Acessibilidade
 
