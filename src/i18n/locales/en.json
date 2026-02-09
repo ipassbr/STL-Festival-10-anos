@@ -55,5 +55,15 @@
       "en": "English",
       "es": "Español"
     }
+  },
+  "lineup": {
+    "title": "Line-up",
+    "subtitle": "Confirmed Artists",
+    "sectionLabel": "Festival artists section",
+    "artistLabel": "Artist: {name}",
+    "scrollHint": "Scroll to see more artists",
+    "genreLabel": "Genre: {genre}",
+    "videoPlaceholder": "Video coming soon",
+    "loading": "Loading artists..."
   }
 }

@@ -1,0 +1,639 @@
+---
+/**
+ * Lineup Section - STL Festival 2026
+ * Seção com 3 mockups: iPhone central com vídeo + 2 Posts laterais com artistas
+ * Scroll interativo sincronizado usando RAF
+ */
+
+import { getLangFromUrl, useTranslations } from '@/i18n/utils';
+import LineupReact from './lineup/LineupReact';
+import type { Artist } from './lineup/lineup.types';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+// Placeholder para vídeo (será fornecido posteriormente)
+const videoPlaceholder =
+  'https://res.cloudinary.com/dazkdemvu/image/upload/v1769618833/stl-festival/fallback/lineup-video-placeholder.jpg';
+
+// Dados dos artistas (6-8 artistas conforme requisito)
+const artists: Artist[] = [
+  {
+    id: '1',
+    name: 'Edson Gomes',
+    imageUrl:
+      'https://via.placeholder.com/484x698/006a47/fefbdf?text=Edson+Gomes',
+    genre: 'Reggae',
+  },
+  {
+    id: '2',
+    name: 'Matuê',
+    imageUrl: 'https://via.placeholder.com/484x698/ff4d2d/fefbdf?text=Matue',
+    genre: 'Trap',
+  },
+  {
+    id: '3',
+    name: 'Marcelo D2',
+    imageUrl:
+      'https://via.placeholder.com/484x698/d2aa56/1e1876?text=Marcelo+D2',
+    genre: 'Rap',
+  },
+  {
+    id: '4',
+    name: 'Natiruts',
+    imageUrl: 'https://via.placeholder.com/484x698/007b9a/fefbdf?text=Natiruts',
+    genre: 'Reggae',
+  },
+  {
+    id: '5',
+    name: 'Djonga',
+    imageUrl: 'https://via.placeholder.com/484x698/ff9d28/1e1876?text=Djonga',
+    genre: 'Rap',
+  },
+  {
+    id: '6',
+    name: 'Pineapple',
+    imageUrl:
+      'https://via.placeholder.com/484x698/006a47/fefbdf?text=Pineapple',
+    genre: 'Reggae',
+  },
+  {
+    id: '7',
+    name: 'BK',
+    imageUrl: 'https://via.placeholder.com/484x698/ff4d2d/fefbdf?text=BK',
+    genre: 'Rap',
+  },
+  {
+    id: '8',
+    name: 'Oriente',
+    imageUrl: 'https://via.placeholder.com/484x698/d2aa56/1e1876?text=Oriente',
+    genre: 'Rap',
+  },
+];
+---
+
+<section
+  id="lineup"
+  class="lineup-section"
+  role="region"
+  aria-label={t('lineup.sectionLabel')}
+>
+  <!-- Container principal -->
+  <div class="lineup-container">
+    <!-- Título da seção -->
+    <div class="lineup-header">
+      <h2 class="lineup-title">{t('lineup.title')}</h2>
+      <p class="lineup-subtitle">{t('lineup.subtitle')}</p>
+    </div>
+
+    <!-- Grid dos mockups -->
+    <div class="lineup-mockups-grid">
+      <!-- Mockup Post - Esquerda -->
+      <div class="lineup-mockup lineup-mockup--left" id="lineup-mockup-left">
+        <svg
+          width="484"
+          height="698"
+          viewBox="0 0 484 698"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          class="lineup-mockup__svg"
+        >
+          <g filter="url(#filter0_d_left)">
+            <path
+              d="M39.8 71.5309C39.8 61.7384 47.7385 53.8 57.531 53.8H399.318C409.11 53.8 417.049 61.7384 417.049 71.5309V119.776H39.8V71.5309Z"
+              fill="white"></path>
+            <rect
+              x="56.8"
+              y="64.8"
+              width="41.8407"
+              height="41.8407"
+              rx="20.9203"
+              fill="#38966d"></rect>
+
+            <!-- Área do conteúdo do post onde a imagem do artista será inserida -->
+            <foreignObject x="39.8" y="119.776" width="377.249" height="525.85">
+              <div
+                xmlns="http://www.w3.org/1999/xhtml"
+                class="lineup-artist-container"
+                id="lineup-artist-left"
+              >
+                <img
+                  src={artists[0].imageUrl}
+                  alt={artists[0].name}
+                  class="lineup-artist-image"
+                  loading="eager"
+                />
+              </div>
+            </foreignObject>
+
+            <path
+              d="M40.8 627.895C40.8 637.688 48.7385 645.626 58.531 645.626H400.318C410.11 645.626 418.049 637.688 418.049 627.895V589.8H40.8V627.895Z"
+              fill="white"></path>
+          </g>
+          <defs>
+            <filter
+              id="filter0_d_left"
+              x="0"
+              y="0"
+              width="484"
+              height="698"
+              filterUnits="userSpaceOnUse"
+              color-interpolation-filters="sRGB"
+            >
+              <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+              <feColorMatrix
+                in="SourceAlpha"
+                type="matrix"
+                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                result="hardAlpha"></feColorMatrix>
+              <feOffset dx="13" dy="-1"></feOffset>
+              <feGaussianBlur stdDeviation="26.4"></feGaussianBlur>
+              <feComposite in2="hardAlpha" operator="out"></feComposite>
+              <feColorMatrix
+                type="matrix"
+                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.05 0"
+              ></feColorMatrix>
+              <feBlend
+                mode="normal"
+                in2="BackgroundImageFix"
+                result="effect1_dropShadow"></feBlend>
+              <feBlend
+                mode="normal"
+                in="SourceGraphic"
+                in2="effect1_dropShadow"
+                result="shape"></feBlend>
+            </filter>
+          </defs>
+        </svg>
+      </div>
+
+      <!-- Mockup iPhone - Centro -->
+      <div
+        class="lineup-mockup lineup-mockup--center"
+        id="lineup-mockup-center"
+      >
+        <svg
+          width="823"
+          height="1670"
+          viewBox="0 0 823 1670"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          class="lineup-mockup__svg"
+        >
+          <!-- Corpo do iPhone -->
+          <g clip-path="url(#clip4_iphone)">
+            <rect
+              x="5.943"
+              y="0.001"
+              width="810.237"
+              height="1670"
+              rx="122.823"
+              fill="black"></rect>
+          </g>
+
+          <!-- Tela do iPhone onde o vídeo/placeholder será inserido -->
+          <g clip-path="url(#clip5_iphone)">
+            <rect
+              x="13.867"
+              y="7.925"
+              width="794.389"
+              height="1654.15"
+              rx="114.899"
+              fill="#000100"></rect>
+
+            <foreignObject
+              x="13.867"
+              y="7.925"
+              width="794.389"
+              height="1654.15"
+            >
+              <div
+                xmlns="http://www.w3.org/1999/xhtml"
+                class="lineup-video-container"
+                id="lineup-video-wrapper"
+              >
+                <img
+                  src={videoPlaceholder}
+                  alt={t('lineup.videoPlaceholder')}
+                  class="lineup-video-placeholder"
+                  loading="lazy"
+                />
+              </div>
+            </foreignObject>
+          </g>
+
+          <defs>
+            <clipPath id="clip4_iphone">
+              <rect
+                x="5.943"
+                y="0.000488281"
+                width="810.237"
+                height="1670"
+                rx="122.823"
+                fill="white"></rect>
+            </clipPath>
+            <clipPath id="clip5_iphone">
+              <rect
+                x="13.867"
+                y="7.924"
+                width="794.389"
+                height="1654.15"
+                rx="114.899"
+                fill="white"></rect>
+            </clipPath>
+          </defs>
+        </svg>
+      </div>
+
+      <!-- Mockup Post - Direita -->
+      <div class="lineup-mockup lineup-mockup--right" id="lineup-mockup-right">
+        <svg
+          width="484"
+          height="698"
+          viewBox="0 0 484 698"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          class="lineup-mockup__svg"
+        >
+          <g filter="url(#filter0_d_right)">
+            <path
+              d="M39.8 71.5309C39.8 61.7384 47.7385 53.8 57.531 53.8H399.318C409.11 53.8 417.049 61.7384 417.049 71.5309V119.776H39.8V71.5309Z"
+              fill="white"></path>
+            <rect
+              x="56.8"
+              y="64.8"
+              width="41.8407"
+              height="41.8407"
+              rx="20.9203"
+              fill="#38966d"></rect>
+
+            <!-- Área do conteúdo do post onde a imagem do artista será inserida -->
+            <foreignObject x="39.8" y="119.776" width="377.249" height="525.85">
+              <div
+                xmlns="http://www.w3.org/1999/xhtml"
+                class="lineup-artist-container"
+                id="lineup-artist-right"
+              >
+                <img
+                  src={artists[0].imageUrl}
+                  alt={artists[0].name}
+                  class="lineup-artist-image"
+                  loading="eager"
+                />
+              </div>
+            </foreignObject>
+
+            <path
+              d="M40.8 627.895C40.8 637.688 48.7385 645.626 58.531 645.626H400.318C410.11 645.626 418.049 637.688 418.049 627.895V589.8H40.8V627.895Z"
+              fill="white"></path>
+          </g>
+          <defs>
+            <filter
+              id="filter0_d_right"
+              x="0"
+              y="0"
+              width="484"
+              height="698"
+              filterUnits="userSpaceOnUse"
+              color-interpolation-filters="sRGB"
+            >
+              <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+              <feColorMatrix
+                in="SourceAlpha"
+                type="matrix"
+                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                result="hardAlpha"></feColorMatrix>
+              <feOffset dx="13" dy="-1"></feOffset>
+              <feGaussianBlur stdDeviation="26.4"></feGaussianBlur>
+              <feComposite in2="hardAlpha" operator="out"></feComposite>
+              <feColorMatrix
+                type="matrix"
+                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.05 0"
+              ></feColorMatrix>
+              <feBlend
+                mode="normal"
+                in2="BackgroundImageFix"
+                result="effect1_dropShadow"></feBlend>
+              <feBlend
+                mode="normal"
+                in="SourceGraphic"
+                in2="effect1_dropShadow"
+                result="shape"></feBlend>
+            </filter>
+          </defs>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Componente React para interatividade (client:visible para lazy load) -->
+  <LineupReact client:visible artists={artists} />
+
+  <!-- Hint de scroll (acessibilidade) -->
+  <div class="lineup-scroll-hint" role="status" aria-live="polite">
+    <p class="text-sm text-stl-cream/70">
+      {t('lineup.scrollHint')}
+    </p>
+  </div>
+</section>
+
+<script>
+  // Script para atualizar imagens dos mockups baseado em data attributes do React
+  function updateMockupImages() {
+    // Mockup esquerdo
+    const leftData = document.getElementById('lineup-left-artist');
+    const leftImg = document
+      .getElementById('lineup-artist-left')
+      ?.querySelector('img') as HTMLImageElement;
+
+    if (leftData && leftImg) {
+      const imageUrl = leftData.getAttribute('data-artist-image');
+      const artistName = leftData.getAttribute('data-artist-name');
+
+      if (imageUrl && imageUrl !== leftImg.src) {
+        leftImg.style.opacity = '0';
+        setTimeout(() => {
+          leftImg.src = imageUrl;
+          leftImg.alt = artistName || '';
+          leftImg.style.opacity = '1';
+        }, 150);
+      }
+    }
+
+    // Mockup direito
+    const rightData = document.getElementById('lineup-right-artist');
+    const rightImg = document
+      .getElementById('lineup-artist-right')
+      ?.querySelector('img') as HTMLImageElement;
+
+    if (rightData && rightImg) {
+      const imageUrl = rightData.getAttribute('data-artist-image');
+      const artistName = rightData.getAttribute('data-artist-name');
+
+      if (imageUrl && imageUrl !== rightImg.src) {
+        rightImg.style.opacity = '0';
+        setTimeout(() => {
+          rightImg.src = imageUrl;
+          rightImg.alt = artistName || '';
+          rightImg.style.opacity = '1';
+        }, 150);
+      }
+    }
+  }
+
+  // Observer para mudanças nos data attributes
+  const observerConfig = {
+    attributes: true,
+    attributeFilter: ['data-artist-image'],
+  };
+
+  const leftObserver = new MutationObserver(updateMockupImages);
+  const rightObserver = new MutationObserver(updateMockupImages);
+
+  const leftData = document.getElementById('lineup-left-artist');
+  const rightData = document.getElementById('lineup-right-artist');
+
+  if (leftData) leftObserver.observe(leftData, observerConfig);
+  if (rightData) rightObserver.observe(rightData, observerConfig);
+</script>
+
+<style>
+  /* ========== SEÇÃO LINEUP ========== */
+  .lineup-section {
+    position: relative;
+    min-height: 200vh; /* Mobile: altura para scroll */
+    width: 100%;
+    background: linear-gradient(
+      180deg,
+      theme('colors.stl-indigo.dark') 0%,
+      theme('colors.stl-green.dark') 100%
+    );
+    padding: var(--spacing-2xl) var(--spacing-lg);
+    overflow: hidden;
+  }
+
+  /* Container principal */
+  .lineup-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header da seção */
+  .lineup-header {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .lineup-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    font-weight: 700;
+    color: theme('colors.stl-cream.DEFAULT');
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--spacing-md);
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  }
+
+  .lineup-subtitle {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    color: theme('colors.stl-gold.DEFAULT');
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+
+  /* Grid dos mockups */
+  .lineup-mockups-grid {
+    display: grid;
+    gap: var(--spacing-xl);
+    align-items: center;
+    justify-items: center;
+    margin-top: var(--spacing-3xl);
+  }
+
+  /* Mockup base */
+  .lineup-mockup {
+    position: relative;
+    transition: transform 0.3s ease-out;
+  }
+
+  .lineup-mockup__svg {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3));
+  }
+
+  /* Container de artista (dentro do SVG) */
+  .lineup-artist-container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #000;
+  }
+
+  .lineup-artist-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease-out;
+  }
+
+  /* Container de vídeo (dentro do iPhone SVG) */
+  .lineup-video-container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lineup-video-placeholder {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Hint de scroll */
+  .lineup-scroll-hint {
+    text-align: center;
+    margin-top: var(--spacing-2xl);
+    padding: var(--spacing-md);
+  }
+
+  /* ========== RESPONSIVIDADE ========== */
+
+  /* Mobile (< 768px) - Stack vertical */
+  @media (max-width: 767px) {
+    .lineup-section {
+      min-height: 250vh;
+      padding: var(--spacing-xl) var(--spacing-md);
+    }
+
+    .lineup-mockups-grid {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto auto;
+      gap: var(--spacing-2xl);
+    }
+
+    /* iPhone no topo, menor */
+    .lineup-mockup--center {
+      order: 1;
+      max-width: 280px;
+    }
+
+    /* Posts em grid 2 colunas abaixo */
+    .lineup-mockup--left {
+      order: 2;
+      max-width: 180px;
+    }
+
+    .lineup-mockup--right {
+      order: 3;
+      max-width: 180px;
+    }
+
+    /* Grid 2 colunas para os posts */
+    .lineup-mockups-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .lineup-mockup--left,
+    .lineup-mockup--right {
+      flex: 0 0 45%;
+    }
+  }
+
+  /* Tablet (768px - 1023px) */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .lineup-section {
+      min-height: 180vh;
+    }
+
+    .lineup-mockups-grid {
+      grid-template-columns: 1fr 1.5fr 1fr;
+      gap: var(--spacing-lg);
+    }
+
+    .lineup-mockup--left,
+    .lineup-mockup--right {
+      max-width: 220px;
+    }
+
+    .lineup-mockup--center {
+      max-width: 350px;
+    }
+  }
+
+  /* Desktop (>= 1024px) */
+  @media (min-width: 1024px) {
+    .lineup-section {
+      min-height: 150vh;
+    }
+
+    .lineup-mockups-grid {
+      grid-template-columns: 25% 50% 25%;
+      gap: var(--spacing-2xl);
+      align-items: start;
+    }
+
+    .lineup-mockup--left,
+    .lineup-mockup--right {
+      max-width: 300px;
+      position: sticky;
+      top: 10vh;
+    }
+
+    .lineup-mockup--center {
+      max-width: 500px;
+      position: sticky;
+      top: 5vh;
+    }
+
+    /* Hover effect em desktop */
+    .lineup-mockup:hover {
+      transform: scale(1.02);
+    }
+  }
+
+  /* Large desktop (>= 1440px) */
+  @media (min-width: 1440px) {
+    .lineup-mockups-grid {
+      gap: var(--spacing-3xl);
+    }
+
+    .lineup-mockup--center {
+      max-width: 600px;
+    }
+
+    .lineup-mockup--left,
+    .lineup-mockup--right {
+      max-width: 350px;
+    }
+  }
+
+  /* ========== ANIMAÇÕES E TRANSIÇÕES ========== */
+
+  /* Suporte a prefers-reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    .lineup-mockup {
+      transition: none !important;
+    }
+
+    .lineup-artist-image,
+    .lineup-video-placeholder {
+      transition: none !important;
+    }
+
+    * {
+      animation: none !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>
