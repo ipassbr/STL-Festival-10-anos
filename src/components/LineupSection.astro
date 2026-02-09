@@ -724,45 +724,43 @@ const artists: Artist[] = [
 
     .lineup-mockups-grid {
       grid-template-columns: auto auto auto;
-      gap: var(--spacing-md); /* Próximos conforme referência */
-      align-items: center; /* CRÍTICO: centraliza Posts verticalmente */
+      gap: var(--spacing-md); /* Reduzido para deixar próximos como na imagem */
+      align-items: start;
       justify-content: center;
     }
 
     .lineup-mockup--left,
     .lineup-mockup--right {
-      max-width: 380px; /* Aumentado para melhor proporção */
+      max-width: 260px; /* Ajustado para melhor proporção */
       position: sticky;
-      top: 50%;
-      transform: translateY(-50%); /* Centralização vertical perfeita */
+      top: 10vh;
     }
 
     .lineup-mockup--center {
-      max-width: 320px; /* Reduzido para não cortar título */
+      max-width: 380px; /* Reduzido significativamente para compatibilidade */
       position: sticky;
-      top: 50%;
-      transform: translateY(-50%);
+      top: 5vh;
     }
 
     /* Hover effect em desktop */
     .lineup-mockup:hover {
-      transform: translateY(-50%) scale(1.02); /* Mantém centralização no hover */
+      transform: scale(1.02);
     }
   }
 
   /* Large desktop (>= 1440px) */
   @media (min-width: 1440px) {
     .lineup-mockups-grid {
-      gap: var(--spacing-lg); /* Proximidade mantida */
+      gap: var(--spacing-lg); /* Mantém proximidade mesmo em telas grandes */
     }
 
     .lineup-mockup--center {
-      max-width: 360px; /* Proporcionalmente menor que Posts */
+      max-width: 420px; /* Mantém proporção controlada */
     }
 
     .lineup-mockup--left,
     .lineup-mockup--right {
-      max-width: 420px; /* Posts maiores para melhor proporção */
+      max-width: 290px;
     }
   }
 
