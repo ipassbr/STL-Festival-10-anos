@@ -567,7 +567,7 @@ const artists: Artist[] = [
   /* Header da seção */
   .lineup-header {
     text-align: center;
-    margin-bottom: var(--spacing-3xl); /* Mais espaço abaixo do título */
+    margin-bottom: 0; /* Sem margin, usamos margin-top no grid */
     position: relative;
     z-index: 10; /* Garante que fica acima dos mockups */
   }
@@ -597,7 +597,7 @@ const artists: Artist[] = [
     gap: var(--spacing-md); /* Reduzido para deixar mais próximos */
     align-items: center;
     justify-items: center;
-    margin-top: var(--spacing-2xl); /* Mais espaço do título */
+    margin-top: 8rem; /* 128px - Espaço grande para título e subtítulo */
   }
 
   /* Mockup base */
@@ -729,26 +729,25 @@ const artists: Artist[] = [
       gap: var(--spacing-md); /* Próximos conforme referência */
       align-items: center; /* CRÍTICO: centraliza Posts verticalmente */
       justify-content: center;
+      margin-top: 10rem; /* 160px - Ainda mais espaço em desktop */
     }
 
     .lineup-mockup--left,
     .lineup-mockup--right {
       max-width: 260px; /* Reduzido para proporção com iPhone */
       position: sticky;
-      top: 50%;
-      transform: translateY(-50%); /* Centralização vertical perfeita */
+      top: 20vh; /* Mais abaixo para não sobrepor */
     }
 
     .lineup-mockup--center {
       max-width: 240px; /* Proporcional aos Posts */
       position: sticky;
-      top: 50%;
-      transform: translateY(-50%);
+      top: 15vh; /* Mais abaixo para não sobrepor */
     }
 
     /* Hover effect em desktop */
     .lineup-mockup:hover {
-      transform: translateY(-50%) scale(1.02); /* Mantém centralização no hover */
+      transform: scale(1.02);
     }
   }
 
