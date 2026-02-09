@@ -310,12 +310,22 @@ Replicar para `en.json` e `es.json` com traduções adequadas.
 - Mockups em tamanhos médios
 - Altura: `min-h-[150vh]`
 
-**Desktop (> 1024px):**
+**Desktop (>= 1024px):**
 
-- Grid 3 colunas: Post (25%) | iPhone (50%) | Post (25%)
-- Mockups em tamanho máximo
-- Altura: `min-h-[120vh]`
-- Adicionar `position: sticky` nos mockups para efeito parallax
+**AJUSTES FINAIS (correção de proporção e centralização):**
+
+- Grid: `auto auto auto` com `justify-content: center` e **`align-items: center`** (centraliza Posts verticalmente com iPhone)
+- Posts: `max-width: 380px` (aumentados significativamente para melhor proporção visual)
+- iPhone: `max-width: 320px` (reduzido para não cortar título/subtítulo)
+- Gap: `var(--spacing-md)` (proximidade conforme referência)
+- Posts com `position: sticky` e `top: 50%` + `transform: translateY(-50%)` para centralização vertical perfeita
+- Altura: `min-h-[150vh]`
+
+**Large Desktop (>= 1440px):**
+
+- Posts: `max-width: 420px` (ainda maiores para telas grandes)
+- iPhone: `max-width: 360px` (proporcionalmente menor que Posts)
+- Gap: `var(--spacing-lg)`
 
 ## 9. Acessibilidade
 
@@ -336,19 +346,65 @@ Replicar para `en.json` e `es.json` com traduções adequadas.
 
 ## 11. Dados dos Artistas
 
-Criar array temporário no componente Astro:
+**Imagens reais dos artistas** (já implementadas):
 
 ```typescript
 const artists: Artist[] = [
   {
     id: '1',
-    name: 'Artista 1',
-    imageUrl: 'https://res.cloudinary.com/[seu-cloud]/artists/artist-1.jpg',
+    name: 'Edson Gomes',
+    imageUrl: '/assets/img/artistas/13.png',
     genre: 'Reggae',
   },
-  // ... até 8 artistas
+  {
+    id: '2',
+    name: 'Matuê',
+    imageUrl: '/assets/img/artistas/14.png',
+    genre: 'Trap',
+  },
+  {
+    id: '3',
+    name: 'Marcelo D2',
+    imageUrl: '/assets/img/artistas/15.png',
+    genre: 'Rap',
+  },
+  {
+    id: '4',
+    name: 'Marcelo Falcão',
+    imageUrl: '/assets/img/artistas/16.png',
+    genre: 'Reggae',
+  },
+  {
+    id: '5',
+    name: 'Djonga',
+    imageUrl: '/assets/img/artistas/17.png',
+    genre: 'Rap',
+  },
+  {
+    id: '6',
+    name: 'Planta e Raiz',
+    imageUrl: '/assets/img/artistas/18.png',
+    genre: 'Reggae',
+  },
+  {
+    id: '7',
+    name: 'Cidade Negra',
+    imageUrl: '/assets/img/artistas/19.png',
+    genre: 'Reggae',
+  },
+  {
+    id: '8',
+    name: 'Rael + Cynthia Luz',
+    imageUrl: '/assets/img/artistas/20.png',
+    genre: 'Rap',
+  },
 ];
 ```
+
+**Vídeo e Fallback:**
+
+- Vídeo: `/assets/videos/lineup.mp4`
+- Fallback/Poster: `/assets/img/artistas/todos juntos/12.png`
 
 ## Fluxo de Implementação
 

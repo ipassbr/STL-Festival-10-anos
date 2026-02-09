@@ -16,8 +16,8 @@ const t = useTranslations(lang);
 const lineupVideo = '/assets/videos/lineup.mp4';
 const videoFallback = '/assets/img/artistas/todos juntos/12.png';
 
-// Dados dos artistas (6-8 artistas conforme requisito)
-// URLs das imagens dos artistas
+// Dados dos artistas (8 artistas conforme imagens fornecidas)
+// URLs das imagens dos artistas (arquivos locais)
 const artists: Artist[] = [
   {
     id: '1',
@@ -51,7 +51,7 @@ const artists: Artist[] = [
   },
   {
     id: '6',
-    name: 'Planta e Mato',
+    name: 'Planta e Raiz',
     imageUrl: '/assets/img/artistas/18.png',
     genre: 'Reggae',
   },
@@ -63,7 +63,7 @@ const artists: Artist[] = [
   },
   {
     id: '8',
-    name: 'Rael',
+    name: 'Rael + Cynthia Luz',
     imageUrl: '/assets/img/artistas/20.png',
     genre: 'Rap',
   },
@@ -724,43 +724,45 @@ const artists: Artist[] = [
 
     .lineup-mockups-grid {
       grid-template-columns: auto auto auto;
-      gap: var(--spacing-md); /* Reduzido para deixar próximos como na imagem */
-      align-items: start;
+      gap: var(--spacing-md); /* Próximos conforme referência */
+      align-items: center; /* CRÍTICO: centraliza Posts verticalmente */
       justify-content: center;
     }
 
     .lineup-mockup--left,
     .lineup-mockup--right {
-      max-width: 260px; /* Ajustado para melhor proporção */
+      max-width: 380px; /* Aumentado para melhor proporção */
       position: sticky;
-      top: 10vh;
+      top: 50%;
+      transform: translateY(-50%); /* Centralização vertical perfeita */
     }
 
     .lineup-mockup--center {
-      max-width: 380px; /* Reduzido significativamente para compatibilidade */
+      max-width: 320px; /* Reduzido para não cortar título */
       position: sticky;
-      top: 5vh;
+      top: 50%;
+      transform: translateY(-50%);
     }
 
     /* Hover effect em desktop */
     .lineup-mockup:hover {
-      transform: scale(1.02);
+      transform: translateY(-50%) scale(1.02); /* Mantém centralização no hover */
     }
   }
 
   /* Large desktop (>= 1440px) */
   @media (min-width: 1440px) {
     .lineup-mockups-grid {
-      gap: var(--spacing-lg); /* Mantém proximidade mesmo em telas grandes */
+      gap: var(--spacing-lg); /* Proximidade mantida */
     }
 
     .lineup-mockup--center {
-      max-width: 420px; /* Mantém proporção controlada */
+      max-width: 360px; /* Proporcionalmente menor que Posts */
     }
 
     .lineup-mockup--left,
     .lineup-mockup--right {
-      max-width: 290px;
+      max-width: 420px; /* Posts maiores para melhor proporção */
     }
   }
 
