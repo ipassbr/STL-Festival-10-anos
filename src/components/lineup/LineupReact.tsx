@@ -5,7 +5,6 @@
  */
 
 import { useEffect, useState, useRef } from 'react';
-import { motion, AnimatePresence, type Variants } from 'framer-motion';
 import type { Artist } from './lineup.types';
 
 interface LineupReactProps {
@@ -91,29 +90,6 @@ export default function LineupReact({ artists }: LineupReactProps) {
   const currentArtist = artists[currentIndex];
   const nextArtist = artists[(currentIndex + 1) % artists.length];
 
-  // Variantes de animação para Framer Motion
-  const imageVariants: Variants = {
-    enter: {
-      opacity: 0,
-      scale: 0.95,
-    },
-    center: {
-      opacity: 1,
-      scale: 1,
-    },
-    exit: {
-      opacity: 0,
-      scale: 1.05,
-    },
-  };
-
-  const transition = prefersReducedMotion
-    ? { duration: 0 }
-    : {
-        duration: 0.5,
-        ease: [0.4, 0.0, 0.2, 1], // ease-out
-      };
-
   return (
     <>
       {/* Mockup ESQUERDO - Artista atual */}
@@ -134,69 +110,7 @@ export default function LineupReact({ artists }: LineupReactProps) {
         style={{ display: 'none' }}
       />
 
-      {/* Indicador visual do artista atual (esquerda) */}
-      <div
-        className="pointer-events-none fixed bottom-8 left-1/4 z-50 -translate-x-1/2"
-        role="status"
-        aria-live="polite"
-        aria-atomic="true"
-      >
-        <AnimatePresence mode="wait">
-          {currentArtist && (
-            <motion.div
-              key={currentArtist.id}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              variants={imageVariants}
-              transition={transition}
-              className="rounded-full border border-stl-gold/30 bg-stl-indigo/90 px-4 py-2 backdrop-blur-sm"
-            >
-              <p className="font-jairo text-xs font-bold tracking-wider text-stl-cream md:text-sm">
-                {currentArtist.name}
-                {currentArtist.genre && (
-                  <span className="ml-2 text-stl-gold">
-                    • {currentArtist.genre}
-                  </span>
-                )}
-              </p>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-
-      {/* Indicador visual do próximo artista (direita) */}
-      <div
-        className="pointer-events-none fixed bottom-8 right-1/4 z-50 translate-x-1/2"
-        role="status"
-        aria-live="polite"
-        aria-atomic="true"
-      >
-        <AnimatePresence mode="wait">
-          {nextArtist && (
-            <motion.div
-              key={nextArtist.id}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              variants={imageVariants}
-              transition={transition}
-              className="rounded-full border border-stl-red/30 bg-stl-indigo/90 px-4 py-2 backdrop-blur-sm"
-            >
-              <p className="font-jairo text-xs font-bold tracking-wider text-stl-cream md:text-sm">
-                {nextArtist.name}
-                {nextArtist.genre && (
-                  <span className="ml-2 text-stl-orange">
-                    • {nextArtist.genre}
-                  </span>
-                )}
-              </p>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-
-      {/* Contador de progresso e controle */}
+      {/* Contador de progresso e controle - APENAS ISSO */}
       <div className="fixed bottom-4 right-4 z-40 flex items-center gap-2">
         <button
           onClick={() => setIsPaused((prev) => !prev)}

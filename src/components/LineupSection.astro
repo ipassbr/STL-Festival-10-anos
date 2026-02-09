@@ -567,7 +567,9 @@ const artists: Artist[] = [
   /* Header da seção */
   .lineup-header {
     text-align: center;
-    margin-bottom: var(--spacing-2xl);
+    margin-bottom: var(--spacing-3xl); /* Mais espaço abaixo do título */
+    position: relative;
+    z-index: 10; /* Garante que fica acima dos mockups */
   }
 
   .lineup-title {
@@ -731,14 +733,14 @@ const artists: Artist[] = [
 
     .lineup-mockup--left,
     .lineup-mockup--right {
-      max-width: 340px; /* Ajustado para proporção harmônica */
+      max-width: 260px; /* Reduzido para proporção com iPhone */
       position: sticky;
       top: 50%;
       transform: translateY(-50%); /* Centralização vertical perfeita */
     }
 
     .lineup-mockup--center {
-      max-width: 240px; /* Reduzido para não cortar título */
+      max-width: 240px; /* Proporcional aos Posts */
       position: sticky;
       top: 50%;
       transform: translateY(-50%);
@@ -757,12 +759,12 @@ const artists: Artist[] = [
     }
 
     .lineup-mockup--center {
-      max-width: 260px; /* Proporcionalmente menor que Posts */
+      max-width: 280px; /* Proporcional */
     }
 
     .lineup-mockup--left,
     .lineup-mockup--right {
-      max-width: 380px; /* Posts maiores para melhor proporção */
+      max-width: 300px; /* Reduzidos para não sobrepor título */
     }
   }
 
