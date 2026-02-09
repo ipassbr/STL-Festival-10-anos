@@ -312,19 +312,19 @@ Replicar para `en.json` e `es.json` com traduções adequadas.
 
 **Desktop (>= 1024px):**
 
-**AJUSTES FINAIS (correção de proporção):**
+**AJUSTES FINAIS (correção de proporção e centralização):**
 
 - Grid: `auto auto auto` com `justify-content: center` e **`align-items: center`** (centraliza Posts verticalmente com iPhone)
-- Posts: `max-width: 380px` (aumentados para melhor proporção visual)
-- iPhone: `max-width: 480px` (mantém tamanho moderado)
+- Posts: `max-width: 380px` (aumentados significativamente para melhor proporção visual)
+- iPhone: `max-width: 380px` (mantém tamanho atual)
 - Gap: `var(--spacing-md)` (proximidade conforme referência)
 - Posts com `position: sticky` e `top: 50%` + `transform: translateY(-50%)` para centralização vertical perfeita
 - Altura: `min-h-[150vh]`
 
 **Large Desktop (>= 1440px):**
 
-- Posts: `max-width: 420px`
-- iPhone: `max-width: 520px`
+- Posts: `max-width: 420px` (ainda maiores para telas grandes)
+- iPhone: `max-width: 420px` (mantém proporção)
 - Gap: `var(--spacing-lg)`
 
 ## 9. Acessibilidade

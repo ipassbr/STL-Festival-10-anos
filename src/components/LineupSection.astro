@@ -738,7 +738,7 @@ const artists: Artist[] = [
     }
 
     .lineup-mockup--center {
-      max-width: 480px; /* Tamanho moderado e proporcional */
+      max-width: 380px; /* Mantém tamanho atual */
       position: sticky;
       top: 50%;
       transform: translateY(-50%);
@@ -753,16 +753,16 @@ const artists: Artist[] = [
   /* Large desktop (>= 1440px) */
   @media (min-width: 1440px) {
     .lineup-mockups-grid {
-      gap: var(--spacing-lg); /* Mantém proximidade mesmo em telas grandes */
+      gap: var(--spacing-lg); /* Proximidade mantida */
     }
 
     .lineup-mockup--center {
-      max-width: 520px; /* Mantém proporção controlada */
+      max-width: 420px; /* Leve aumento para telas grandes */
     }
 
     .lineup-mockup--left,
     .lineup-mockup--right {
-      max-width: 420px;
+      max-width: 420px; /* Posts maiores para melhor proporção */
     }
   }
 
