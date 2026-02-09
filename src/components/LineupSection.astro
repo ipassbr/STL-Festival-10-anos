@@ -345,7 +345,7 @@ const artists: Artist[] = [
               width="377.249"
               height="465.024"
             >
-              <div class="lineup-artist-container" id="lineup-artist-left">
+              <div class="lineup-artist-container" id="lineup-artist-right">
                 <img
                   src={artists[0]?.imageUrl ?? ''}
                   alt={artists[0]?.name ?? ''}
@@ -552,7 +552,7 @@ const artists: Artist[] = [
       theme('colors.stl-indigo.dark') 0%,
       theme('colors.stl-green.dark') 100%
     );
-    padding: var(--spacing-2xl) var(--spacing-lg);
+    padding: var(--spacing-3xl) var(--spacing-lg); /* Mais espaço no topo */
     overflow: hidden;
   }
 
@@ -595,7 +595,7 @@ const artists: Artist[] = [
     gap: var(--spacing-md); /* Reduzido para deixar mais próximos */
     align-items: center;
     justify-items: center;
-    margin-top: var(--spacing-3xl);
+    margin-top: var(--spacing-2xl); /* Mais espaço do título */
   }
 
   /* Mockup base */
@@ -731,14 +731,14 @@ const artists: Artist[] = [
 
     .lineup-mockup--left,
     .lineup-mockup--right {
-      max-width: 380px; /* Aumentado para melhor proporção */
+      max-width: 340px; /* Ajustado para proporção harmônica */
       position: sticky;
       top: 50%;
       transform: translateY(-50%); /* Centralização vertical perfeita */
     }
 
     .lineup-mockup--center {
-      max-width: 320px; /* Reduzido para não cortar título */
+      max-width: 240px; /* Reduzido para não cortar título */
       position: sticky;
       top: 50%;
       transform: translateY(-50%);
@@ -757,12 +757,12 @@ const artists: Artist[] = [
     }
 
     .lineup-mockup--center {
-      max-width: 360px; /* Proporcionalmente menor que Posts */
+      max-width: 260px; /* Proporcionalmente menor que Posts */
     }
 
     .lineup-mockup--left,
     .lineup-mockup--right {
-      max-width: 420px; /* Posts maiores para melhor proporção */
+      max-width: 380px; /* Posts maiores para melhor proporção */
     }
   }
 

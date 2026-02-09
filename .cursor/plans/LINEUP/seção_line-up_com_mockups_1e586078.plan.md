@@ -38,6 +38,12 @@ todos:
   - id: iphone-size
     content: Ajustar tamanho do mockup do iPhone para proporcionalidade
     status: completed
+  - id: fix-duplicate-id
+    content: Corrigir ID duplicado no mockup direito (bug crítico)
+    status: completed
+  - id: autoplay-hover
+    content: Implementar autoplay com pause no hover (opção E)
+    status: completed
 ---
 
 # Plano: Seção Line-up com Mockups Interativos
@@ -163,13 +169,14 @@ export interface ScrollProgress {
 
 **Arquivo:** [`src/components/lineup/LineupReact.tsx`](src/components/lineup/LineupReact.tsx)
 
-**Características:**
+**Características (ATUALIZADO - Autoplay com Pause no Hover):**
 
-- Usa `IntersectionObserver` para detectar quando seção está visível
-- Chama `setupLineupScroll` do script TypeScript
-- Gerencia estado do índice do artista atual
-- Animações com Framer Motion para troca de imagens
-- Respeita `prefers-reduced-motion`
+- **Autoplay**: Troca automática de artistas a cada 3 segundos
+- **Pause no Hover**: Pausa ao passar mouse sobre os mockups
+- **Keyboard Navigation**: Setas para navegar, Space para pausar/retomar
+- **Botão de controle**: Play/Pause visível no canto inferior direito
+- Animações com Framer Motion para transições suaves
+- Respeita `prefers-reduced-motion` (desativa autoplay e animações)
 
 **Estrutura React:**
 
