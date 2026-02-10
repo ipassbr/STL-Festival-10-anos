@@ -123,11 +123,11 @@ const variantClasses = {
     )
   }
 
-  <!-- Elementos decorativos de fundo (montanha e nuvem) -->
+  <!-- Elementos decorativos de fundo (laranja no canto + nuvens) -->
   {
     features && (
       <div class="ticket-card__background-decorations" aria-hidden="true">
-        <div class="ticket-card__mountain" />
+        <div class="ticket-card__orange-shape" />
         <div class="ticket-card__cloud ticket-card__cloud--1" />
         <div class="ticket-card__cloud ticket-card__cloud--2" />
       </div>
@@ -429,7 +429,7 @@ const variantClasses = {
     opacity: 0.95;
   }
 
-  /* ========== BACKGROUND DECORATIONS (Montanha e Nuvens) ========== */
+  /* ========== BACKGROUND DECORATIONS (Laranja + Nuvens) ========== */
   .ticket-card__background-decorations {
     position: absolute;
     bottom: 0;
@@ -441,17 +441,21 @@ const variantClasses = {
     pointer-events: none;
   }
 
-  /* Montanha no fundo */
-  .ticket-card__mountain {
+  /* Elemento decorativo laranja no canto direito */
+  .ticket-card__orange-shape {
     position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 0;
-    border-left: 150px solid transparent;
-    border-right: 150px solid transparent;
-    border-bottom: 180px solid rgba(0, 0, 0, 0.08);
+    bottom: -30%;
+    right: -15%;
+    width: 60%;
+    height: 70%;
+    background: linear-gradient(
+      135deg,
+      var(--color-orange) 0%,
+      var(--color-red) 100%
+    );
+    border-radius: 50% 0 0 50%;
+    opacity: 0.25;
+    transform: rotate(-15deg);
     z-index: 1;
   }
 
@@ -642,10 +646,11 @@ const variantClasses = {
       transform: rotate(-45deg) translateX(5px);
     }
 
-    .ticket-card__mountain {
-      border-left-width: 120px;
-      border-right-width: 120px;
-      border-bottom-width: 150px;
+    .ticket-card__orange-shape {
+      width: 55%;
+      height: 65%;
+      bottom: -25%;
+      right: -10%;
     }
 
     .ticket-card__cloud--1 {
@@ -724,10 +729,11 @@ const variantClasses = {
       font-size: 0.875rem;
     }
 
-    .ticket-card__mountain {
-      border-left-width: 100px;
-      border-right-width: 100px;
-      border-bottom-width: 120px;
+    .ticket-card__orange-shape {
+      width: 50%;
+      height: 60%;
+      bottom: -20%;
+      right: -8%;
     }
 
     .ticket-card__cloud--1 {
