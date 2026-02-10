@@ -32,12 +32,15 @@ const t = useTranslations(lang);
       <!-- Pista -->
       <TicketCard
         name={t('tickets.pista.name')}
-        price={t('tickets.pista.price')}
-        description={t('tickets.pista.description')}
+        features={[
+          'Praça de alimentação completa',
+          'Acesso parcial à frente do palco',
+        ]}
         variant="standard"
         ariaLabel={t('tickets.pista.ariaLabel')}
         buyNowLabel={t('tickets.buyNow')}
         buyUrl="https://www.ipass.com.br/stlfestival"
+        showPrice={false}
       />
 
       <!-- Camarote -->

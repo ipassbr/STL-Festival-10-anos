@@ -17,23 +17,27 @@
 export interface Props {
   name: string;
   price?: string;
-  description: string;
+  description?: string;
+  features?: string[];
   soldOut?: boolean;
   variant: 'premium' | 'standard';
   ariaLabel: string;
   buyNowLabel: string;
   buyUrl?: string;
+  showPrice?: boolean;
 }
 
 const {
   name,
   price,
   description,
+  features,
   soldOut = false,
   variant,
   ariaLabel,
   buyNowLabel,
   buyUrl = '#',
+  showPrice = true,
 } = Astro.props;
 
 // Definir cores baseadas no variant
@@ -67,16 +71,42 @@ const variantClasses = {
     <h3 class="ticket-card__name">{name}</h3>
   </header>
 
-  <!-- Círculo com preço (inspirado no Klangtherapie) -->
-  <div class="ticket-card__price-circle" aria-hidden="true">
-    {price && <span class="ticket-card__price">{price}</span>}
-    {!price && soldOut && <span class="ticket-card__price">-</span>}
-  </div>
+  <!-- Círculo com preço (apenas se showPrice for true) -->
+  {
+    showPrice && (
+      <div class="ticket-card__price-circle" aria-hidden="true">
+        {price && <span class="ticket-card__price">{price}</span>}
+        {!price && soldOut && <span class="ticket-card__price">-</span>}
+      </div>
+    )
+  }
 
-  <!-- Descrição do ingresso -->
-  <div class="ticket-card__description">
-    <p>{description}</p>
-  </div>
+  <!-- Lista de features com X (se fornecida) -->
+  {
+    features && features.length > 0 && (
+      <div class="ticket-card__features">
+        <ul class="ticket-card__features-list">
+          {features.map((feature) => (
+            <li class="ticket-card__feature-item">
+              <span class="ticket-card__feature-icon" aria-hidden="true">
+                ✕
+              </span>
+              <span class="ticket-card__feature-text">{feature}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+
+  <!-- Descrição do ingresso (se não houver features) -->
+  {
+    !features && description && (
+      <div class="ticket-card__description">
+        <p>{description}</p>
+      </div>
+    )
+  }
 
   <!-- Botão de compra (ou disabled se sold out) -->
   <div class="ticket-card__action">
@@ -277,6 +307,55 @@ const variantClasses = {
     opacity: 0.95;
   }
 
+  /* ========== FEATURES LIST ========== */
+  .ticket-card__features {
+    width: 100%;
+    margin: var(--spacing-xl) 0;
+    padding: 0 var(--spacing-lg);
+  }
+
+  .ticket-card__features-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .ticket-card__feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .ticket-card__feature-icon {
+    flex-shrink: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--color-cream);
+    opacity: 0.95;
+  }
+
+  /* Cor do X para card azul (pista) */
+  .ticket-card--standard:nth-of-type(1) .ticket-card__feature-icon {
+    color: var(--color-cream);
+  }
+
+  /* Cor do X para card verde (camarote) */
+  .ticket-card--standard:nth-of-type(2) .ticket-card__feature-icon {
+    color: var(--color-cream);
+  }
+
+  .ticket-card__feature-text {
+    flex: 1;
+    opacity: 0.95;
+  }
+
   /* ========== ACTION BUTTON ========== */
   .ticket-card__action {
     width: 100%;
@@ -377,6 +456,19 @@ const variantClasses = {
 
     .ticket-card__description p {
       font-size: 0.9375rem;
+    }
+
+    .ticket-card__features {
+      padding: 0 var(--spacing-md);
+    }
+
+    .ticket-card__feature-item {
+      font-size: 0.9375rem;
+      gap: var(--spacing-sm);
+    }
+
+    .ticket-card__feature-icon {
+      font-size: 1.125rem;
     }
 
     .ticket-card__button {
