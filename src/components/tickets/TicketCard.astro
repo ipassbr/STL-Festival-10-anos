@@ -112,9 +112,7 @@ const variantClasses = {
         <ul class="ticket-card__features-list">
           {features.map((feature) => (
             <li class="ticket-card__feature-item">
-              <span class="ticket-card__feature-icon" aria-hidden="true">
-                ✕
-              </span>
+              <span class="ticket-card__feature-bullet" aria-hidden="true" />
               <span class="ticket-card__feature-text">{feature}</span>
             </li>
           ))}
@@ -405,23 +403,24 @@ const variantClasses = {
     line-height: 1.5;
   }
 
-  .ticket-card__feature-icon {
+  .ticket-card__feature-bullet {
     flex-shrink: 0;
-    font-size: 1.25rem;
-    font-weight: 700;
-    line-height: 1;
-    color: var(--color-cream);
+    width: 10px;
+    height: 10px;
+    border-radius: var(--radius-full);
+    background-color: var(--color-cream);
     opacity: 0.95;
+    margin-top: 0.35rem;
   }
 
-  /* Cor do X para card azul (pista) */
-  .ticket-card--standard:nth-of-type(1) .ticket-card__feature-icon {
-    color: var(--color-cream);
+  /* Cor da bolinha para card azul (pista) */
+  .ticket-card--standard:nth-of-type(1) .ticket-card__feature-bullet {
+    background-color: var(--color-cream);
   }
 
-  /* Cor do X para card verde (camarote) */
-  .ticket-card--standard:nth-of-type(2) .ticket-card__feature-icon {
-    color: var(--color-cream);
+  /* Cor da bolinha para card verde (camarote) */
+  .ticket-card--standard:nth-of-type(2) .ticket-card__feature-bullet {
+    background-color: var(--color-cream);
   }
 
   .ticket-card__feature-text {
@@ -459,12 +458,14 @@ const variantClasses = {
     z-index: 1;
   }
 
-  /* Nuvens decorativas */
+  /* Nuvens decorativas com animação */
   .ticket-card__cloud {
     position: absolute;
     background-color: rgba(255, 255, 255, 0.15);
     border-radius: var(--radius-full);
     z-index: 2;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
   }
 
   .ticket-card__cloud--1 {
@@ -472,6 +473,8 @@ const variantClasses = {
     right: 40px;
     width: 60px;
     height: 25px;
+    animation-name: cloudFloat1;
+    animation-duration: 20s;
   }
 
   .ticket-card__cloud--1::before,
@@ -501,6 +504,9 @@ const variantClasses = {
     left: 30px;
     width: 50px;
     height: 20px;
+    animation-name: cloudFloat2;
+    animation-duration: 25s;
+    animation-delay: -5s;
   }
 
   .ticket-card__cloud--2::before,
@@ -670,8 +676,9 @@ const variantClasses = {
       gap: var(--spacing-sm);
     }
 
-    .ticket-card__feature-icon {
-      font-size: 1.125rem;
+    .ticket-card__feature-bullet {
+      width: 8px;
+      height: 8px;
     }
 
     .ticket-card__button {
@@ -729,6 +736,11 @@ const variantClasses = {
       font-size: 0.875rem;
     }
 
+    .ticket-card__feature-bullet {
+      width: 7px;
+      height: 7px;
+    }
+
     .ticket-card__orange-shape {
       width: 50%;
       height: 60%;
@@ -749,6 +761,37 @@ const variantClasses = {
     }
   }
 
+  /* ========== ANIMATIONS ========== */
+  @keyframes cloudFloat1 {
+    0% {
+      transform: translateX(0);
+      opacity: 0.15;
+    }
+    50% {
+      transform: translateX(-30px);
+      opacity: 0.2;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 0.15;
+    }
+  }
+
+  @keyframes cloudFloat2 {
+    0% {
+      transform: translateX(0);
+      opacity: 0.15;
+    }
+    50% {
+      transform: translateX(40px);
+      opacity: 0.25;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 0.15;
+    }
+  }
+
   /* ========== ACESSIBILIDADE ========== */
   @media (prefers-reduced-motion: reduce) {
     .ticket-card,
@@ -758,6 +801,10 @@ const variantClasses = {
 
     .ticket-card:hover {
       transform: none;
+    }
+
+    .ticket-card__cloud {
+      animation: none !important;
     }
   }
 </style>
