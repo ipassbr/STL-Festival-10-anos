@@ -118,7 +118,7 @@ const variantClasses = {
     transition:
       transform var(--duration-normal) var(--ease-out),
       box-shadow var(--duration-normal) var(--ease-out);
-    overflow: visible;
+    overflow: visible; /* Permite o furo circular ficar visível */
   }
 
   .ticket-card:hover {
@@ -195,7 +195,7 @@ const variantClasses = {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 200%;
+    width: 140%;
     padding: var(--spacing-lg) 0;
     background-color: var(--color-black);
     color: var(--color-white);
@@ -210,6 +210,11 @@ const variantClasses = {
       0 4px 8px rgba(0, 0, 0, 0.3),
       0 -4px 8px rgba(0, 0, 0, 0.3);
     z-index: 15;
+  }
+
+  /* Garantir que a faixa fique contida no card */
+  .ticket-card--sold-out {
+    overflow: hidden;
   }
 
   .ticket-card__sold-out-text {
