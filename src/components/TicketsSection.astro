@@ -29,14 +29,14 @@ const t = useTranslations(lang);
 
     <!-- Grid de cards -->
     <div class="tickets-grid">
-      <!-- Camarote Premium - Sold Out -->
+      <!-- Pista -->
       <TicketCard
-        name={t('tickets.camarotePremium.name')}
-        description={t('tickets.camarotePremium.description')}
-        soldOut={true}
-        variant="premium"
-        ariaLabel={t('tickets.camarotePremium.ariaLabel')}
-        buyNowLabel={t('tickets.soldOut')}
+        name={t('tickets.pista.name')}
+        price={t('tickets.pista.price')}
+        description={t('tickets.pista.description')}
+        variant="standard"
+        ariaLabel={t('tickets.pista.ariaLabel')}
+        buyNowLabel={t('tickets.buyNow')}
       />
 
       <!-- Camarote -->
@@ -49,14 +49,14 @@ const t = useTranslations(lang);
         buyNowLabel={t('tickets.buyNow')}
       />
 
-      <!-- Pista -->
+      <!-- Camarote Premium - Sold Out -->
       <TicketCard
-        name={t('tickets.pista.name')}
-        price={t('tickets.pista.price')}
-        description={t('tickets.pista.description')}
-        variant="standard"
-        ariaLabel={t('tickets.pista.ariaLabel')}
-        buyNowLabel={t('tickets.buyNow')}
+        name={t('tickets.camarotePremium.name')}
+        description={t('tickets.camarotePremium.description')}
+        soldOut={true}
+        variant="premium"
+        ariaLabel={t('tickets.camarotePremium.ariaLabel')}
+        buyNowLabel={t('tickets.soldOut')}
       />
     </div>
   </div>
@@ -72,8 +72,9 @@ const t = useTranslations(lang);
       offers: [
         {
           '@type': 'Offer',
-          name: t('tickets.camarotePremium.name'),
-          availability: 'https://schema.org/SoldOut',
+          name: t('tickets.pista.name'),
+          priceCurrency: 'BRL',
+          availability: 'https://schema.org/InStock',
           url: 'https://stlfestival.com.br/#tickets',
         },
         {
@@ -85,9 +86,8 @@ const t = useTranslations(lang);
         },
         {
           '@type': 'Offer',
-          name: t('tickets.pista.name'),
-          priceCurrency: 'BRL',
-          availability: 'https://schema.org/InStock',
+          name: t('tickets.camarotePremium.name'),
+          availability: 'https://schema.org/SoldOut',
           url: 'https://stlfestival.com.br/#tickets',
         },
       ],
