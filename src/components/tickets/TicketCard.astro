@@ -22,6 +22,7 @@ export interface Props {
   variant: 'premium' | 'standard';
   ariaLabel: string;
   buyNowLabel: string;
+  buyUrl?: string;
 }
 
 const {
@@ -32,6 +33,7 @@ const {
   variant,
   ariaLabel,
   buyNowLabel,
+  buyUrl = '#',
 } = Astro.props;
 
 // Definir cores baseadas no variant
@@ -90,9 +92,11 @@ const variantClasses = {
         </button>
       ) : (
         <a
-          href="#"
+          href={buyUrl}
           class="ticket-card__button"
           aria-label={`${buyNowLabel} - ${name}`}
+          target="_blank"
+          rel="noopener noreferrer"
         >
           {buyNowLabel}
         </a>
