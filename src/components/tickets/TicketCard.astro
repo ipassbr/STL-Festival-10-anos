@@ -19,12 +19,14 @@ export interface Props {
   price?: string;
   description?: string;
   features?: string[];
+  featureImage?: string;
   soldOut?: boolean;
   variant: 'premium' | 'standard';
   ariaLabel: string;
   buyNowLabel: string;
   buyUrl?: string;
   showPrice?: boolean;
+  largeTitle?: boolean;
 }
 
 const {
@@ -32,12 +34,14 @@ const {
   price,
   description,
   features,
+  featureImage,
   soldOut = false,
   variant,
   ariaLabel,
   buyNowLabel,
   buyUrl = '#',
   showPrice = true,
+  largeTitle = false,
 } = Astro.props;
 
 // Definir cores baseadas no variant
@@ -68,7 +72,11 @@ const variantClasses = {
 
   <!-- Header do card com nome do ticket -->
   <header class="ticket-card__header">
-    <h3 class="ticket-card__name">{name}</h3>
+    <h3
+      class={`ticket-card__name ${largeTitle ? 'ticket-card__name--large' : ''}`}
+    >
+      {name}
+    </h3>
   </header>
 
   <!-- Círculo com preço (apenas se showPrice for true) -->
@@ -95,6 +103,29 @@ const variantClasses = {
             </li>
           ))}
         </ul>
+        {featureImage && (
+          <div class="ticket-card__feature-image">
+            <img
+              src={featureImage}
+              alt=""
+              role="presentation"
+              loading="lazy"
+              width="120"
+              height="120"
+            />
+          </div>
+        )}
+      </div>
+    )
+  }
+
+  <!-- Elementos decorativos de fundo (montanha e nuvem) -->
+  {
+    features && (
+      <div class="ticket-card__background-decorations" aria-hidden="true">
+        <div class="ticket-card__mountain" />
+        <div class="ticket-card__cloud ticket-card__cloud--1" />
+        <div class="ticket-card__cloud ticket-card__cloud--2" />
       </div>
     )
   }
@@ -261,6 +292,8 @@ const variantClasses = {
     text-align: center;
     margin-top: var(--spacing-md);
     margin-bottom: var(--spacing-xl);
+    position: relative;
+    z-index: 5;
   }
 
   .ticket-card__name {
@@ -269,6 +302,13 @@ const variantClasses = {
     font-weight: 700;
     line-height: 1.2;
     margin: 0;
+  }
+
+  /* Título grande para card da Pista */
+  .ticket-card__name--large {
+    font-size: 3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 
   /* ========== PRICE CIRCLE ========== */
@@ -283,6 +323,8 @@ const variantClasses = {
     border: 4px solid rgba(255, 255, 255, 0.3);
     margin: var(--spacing-xl) 0;
     backdrop-filter: blur(10px);
+    position: relative;
+    z-index: 5;
   }
 
   .ticket-card__price {
@@ -297,6 +339,8 @@ const variantClasses = {
     text-align: center;
     margin-bottom: var(--spacing-xl);
     padding: 0 var(--spacing-md);
+    position: relative;
+    z-index: 5;
   }
 
   .ticket-card__description p {
@@ -312,6 +356,27 @@ const variantClasses = {
     width: 100%;
     margin: var(--spacing-xl) 0;
     padding: 0 var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+  }
+
+  .ticket-card__feature-image {
+    flex-shrink: 0;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+    position: relative;
+  }
+
+  .ticket-card__feature-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: brightness(1.1);
   }
 
   .ticket-card__features-list {
@@ -321,6 +386,9 @@ const variantClasses = {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-md);
+    flex: 1;
+    z-index: 5;
+    position: relative;
   }
 
   .ticket-card__feature-item {
@@ -356,10 +424,104 @@ const variantClasses = {
     opacity: 0.95;
   }
 
+  /* ========== BACKGROUND DECORATIONS (Montanha e Nuvens) ========== */
+  .ticket-card__background-decorations {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* Montanha no fundo */
+  .ticket-card__mountain {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 150px solid transparent;
+    border-right: 150px solid transparent;
+    border-bottom: 180px solid rgba(0, 0, 0, 0.08);
+    z-index: 1;
+  }
+
+  /* Nuvens decorativas */
+  .ticket-card__cloud {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-full);
+    z-index: 2;
+  }
+
+  .ticket-card__cloud--1 {
+    top: 120px;
+    right: 40px;
+    width: 60px;
+    height: 25px;
+  }
+
+  .ticket-card__cloud--1::before,
+  .ticket-card__cloud--1::after {
+    content: '';
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-full);
+  }
+
+  .ticket-card__cloud--1::before {
+    width: 30px;
+    height: 30px;
+    top: -12px;
+    left: 10px;
+  }
+
+  .ticket-card__cloud--1::after {
+    width: 35px;
+    height: 35px;
+    top: -15px;
+    right: 10px;
+  }
+
+  .ticket-card__cloud--2 {
+    bottom: 200px;
+    left: 30px;
+    width: 50px;
+    height: 20px;
+  }
+
+  .ticket-card__cloud--2::before,
+  .ticket-card__cloud--2::after {
+    content: '';
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-full);
+  }
+
+  .ticket-card__cloud--2::before {
+    width: 25px;
+    height: 25px;
+    top: -10px;
+    left: 8px;
+  }
+
+  .ticket-card__cloud--2::after {
+    width: 28px;
+    height: 28px;
+    top: -12px;
+    right: 8px;
+  }
+
   /* ========== ACTION BUTTON ========== */
   .ticket-card__action {
     width: 100%;
     margin-top: auto;
+    position: relative;
+    z-index: 5;
   }
 
   .ticket-card__button {
@@ -445,6 +607,10 @@ const variantClasses = {
       font-size: 1.5rem;
     }
 
+    .ticket-card__name--large {
+      font-size: 2.25rem;
+    }
+
     .ticket-card__price-circle {
       width: 150px;
       height: 150px;
@@ -460,6 +626,32 @@ const variantClasses = {
 
     .ticket-card__features {
       padding: 0 var(--spacing-md);
+      flex-direction: column-reverse;
+      gap: var(--spacing-md);
+    }
+
+    .ticket-card__feature-image {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto;
+    }
+
+    .ticket-card__mountain {
+      border-left-width: 120px;
+      border-right-width: 120px;
+      border-bottom-width: 150px;
+    }
+
+    .ticket-card__cloud--1 {
+      width: 50px;
+      height: 20px;
+      right: 30px;
+    }
+
+    .ticket-card__cloud--2 {
+      width: 40px;
+      height: 18px;
+      left: 25px;
     }
 
     .ticket-card__feature-item {
@@ -504,6 +696,37 @@ const variantClasses = {
 
     .ticket-card__price {
       font-size: 1.75rem;
+    }
+
+    .ticket-card__name--large {
+      font-size: 2rem;
+    }
+
+    .ticket-card__feature-image {
+      width: 80px;
+      height: 80px;
+    }
+
+    .ticket-card__feature-item {
+      font-size: 0.875rem;
+    }
+
+    .ticket-card__mountain {
+      border-left-width: 100px;
+      border-right-width: 100px;
+      border-bottom-width: 120px;
+    }
+
+    .ticket-card__cloud--1 {
+      width: 40px;
+      height: 18px;
+      right: 20px;
+    }
+
+    .ticket-card__cloud--2 {
+      width: 35px;
+      height: 16px;
+      left: 20px;
     }
   }
 
