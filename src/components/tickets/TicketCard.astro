@@ -1,0 +1,342 @@
+---
+/**
+ * TicketCard Component - STL Festival 2026
+ * Card de ingresso reutilizável com design inspirado no Klangtherapie Festival
+ *
+ * @component
+ * @example
+ * <TicketCard
+ *   name="Camarote Premium"
+ *   description="Área VIP com bar exclusivo"
+ *   soldOut={true}
+ *   variant="premium"
+ *   ariaLabel="Camarote Premium - Esgotado"
+ * />
+ */
+
+export interface Props {
+  name: string;
+  price?: string;
+  description: string;
+  soldOut?: boolean;
+  variant: 'premium' | 'standard';
+  ariaLabel: string;
+  buyNowLabel: string;
+}
+
+const {
+  name,
+  price,
+  description,
+  soldOut = false,
+  variant,
+  ariaLabel,
+  buyNowLabel,
+} = Astro.props;
+
+// Definir cores baseadas no variant
+const variantClasses = {
+  premium: 'ticket-card--premium',
+  standard: 'ticket-card--standard',
+};
+---
+
+<article
+  class={`ticket-card ${variantClasses[variant]} ${soldOut ? 'ticket-card--sold-out' : ''}`}
+  aria-label={ariaLabel}
+>
+  <!-- Badge "Sold Out" (se aplicável) -->
+  {
+    soldOut && (
+      <div class="ticket-card__sold-out-badge" aria-hidden="true">
+        <span class="ticket-card__sold-out-text">SOLD OUT</span>
+      </div>
+    )
+  }
+
+  <!-- Header do card com nome do ticket -->
+  <header class="ticket-card__header">
+    <h3 class="ticket-card__name">{name}</h3>
+  </header>
+
+  <!-- Círculo com preço (inspirado no Klangtherapie) -->
+  <div class="ticket-card__price-circle" aria-hidden="true">
+    {price && <span class="ticket-card__price">{price}</span>}
+    {!price && soldOut && <span class="ticket-card__price">-</span>}
+  </div>
+
+  <!-- Descrição do ingresso -->
+  <div class="ticket-card__description">
+    <p>{description}</p>
+  </div>
+
+  <!-- Botão de compra (ou disabled se sold out) -->
+  <div class="ticket-card__action">
+    {
+      soldOut ? (
+        <button
+          type="button"
+          class="ticket-card__button ticket-card__button--disabled"
+          disabled
+          aria-disabled="true"
+        >
+          Esgotado
+        </button>
+      ) : (
+        <a
+          href="#"
+          class="ticket-card__button"
+          aria-label={`${buyNowLabel} - ${name}`}
+        >
+          {buyNowLabel}
+        </a>
+      )
+    }
+  </div>
+</article>
+
+<style>
+  /* ========== CARD BASE ========== */
+  .ticket-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 520px;
+    padding: var(--spacing-2xl);
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-lg);
+    transition:
+      transform var(--duration-normal) var(--ease-out),
+      box-shadow var(--duration-normal) var(--ease-out);
+    overflow: hidden;
+  }
+
+  .ticket-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+  }
+
+  /* ========== VARIANTS ========== */
+  /* Premium (Sold Out) - Grayscale */
+  .ticket-card--premium {
+    background: linear-gradient(
+      135deg,
+      var(--color-gray-300) 0%,
+      var(--color-gray-400) 100%
+    );
+    color: var(--color-gray-700);
+  }
+
+  /* Standard - Gradiente verde para camarote, azul para pista */
+  .ticket-card--standard:nth-of-type(2) {
+    background: linear-gradient(
+      135deg,
+      var(--color-green) 0%,
+      var(--color-green-light) 100%
+    );
+    color: var(--color-cream);
+  }
+
+  .ticket-card--standard:nth-of-type(3) {
+    background: linear-gradient(
+      135deg,
+      var(--color-blue) 0%,
+      var(--color-blue-light) 100%
+    );
+    color: var(--color-cream);
+  }
+
+  /* ========== SOLD OUT BADGE ========== */
+  .ticket-card__sold-out-badge {
+    position: absolute;
+    top: var(--spacing-xl);
+    right: calc(-1 * var(--spacing-3xl));
+    background-color: var(--color-red);
+    color: var(--color-white);
+    padding: var(--spacing-sm) var(--spacing-3xl);
+    transform: rotate(45deg);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    box-shadow: var(--shadow-md);
+    z-index: 10;
+  }
+
+  .ticket-card__sold-out-text {
+    display: block;
+  }
+
+  /* ========== HEADER ========== */
+  .ticket-card__header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .ticket-card__name {
+    font-family: var(--font-heading);
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  /* ========== PRICE CIRCLE ========== */
+  .ticket-card__price-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 180px;
+    height: 180px;
+    border-radius: var(--radius-full);
+    background-color: rgba(255, 255, 255, 0.15);
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    margin: var(--spacing-xl) 0;
+    backdrop-filter: blur(10px);
+  }
+
+  .ticket-card__price {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  /* ========== DESCRIPTION ========== */
+  .ticket-card__description {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    padding: 0 var(--spacing-md);
+  }
+
+  .ticket-card__description p {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0;
+    opacity: 0.95;
+  }
+
+  /* ========== ACTION BUTTON ========== */
+  .ticket-card__action {
+    width: 100%;
+    margin-top: auto;
+  }
+
+  .ticket-card__button {
+    display: block;
+    width: 100%;
+    padding: var(--spacing-md) var(--spacing-xl);
+    border: none;
+    border-radius: var(--radius-lg);
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition:
+      background-color var(--duration-fast) var(--ease-out),
+      transform var(--duration-fast) var(--ease-out);
+  }
+
+  /* Button para cards standard (verde/azul) */
+  .ticket-card--standard .ticket-card__button {
+    background-color: var(--color-cream);
+    color: var(--color-green-dark);
+  }
+
+  .ticket-card--standard .ticket-card__button:hover {
+    background-color: var(--color-cream-light);
+    transform: scale(1.02);
+  }
+
+  .ticket-card--standard .ticket-card__button:focus-visible {
+    outline: 3px solid var(--color-cream);
+    outline-offset: 2px;
+  }
+
+  /* Button disabled (sold out) */
+  .ticket-card__button--disabled {
+    background-color: var(--color-gray-600);
+    color: var(--color-gray-300);
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+  .ticket-card__button--disabled:hover {
+    transform: none;
+  }
+
+  /* ========== SOLD OUT STATE ========== */
+  .ticket-card--sold-out {
+    opacity: 0.85;
+  }
+
+  .ticket-card--sold-out:hover {
+    transform: none;
+  }
+
+  /* ========== RESPONSIVE ========== */
+  @media (max-width: 768px) {
+    .ticket-card {
+      min-height: 480px;
+      padding: var(--spacing-xl);
+    }
+
+    .ticket-card__name {
+      font-size: 1.5rem;
+    }
+
+    .ticket-card__price-circle {
+      width: 150px;
+      height: 150px;
+    }
+
+    .ticket-card__price {
+      font-size: 2rem;
+    }
+
+    .ticket-card__description p {
+      font-size: 0.9375rem;
+    }
+
+    .ticket-card__button {
+      font-size: 1rem;
+      padding: var(--spacing-md);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .ticket-card {
+      min-height: 440px;
+    }
+
+    .ticket-card__price-circle {
+      width: 130px;
+      height: 130px;
+    }
+
+    .ticket-card__price {
+      font-size: 1.75rem;
+    }
+  }
+
+  /* ========== ACESSIBILIDADE ========== */
+  @media (prefers-reduced-motion: reduce) {
+    .ticket-card,
+    .ticket-card__button {
+      transition: none;
+    }
+
+    .ticket-card:hover {
+      transform: none;
+    }
+  }
+</style>
