@@ -440,7 +440,7 @@ const variantClasses = {
     pointer-events: none;
   }
 
-  /* Elemento decorativo laranja no canto direito */
+  /* Elemento decorativo azul forte no canto direito */
   .ticket-card__orange-shape {
     position: absolute;
     bottom: -30%;
@@ -449,11 +449,11 @@ const variantClasses = {
     height: 70%;
     background: linear-gradient(
       135deg,
-      var(--color-orange) 0%,
-      var(--color-red) 100%
+      var(--color-blue-dark) 0%,
+      var(--color-indigo) 100%
     );
     border-radius: 50% 0 0 50%;
-    opacity: 0.25;
+    opacity: 0.35;
     transform: rotate(-15deg);
     z-index: 1;
   }
@@ -486,17 +486,23 @@ const variantClasses = {
   }
 
   .ticket-card__cloud--1::before {
-    width: 30px;
-    height: 30px;
-    top: -12px;
-    left: 10px;
+    width: 40px;
+    height: 40px;
+    top: -18px;
+    left: 5px;
+    box-shadow:
+      15px 0 0 -5px rgba(255, 255, 255, 0.15),
+      -10px 5px 0 -8px rgba(255, 255, 255, 0.12);
   }
 
   .ticket-card__cloud--1::after {
-    width: 35px;
-    height: 35px;
-    top: -15px;
-    right: 10px;
+    width: 45px;
+    height: 45px;
+    top: -22px;
+    right: 8px;
+    box-shadow:
+      -15px 5px 0 -10px rgba(255, 255, 255, 0.13),
+      10px 0 0 -8px rgba(255, 255, 255, 0.15);
   }
 
   .ticket-card__cloud--2 {
@@ -518,17 +524,23 @@ const variantClasses = {
   }
 
   .ticket-card__cloud--2::before {
-    width: 25px;
-    height: 25px;
-    top: -10px;
-    left: 8px;
+    width: 32px;
+    height: 32px;
+    top: -14px;
+    left: 6px;
+    box-shadow:
+      12px 0 0 -5px rgba(255, 255, 255, 0.15),
+      -8px 3px 0 -6px rgba(255, 255, 255, 0.12);
   }
 
   .ticket-card__cloud--2::after {
-    width: 28px;
-    height: 28px;
-    top: -12px;
-    right: 8px;
+    width: 35px;
+    height: 35px;
+    top: -16px;
+    right: 6px;
+    box-shadow:
+      -12px 4px 0 -8px rgba(255, 255, 255, 0.13),
+      8px 0 0 -6px rgba(255, 255, 255, 0.15);
   }
 
   /* ========== ACTION BUTTON ========== */
