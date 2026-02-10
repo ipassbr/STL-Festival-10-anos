@@ -71,7 +71,9 @@ const variantClasses = {
   }
 
   <!-- Header do card com nome do ticket -->
-  <header class="ticket-card__header">
+  <header
+    class={`ticket-card__header ${largeTitle ? 'ticket-card__header--left' : ''}`}
+  >
     <h3
       class={`ticket-card__name ${largeTitle ? 'ticket-card__name--large' : ''}`}
     >
@@ -298,6 +300,12 @@ const variantClasses = {
     z-index: 5;
   }
 
+  /* Header alinhado à esquerda para títulos grandes */
+  .ticket-card__header--left {
+    text-align: left;
+    padding-left: var(--spacing-lg);
+  }
+
   .ticket-card__name {
     font-family: var(--font-heading);
     font-size: 1.75rem;
@@ -308,9 +316,10 @@ const variantClasses = {
 
   /* Título grande para card da Pista */
   .ticket-card__name--large {
-    font-size: 3rem;
+    font-size: 4rem;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
+    font-weight: 900;
   }
 
   /* ========== PRICE CIRCLE ========== */
@@ -443,18 +452,18 @@ const variantClasses = {
   /* Elemento decorativo azul forte no canto direito */
   .ticket-card__orange-shape {
     position: absolute;
-    bottom: -30%;
-    right: -15%;
-    width: 60%;
-    height: 70%;
+    bottom: 0;
+    right: 0;
+    width: 50%;
+    height: 60%;
     background: linear-gradient(
       135deg,
       var(--color-blue-dark) 0%,
       var(--color-indigo) 100%
     );
-    border-radius: 50% 0 0 50%;
+    border-radius: 80% 0 0 0;
     opacity: 0.35;
-    transform: rotate(-15deg);
+    transform: rotate(0deg);
     z-index: 1;
   }
 
@@ -635,7 +644,11 @@ const variantClasses = {
     }
 
     .ticket-card__name--large {
-      font-size: 2.25rem;
+      font-size: 3rem;
+    }
+
+    .ticket-card__header--left {
+      padding-left: var(--spacing-md);
     }
 
     .ticket-card__price-circle {
@@ -665,10 +678,11 @@ const variantClasses = {
     }
 
     .ticket-card__orange-shape {
-      width: 55%;
-      height: 65%;
-      bottom: -25%;
-      right: -10%;
+      width: 45%;
+      height: 55%;
+      bottom: 0;
+      right: 0;
+      border-radius: 70% 0 0 0;
     }
 
     .ticket-card__cloud--1 {
@@ -691,6 +705,14 @@ const variantClasses = {
     .ticket-card__feature-bullet {
       width: 8px;
       height: 8px;
+    }
+
+    .ticket-card__name--large {
+      font-size: 3.5rem;
+    }
+
+    .ticket-card__header--left {
+      padding-left: var(--spacing-md);
     }
 
     .ticket-card__button {
@@ -729,7 +751,11 @@ const variantClasses = {
     }
 
     .ticket-card__name--large {
-      font-size: 2rem;
+      font-size: 2.5rem;
+    }
+
+    .ticket-card__header--left {
+      padding-left: var(--spacing-sm);
     }
 
     .ticket-card__features {
@@ -754,10 +780,11 @@ const variantClasses = {
     }
 
     .ticket-card__orange-shape {
-      width: 50%;
-      height: 60%;
-      bottom: -20%;
-      right: -8%;
+      width: 40%;
+      height: 50%;
+      bottom: 0;
+      right: 0;
+      border-radius: 60% 0 0 0;
     }
 
     .ticket-card__cloud--1 {
