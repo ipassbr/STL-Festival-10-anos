@@ -47,12 +47,17 @@ const t = useTranslations(lang);
       <!-- Camarote -->
       <TicketCard
         name={t('tickets.camarote.name')}
-        price={t('tickets.camarote.price')}
-        description={t('tickets.camarote.description')}
+        features={[
+          'Acesso a frente do palco',
+          'Banheiros exclusivos',
+          'Area de descanso exclusiva',
+        ]}
         variant="standard"
         ariaLabel={t('tickets.camarote.ariaLabel')}
         buyNowLabel={t('tickets.buyNow')}
         buyUrl="https://www.ipass.com.br/stlfestival"
+        showPrice={false}
+        largeTitle={true}
       />
 
       <!-- Camarote Premium - Sold Out -->
