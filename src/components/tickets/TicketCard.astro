@@ -522,12 +522,12 @@ const variantClasses = {
     filter: brightness(1.1);
   }
 
-  /* Mão do rock na Pista - acima do botão, centralizada */
+  /* Mão do rock na Pista - acima do botão, centralizada, reta */
   .ticket-card--standard:nth-of-type(1) .ticket-card__decorative-image {
     display: block;
-    bottom: 110px;
+    bottom: 100px;
     left: 50%;
-    transform: translateX(-50%) rotate(-45deg);
+    transform: translateX(-50%);
     width: 100px;
     height: 100px;
   }
@@ -768,7 +768,8 @@ const variantClasses = {
     .ticket-card--standard:nth-of-type(1) .ticket-card__decorative-image {
       width: 80px;
       height: 80px;
-      bottom: 90px;
+      bottom: 85px;
+      transform: translateX(-50%);
     }
 
     .ticket-card--standard:nth-of-type(2) .ticket-card__decorative-image {
@@ -898,7 +899,8 @@ const variantClasses = {
     .ticket-card--standard:nth-of-type(1) .ticket-card__decorative-image {
       width: 70px;
       height: 70px;
-      bottom: 80px;
+      bottom: 75px;
+      transform: translateX(-50%);
     }
 
     .ticket-card--standard:nth-of-type(2) .ticket-card__decorative-image {
