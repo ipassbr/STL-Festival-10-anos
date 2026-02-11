@@ -67,7 +67,7 @@ const variantClasses = {
   {
     soldOut && (
       <div class="ticket-card__sold-out-banner" aria-hidden="true">
-        <span class="ticket-card__sold-out-text">Sold out</span>
+        <span class="ticket-card__sold-out-text">{buyNowLabel}</span>
       </div>
     )
   }
@@ -168,7 +168,7 @@ const variantClasses = {
           disabled
           aria-disabled="true"
         >
-          Esgotado
+          {buyNowLabel}
         </button>
       ) : (
         <a

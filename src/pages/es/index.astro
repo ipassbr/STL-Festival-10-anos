@@ -2,6 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Preloader from '@/components/Preloader.astro';
 import HeroSection from '@/components/HeroSection.astro';
+import TicketsSection from '@/components/TicketsSection.astro';
 import { getLangFromUrl, useTranslations } from '@/i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
@@ -20,7 +21,7 @@ const fallbackImage =
   <Preloader videoUrl={videoUrl} fallbackImage={fallbackImage} />
   <HeroSection videoUrl={videoUrl} fallbackImage={fallbackImage} />
 
-  <!-- Placeholder para próximas secciones -->
+  <!-- Placeholder para lineup (será implementado em outra branch) -->
   <section
     id="lineup"
     style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--color-cream);"
@@ -29,8 +30,11 @@ const fallbackImage =
       <h2
         style="font-family: var(--font-heading); font-size: 3rem; text-align: center;"
       >
-        Lineup próximamente...
+        {t('lineup.title')}
+        {t('lineup.loading')}
       </h2>
     </div>
   </section>
+
+  <TicketsSection />
 </BaseLayout>
