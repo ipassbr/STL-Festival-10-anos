@@ -65,11 +65,20 @@ const t = useTranslations(lang);
       <!-- Camarote Premium - Sold Out -->
       <TicketCard
         name={t('tickets.camarotePremium.name')}
-        description={t('tickets.camarotePremium.description')}
+        features={[
+          'Camarote elevado',
+          'Visao priveligiada do palco e de todo o evento',
+          'Entrada exclusiva',
+          'Area de descanso exclusiva',
+          'Banheiros premium exclusivos',
+          'Praça de alimentação com transmissão ao vivo de shows',
+        ]}
         soldOut={true}
         variant="premium"
         ariaLabel={t('tickets.camarotePremium.ariaLabel')}
         buyNowLabel={t('tickets.soldOut')}
+        showPrice={false}
+        largeTitle={true}
       />
     </div>
   </div>
