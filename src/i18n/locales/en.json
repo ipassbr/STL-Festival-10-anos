@@ -72,22 +72,31 @@
     "sectionLabel": "Festival tickets section",
     "soldOut": "Sold Out",
     "buyNow": "Buy Now",
-    "camarotePremium": {
-      "name": "Premium VIP Box",
-      "description": "????????",
-      "ariaLabel": "Premium VIP Box - Sold Out"
+    "pista": {
+      "name": "General Admission",
+      "ariaLabel": "General Admission",
+      "features": ["Complete food court", "Partial access to front stage"]
     },
     "camarote": {
       "name": "VIP Box",
-      "price": "XXX",
-      "description": "????????",
-      "ariaLabel": "VIP Box - R$ XXX"
+      "ariaLabel": "VIP Box",
+      "features": [
+        "Front stage access",
+        "Exclusive restrooms",
+        "Exclusive lounge area"
+      ]
     },
-    "pista": {
-      "name": "General Admission",
-      "price": "XXX",
-      "description": "????????",
-      "ariaLabel": "General Admission - R$ XXX"
+    "camarotePremium": {
+      "name": "Premium VIP Box",
+      "ariaLabel": "Premium VIP Box - Sold Out",
+      "features": [
+        "Elevated VIP box",
+        "Privileged view of stage and entire event",
+        "Exclusive entrance",
+        "Exclusive lounge area",
+        "Premium exclusive restrooms",
+        "Food court with live show broadcast"
+      ]
     }
   }
 }

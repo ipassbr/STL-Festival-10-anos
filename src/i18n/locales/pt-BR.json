@@ -72,22 +72,34 @@
     "sectionLabel": "Seção de ingressos do festival",
     "soldOut": "Esgotado",
     "buyNow": "Comprar Agora",
-    "camarotePremium": {
-      "name": "Camarote Premium",
-      "description": "????????",
-      "ariaLabel": "Camarote Premium - Esgotado"
+    "pista": {
+      "name": "Pista",
+      "ariaLabel": "Pista",
+      "features": [
+        "Praça de alimentação completa",
+        "Acesso parcial à frente do palco"
+      ]
     },
     "camarote": {
       "name": "Camarote",
-      "price": "XXX",
-      "description": "????????",
-      "ariaLabel": "Camarote - R$ XXX"
+      "ariaLabel": "Camarote",
+      "features": [
+        "Acesso a frente do palco",
+        "Banheiros exclusivos",
+        "Area de descanso exclusiva"
+      ]
     },
-    "pista": {
-      "name": "Pista",
-      "price": "XXX",
-      "description": "????????",
-      "ariaLabel": "Pista - R$ XXX"
+    "camarotePremium": {
+      "name": "Camarote Premium",
+      "ariaLabel": "Camarote Premium - Esgotado",
+      "features": [
+        "Camarote elevado",
+        "Visao priveligiada do palco e de todo o evento",
+        "Entrada exclusiva",
+        "Area de descanso exclusiva",
+        "Banheiros premium exclusivos",
+        "Praça de alimentação com transmissão ao vivo de shows"
+      ]
     }
   }
 }

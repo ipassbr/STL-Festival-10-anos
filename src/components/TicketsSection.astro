@@ -9,9 +9,21 @@
 
 import { getLangFromUrl, useTranslations } from '@/i18n/utils';
 import TicketCard from './tickets/TicketCard.astro';
+import ptBR from '@/i18n/locales/pt-BR.json';
+import en from '@/i18n/locales/en.json';
+import es from '@/i18n/locales/es.json';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+
+// Get full translations object for arrays
+const translations = {
+  'pt-BR': ptBR,
+  en: en,
+  es: es,
+} as const;
+
+const currentTranslations = translations[lang];
 ---
 
 <section
@@ -32,10 +44,7 @@ const t = useTranslations(lang);
       <!-- Pista -->
       <TicketCard
         name={t('tickets.pista.name')}
-        features={[
-          'Praça de alimentação completa',
-          'Acesso parcial à frente do palco',
-        ]}
+        features={currentTranslations.tickets.pista.features}
         decorativeImage="/assets/elementos-card/1.png"
         variant="standard"
         ariaLabel={t('tickets.pista.ariaLabel')}
@@ -48,11 +57,7 @@ const t = useTranslations(lang);
       <!-- Camarote -->
       <TicketCard
         name={t('tickets.camarote.name')}
-        features={[
-          'Acesso a frente do palco',
-          'Banheiros exclusivos',
-          'Area de descanso exclusiva',
-        ]}
+        features={currentTranslations.tickets.camarote.features}
         decorativeImage="/assets/elementos-card/3.png"
         variant="standard"
         ariaLabel={t('tickets.camarote.ariaLabel')}
@@ -65,14 +70,7 @@ const t = useTranslations(lang);
       <!-- Camarote Premium - Sold Out -->
       <TicketCard
         name={t('tickets.camarotePremium.name')}
-        features={[
-          'Camarote elevado',
-          'Visao priveligiada do palco e de todo o evento',
-          'Entrada exclusiva',
-          'Area de descanso exclusiva',
-          'Banheiros premium exclusivos',
-          'Praça de alimentação com transmissão ao vivo de shows',
-        ]}
+        features={currentTranslations.tickets.camarotePremium.features}
         soldOut={true}
         variant="premium"
         ariaLabel={t('tickets.camarotePremium.ariaLabel')}
