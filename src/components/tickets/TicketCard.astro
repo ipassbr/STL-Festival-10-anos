@@ -20,6 +20,7 @@ export interface Props {
   description?: string;
   features?: string[];
   featureImage?: string;
+  decorativeImage?: string;
   soldOut?: boolean;
   variant: 'premium' | 'standard';
   ariaLabel: string;
@@ -35,6 +36,7 @@ const {
   description,
   features,
   featureImage,
+  decorativeImage,
   soldOut = false,
   variant,
   ariaLabel,
@@ -129,6 +131,18 @@ const variantClasses = {
       <div class="ticket-card__background-decorations" aria-hidden="true">
         <div class="ticket-card__orange-shape" />
         <div class="ticket-card__mountain-decoration" />
+        {decorativeImage && (
+          <div class="ticket-card__decorative-image">
+            <img
+              src={decorativeImage}
+              alt=""
+              role="presentation"
+              loading="lazy"
+              width="80"
+              height="80"
+            />
+          </div>
+        )}
         <div class="ticket-card__cloud ticket-card__cloud--1" />
         <div class="ticket-card__cloud ticket-card__cloud--2" />
       </div>
@@ -494,6 +508,40 @@ const variantClasses = {
     z-index: 1;
   }
 
+  /* Imagem decorativa (ET para Camarote, Mão para Pista) */
+  .ticket-card__decorative-image {
+    display: none;
+    position: absolute;
+    z-index: 3;
+  }
+
+  .ticket-card__decorative-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: brightness(1.1);
+  }
+
+  /* Mão do rock na Pista - acima do botão, centralizada */
+  .ticket-card--standard:nth-of-type(1) .ticket-card__decorative-image {
+    display: block;
+    bottom: 110px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-45deg);
+    width: 100px;
+    height: 100px;
+  }
+
+  /* ET no Camarote - ao lado da montanha, canto inferior direito */
+  .ticket-card--standard:nth-of-type(2) .ticket-card__decorative-image {
+    display: block;
+    bottom: 140px;
+    right: 30px;
+    width: 80px;
+    height: 80px;
+    transform: none;
+  }
+
   /* Nuvens decorativas com animação */
   .ticket-card__cloud {
     position: absolute;
@@ -717,6 +765,19 @@ const variantClasses = {
       border-bottom-width: 180px;
     }
 
+    .ticket-card--standard:nth-of-type(1) .ticket-card__decorative-image {
+      width: 80px;
+      height: 80px;
+      bottom: 90px;
+    }
+
+    .ticket-card--standard:nth-of-type(2) .ticket-card__decorative-image {
+      width: 65px;
+      height: 65px;
+      bottom: 120px;
+      right: 25px;
+    }
+
     .ticket-card__cloud--1 {
       width: 50px;
       height: 20px;
@@ -832,6 +893,19 @@ const variantClasses = {
       border-left-width: 120px;
       border-right-width: 120px;
       border-bottom-width: 150px;
+    }
+
+    .ticket-card--standard:nth-of-type(1) .ticket-card__decorative-image {
+      width: 70px;
+      height: 70px;
+      bottom: 80px;
+    }
+
+    .ticket-card--standard:nth-of-type(2) .ticket-card__decorative-image {
+      width: 55px;
+      height: 55px;
+      bottom: 100px;
+      right: 20px;
     }
 
     .ticket-card__cloud--1 {
