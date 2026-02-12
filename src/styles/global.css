@@ -50,6 +50,10 @@
     --color-orange-light: #ffb34d;
     --color-orange-dark: #e68a1f;
 
+    /* Laranja Pista (Card de ingresso) */
+    --color-orange-pista: #fa9327;
+    --color-orange-pista-bg: #fd8d1f;
+
     /* Azul Teal (Secondary) */
     --color-blue: #007b9a;
     --color-blue-light: #009bb8;

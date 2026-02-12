@@ -46,7 +46,6 @@ const {
   largeTitle = false,
 } = Astro.props;
 
-// Definir cores baseadas no variant
 const variantClasses = {
   premium: 'ticket-card--premium',
   standard: 'ticket-card--standard',
@@ -266,17 +265,8 @@ const variantClasses = {
     padding-left: 0;
   }
 
-  /* Standard - Gradiente por ordem: azul (pista), verde (camarote) */
-  .ticket-card--standard:nth-of-type(1) {
-    background: linear-gradient(
-      135deg,
-      var(--color-blue) 0%,
-      var(--color-blue-light) 100%
-    );
-    color: var(--color-cream);
-  }
-
-  .ticket-card--standard:nth-of-type(2) {
+  /* Standard - Camarote (vermelho) */
+  .ticket-card--standard {
     background: linear-gradient(
       135deg,
       var(--color-red) 0%,
@@ -321,14 +311,6 @@ const variantClasses = {
     margin-bottom: var(--spacing-xl);
     position: relative;
     z-index: 5;
-  }
-
-  /* Header alinhado à esquerda para títulos grandes */
-  .ticket-card__header--left {
-    text-align: left;
-    padding-left: 0;
-    margin-bottom: var(--spacing-lg);
-    margin-top: var(--spacing-lg);
   }
 
   .ticket-card__name {
@@ -446,13 +428,8 @@ const variantClasses = {
     margin-top: 0.35rem;
   }
 
-  /* Cor da bolinha para card azul (pista) */
-  .ticket-card--standard:nth-of-type(1) .ticket-card__feature-bullet {
-    background-color: var(--color-cream);
-  }
-
-  /* Cor da bolinha para card verde (camarote) */
-  .ticket-card--standard:nth-of-type(2) .ticket-card__feature-bullet {
+  /* Cor da bolinha para card standard (camarote) */
+  .ticket-card--standard .ticket-card__feature-bullet {
     background-color: var(--color-cream);
   }
 
@@ -473,26 +450,8 @@ const variantClasses = {
     pointer-events: none;
   }
 
-  /* Elemento decorativo azul forte no canto direito (Pista) */
-  .ticket-card--standard:nth-of-type(1) .ticket-card__orange-shape {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 45%;
-    height: 50%;
-    background: linear-gradient(
-      135deg,
-      var(--color-blue-dark) 0%,
-      var(--color-indigo) 100%
-    );
-    border-radius: 80% 0 0 0;
-    opacity: 0.35;
-    transform: rotate(0deg);
-    z-index: 1;
-  }
-
   /* Ocultar orange-shape do card Camarote */
-  .ticket-card--standard:nth-of-type(2) .ticket-card__orange-shape {
+  .ticket-card--standard .ticket-card__orange-shape {
     display: none;
   }
 
@@ -501,7 +460,7 @@ const variantClasses = {
     display: none;
   }
 
-  .ticket-card--standard:nth-of-type(2) .ticket-card__mountain-decoration {
+  .ticket-card--standard .ticket-card__mountain-decoration {
     display: block;
     position: absolute;
     bottom: 0;
@@ -530,18 +489,8 @@ const variantClasses = {
     filter: brightness(1.1);
   }
 
-  /* Mão do rock na Pista - acima do botão, centralizada, reta */
-  .ticket-card--standard:nth-of-type(1) .ticket-card__decorative-image {
-    display: block;
-    bottom: 100px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100px;
-    height: 100px;
-  }
-
   /* ET no Camarote - ao lado da montanha, canto inferior direito */
-  .ticket-card--standard:nth-of-type(2) .ticket-card__decorative-image {
+  .ticket-card--standard .ticket-card__decorative-image {
     display: block;
     bottom: 140px;
     right: 30px;
@@ -761,28 +710,13 @@ const variantClasses = {
       transform: rotate(-45deg) translateX(5px);
     }
 
-    .ticket-card--standard:nth-of-type(1) .ticket-card__orange-shape {
-      width: 40%;
-      height: 45%;
-      bottom: 0;
-      right: 0;
-      border-radius: 70% 0 0 0;
-    }
-
-    .ticket-card--standard:nth-of-type(2) .ticket-card__mountain-decoration {
+    .ticket-card--standard .ticket-card__mountain-decoration {
       border-left-width: 80px;
       border-right-width: 80px;
       border-bottom-width: 90px;
     }
 
-    .ticket-card--standard:nth-of-type(1) .ticket-card__decorative-image {
-      width: 80px;
-      height: 80px;
-      bottom: 85px;
-      transform: translateX(-50%);
-    }
-
-    .ticket-card--standard:nth-of-type(2) .ticket-card__decorative-image {
+    .ticket-card--standard .ticket-card__decorative-image {
       width: 65px;
       height: 65px;
       bottom: 120px;
@@ -894,28 +828,13 @@ const variantClasses = {
       height: 7px;
     }
 
-    .ticket-card--standard:nth-of-type(1) .ticket-card__orange-shape {
-      width: 35%;
-      height: 40%;
-      bottom: 0;
-      right: 0;
-      border-radius: 60% 0 0 0;
-    }
-
-    .ticket-card--standard:nth-of-type(2) .ticket-card__mountain-decoration {
+    .ticket-card--standard .ticket-card__mountain-decoration {
       border-left-width: 70px;
       border-right-width: 70px;
       border-bottom-width: 80px;
     }
 
-    .ticket-card--standard:nth-of-type(1) .ticket-card__decorative-image {
-      width: 70px;
-      height: 70px;
-      bottom: 75px;
-      transform: translateX(-50%);
-    }
-
-    .ticket-card--standard:nth-of-type(2) .ticket-card__decorative-image {
+    .ticket-card--standard .ticket-card__decorative-image {
       width: 55px;
       height: 55px;
       bottom: 100px;
