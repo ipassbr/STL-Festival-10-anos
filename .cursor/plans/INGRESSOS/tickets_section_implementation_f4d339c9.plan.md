@@ -371,11 +371,46 @@ Refs: Klangtherapie Festival design inspiration"
 }
 ```
 
+## 13. Integração com iPass (IMPLEMENTADO)
+
+### URLs de Compra:
+
+- **Pista**: https://www.ipass.com.br/stlfestival
+- **Camarote**: https://www.ipass.com.br/stlfestival
+- **Camarote Premium**: N/A (sold out, botão desabilitado)
+
+### Implementação:
+
+```typescript
+// TicketCard.astro - Nova prop
+export interface Props {
+  // ... outras props
+  buyUrl?: string; // URL opcional para compra
+}
+
+// Botão com link externo
+<a
+  href={buyUrl}
+  class="ticket-card__button"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  {buyNowLabel}
+</a>
+```
+
+### Segurança:
+
+- `target="_blank"` - Abre em nova aba
+- `rel="noopener noreferrer"` - Previne ataques de tabnabbing
+- Sold out cards não têm link (botão desabilitado)
+
 ## Notas Técnicas
 
-- **Link placeholder**: Botões usarão `href="#"` temporariamente até integração com iPass
+- **iPass Integration**: ✅ Links funcionais para plataforma de venda de ingressos
 - **Imagens**: Estrutura preparada mas sem imagens no primeiro commit
 - **Prices & Descriptions**: Valores placeholder (`XXX` e `????????`) serão atualizados posteriormente
 - **Islands Architecture**: Seção totalmente estática, sem hidratação React (LEI 05)
 - **Design Reference**: Inspirado no Klangtherapie Festival com formato de ticket físico
 - **Ordem dos Cards**: Pista → Camarote → Camarote Premium (sold out)
+- **External Links**: Segurança implementada com noopener noreferrer
