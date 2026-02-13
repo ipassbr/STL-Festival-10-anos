@@ -44,11 +44,19 @@ if [ -f "scripts/validate.sh" ]; then
     echo ""
 fi
 
+# Perguntar pela branch base
+echo -e "${YELLOW}Digite a branch base para o PR (Enter para auto-detectar):${NC}"
+read -r BASE_BRANCH_INPUT
+
 # Executar o script principal
 echo -e "${BLUE}🎯 Iniciando criação da PR...${NC}"
 echo ""
 
-bash scripts/create-pr.sh
+if [ -n "$BASE_BRANCH_INPUT" ]; then
+    bash scripts/create-pr.sh "$BASE_BRANCH_INPUT"
+else
+    bash scripts/create-pr.sh
+fi
 
 # Capturar exit code
 EXIT_CODE=$?

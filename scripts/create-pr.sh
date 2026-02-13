@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # Script para criar PR técnica com issues associadas
-# Uso: ./scripts/create-pr.sh
+# Uso: ./scripts/create-pr.sh [base-branch]
+# Exemplo: ./scripts/create-pr.sh feature/tickets-section
 
 set -e
 
@@ -30,12 +31,47 @@ fi
 
 # Obter branch atual
 CURRENT_BRANCH=$(git branch --show-current)
-if [ "$CURRENT_BRANCH" = "main" ] || [ "$CURRENT_BRANCH" = "develop" ]; then
-    echo -e "${RED}❌ Você está em $CURRENT_BRANCH. Crie uma feature branch primeiro.${NC}"
+
+# Determinar branch base
+if [ -n "$1" ]; then
+    # Branch base fornecida como argumento
+    BASE_BRANCH="$1"
+else
+    # Tentar detectar automaticamente ou usar padrão
+    if git show-ref --verify --quiet refs/heads/develop; then
+        BASE_BRANCH="develop"
+    elif git show-ref --verify --quiet refs/heads/main; then
+        BASE_BRANCH="main"
+    else
+        echo -e "${YELLOW}⚠️  Não foi possível detectar branch base automaticamente${NC}"
+        echo -e "${YELLOW}Branches disponíveis:${NC}"
+        git branch | grep -v "^*"
+        echo ""
+        echo -e "${YELLOW}Digite a branch base para o PR:${NC}"
+        read -r BASE_BRANCH
+    fi
+fi
+
+# Validar que não estamos na branch base
+if [ "$CURRENT_BRANCH" = "$BASE_BRANCH" ]; then
+    echo -e "${RED}❌ Você está em $CURRENT_BRANCH (branch base). Crie uma feature branch primeiro.${NC}"
     exit 1
 fi
 
+# Verificar se a branch base existe
+if ! git show-ref --verify --quiet refs/heads/"$BASE_BRANCH"; then
+    echo -e "${RED}❌ Branch base '$BASE_BRANCH' não existe localmente${NC}"
+    echo -e "${YELLOW}Tentando buscar do remote...${NC}"
+    if git fetch origin "$BASE_BRANCH":"$BASE_BRANCH" 2>/dev/null; then
+        echo -e "${GREEN}✅ Branch '$BASE_BRANCH' baixada do remote${NC}"
+    else
+        echo -e "${RED}❌ Branch '$BASE_BRANCH' não encontrada no remote${NC}"
+        exit 1
+    fi
+fi
+
 echo -e "${BLUE}📍 Branch atual: ${GREEN}$CURRENT_BRANCH${NC}"
+echo -e "${BLUE}📍 Branch base: ${GREEN}$BASE_BRANCH${NC}"
 
 # Verificar se há mudanças não commitadas
 if [ -n "$(git status --porcelain)" ]; then
@@ -59,9 +95,9 @@ if [ -n "$(git status --porcelain)" ]; then
     fi
 fi
 
-# Analisar commits desde develop
+# Analisar commits desde a branch base
 echo -e "${BLUE}📊 Analisando commits na branch...${NC}"
-COMMITS=$(git log develop..HEAD --oneline)
+COMMITS=$(git log "$BASE_BRANCH"..HEAD --oneline)
 COMMIT_COUNT=$(echo "$COMMITS" | wc -l)
 
 echo -e "${GREEN}Total de commits: $COMMIT_COUNT${NC}"
@@ -69,7 +105,7 @@ echo "$COMMITS"
 
 # Analisar tipos de mudanças
 echo -e "\n${BLUE}📁 Arquivos modificados:${NC}"
-git diff develop..HEAD --name-status | head -20
+git diff "$BASE_BRANCH"..HEAD --name-status | head -20
 
 # Verificar se a branch já existe no remote
 if git ls-remote --heads origin "$CURRENT_BRANCH" | grep -q "$CURRENT_BRANCH"; then
@@ -81,7 +117,7 @@ else
 fi
 
 # Gerar título da PR baseado nos commits
-PR_TITLE=$(git log develop..HEAD --format=%s | head -1)
+PR_TITLE=$(git log "$BASE_BRANCH"..HEAD --format=%s | head -1)
 if [ -z "$PR_TITLE" ]; then
     PR_TITLE="$CURRENT_BRANCH"
 fi
@@ -90,14 +126,14 @@ fi
 echo -e "\n${BLUE}📝 Gerando descrição da PR...${NC}"
 
 # Contar arquivos por tipo
-ASTRO_FILES=$(git diff develop..HEAD --name-only | grep -c '\.astro$' || echo 0)
-TSX_FILES=$(git diff develop..HEAD --name-only | grep -c '\.tsx$' || echo 0)
-TS_FILES=$(git diff develop..HEAD --name-only | grep -c '\.ts$' || echo 0)
-CSS_FILES=$(git diff develop..HEAD --name-only | grep -c '\.css$' || echo 0)
-JSON_FILES=$(git diff develop..HEAD --name-only | grep -c '\.json$' || echo 0)
+ASTRO_FILES=$(git diff "$BASE_BRANCH"..HEAD --name-only | grep -c '\.astro$' || echo 0)
+TSX_FILES=$(git diff "$BASE_BRANCH"..HEAD --name-only | grep -c '\.tsx$' || echo 0)
+TS_FILES=$(git diff "$BASE_BRANCH"..HEAD --name-only | grep -c '\.ts$' || echo 0)
+CSS_FILES=$(git diff "$BASE_BRANCH"..HEAD --name-only | grep -c '\.css$' || echo 0)
+JSON_FILES=$(git diff "$BASE_BRANCH"..HEAD --name-only | grep -c '\.json$' || echo 0)
 
 # Identificar seções modificadas
-SECTIONS=$(git diff develop..HEAD --name-only | grep -oP 'src/components/\K[^/]+' | sort -u | head -5)
+SECTIONS=$(git diff "$BASE_BRANCH"..HEAD --name-only | grep -oP 'src/components/\K[^/]+' | sort -u | head -5)
 
 # Criar corpo da PR
 PR_BODY=$(cat <<EOF
@@ -180,7 +216,7 @@ echo -e "${BLUE}🎯 Criando Pull Request...${NC}"
 PR_URL=$(gh pr create \
     --title "$PR_TITLE" \
     --body "$PR_BODY" \
-    --base develop \
+    --base "$BASE_BRANCH" \
     --head "$CURRENT_BRANCH")
 
 if [ -z "$PR_URL" ]; then
