@@ -69,6 +69,10 @@
     --color-indigo-light: #2d2499;
     --color-indigo-dark: #15115a;
 
+    /* Cores de botões dos cards de ingresso */
+    --color-green-pista-button: #094931;
+    --color-indigo-button: #1a1179;
+
     /* Dourado/Gold (Accent) */
     --color-gold: #d2aa56;
     --color-gold-light: #e0bf75;
