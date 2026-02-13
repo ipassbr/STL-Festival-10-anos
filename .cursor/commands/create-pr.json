@@ -1,0 +1,13 @@
+{
+  "name": "Create PR",
+  "description": "Cria Pull Request técnica com issues automaticamente",
+  "command": "bash .cursor/commands/create-pr.sh",
+  "icon": "🚀",
+  "category": "Git",
+  "tags": ["pr", "pull request", "github", "automation", "issues"],
+  "shortcut": "Ctrl+Shift+P",
+  "cwd": "${workspaceFolder}",
+  "showInTerminal": true,
+  "requireGit": true,
+  "requireGitHub": true
+}

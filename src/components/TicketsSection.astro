@@ -1,0 +1,219 @@
+---
+/**
+ * TicketsSection - STL Festival 2026
+ * Seção de ingressos com 3 cards: Camarote Premium (sold out), Camarote e Pista
+ * Design inspirado no Klangtherapie Festival
+ *
+ * @component
+ */
+
+import { getLangFromUrl, useTranslations } from '@/i18n/utils';
+import TicketCardCamarote from './tickets/TicketCardCamarote.astro';
+import TicketCardCamarotePremium from './tickets/TicketCardCamarotePremium.astro';
+import TicketCardPista from './tickets/TicketCardPista.astro';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<section
+  id="tickets"
+  class="tickets-section"
+  role="region"
+  aria-label={t('tickets.sectionLabel')}
+>
+  <div class="container">
+    <!-- Header da seção -->
+    <div class="tickets-header">
+      <h2 class="tickets-title">{t('tickets.title')}</h2>
+      <p class="tickets-subtitle">{t('tickets.subtitle')}</p>
+    </div>
+
+    <!-- Grid de cards -->
+    <div class="tickets-grid">
+      <!-- Pista -->
+      <TicketCardPista
+        ariaLabel={t('tickets.pista.ariaLabel')}
+        buyNowLabel={t('tickets.buyNow')}
+        buyUrl="https://www.ipass.com.br/stlfestival"
+        imageUrl="/assets/teste.png"
+      />
+
+      <!-- Camarote -->
+      <TicketCardCamarote
+        ariaLabel={t('tickets.camarote.ariaLabel')}
+        buyNowLabel={t('tickets.buyNow')}
+        buyUrl="https://www.ipass.com.br/stlfestival"
+        imageUrl="/assets/elementos-card/CARROSSEL-SETORES_04.png"
+      />
+
+      <!-- Camarote Premium - Sold Out -->
+      <TicketCardCamarotePremium
+        ariaLabel={t('tickets.camarotePremium.ariaLabel')}
+        soldOutLabel={t('tickets.soldOut')}
+        imageUrl="/assets/elementos-card/CARROSSEL-SETORES_05.png"
+      />
+    </div>
+  </div>
+
+  <!-- Schema.org structured data para SEO -->
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Event',
+      name: 'STL Festival 2026 - 10ª Edição',
+      offers: [
+        {
+          '@type': 'Offer',
+          name: t('tickets.pista.name'),
+          priceCurrency: 'BRL',
+          availability: 'https://schema.org/InStock',
+          url: 'https://stlfestival.com.br/#tickets',
+        },
+        {
+          '@type': 'Offer',
+          name: t('tickets.camarote.name'),
+          priceCurrency: 'BRL',
+          availability: 'https://schema.org/InStock',
+          url: 'https://stlfestival.com.br/#tickets',
+        },
+        {
+          '@type': 'Offer',
+          name: t('tickets.camarotePremium.name'),
+          availability: 'https://schema.org/SoldOut',
+          url: 'https://stlfestival.com.br/#tickets',
+        },
+      ],
+    })}
+  />
+</section>
+
+<style>
+  /* ========== SECTION BASE ========== */
+  .tickets-section {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    padding: var(--spacing-3xl) 0;
+    background: linear-gradient(
+      180deg,
+      var(--color-cream) 0%,
+      var(--color-cream-light) 50%,
+      var(--color-cream) 100%
+    );
+  }
+
+  /* ========== HEADER ========== */
+  .tickets-header {
+    text-align: center;
+    margin-bottom: var(--spacing-3xl);
+    padding: 0 var(--spacing-lg);
+  }
+
+  .tickets-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--color-green-dark);
+    margin: 0 0 var(--spacing-md) 0;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  .tickets-subtitle {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    line-height: 1.6;
+    color: var(--color-gray-700);
+    margin: 0;
+    max-width: 600px;
+    margin-inline: auto;
+  }
+
+  /* ========== GRID ========== */
+  .tickets-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-2xl);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+    align-items: start;
+  }
+
+  /* ========== RESPONSIVE ========== */
+  /* Tablet */
+  @media (min-width: 768px) {
+    .tickets-section {
+      padding: calc(var(--spacing-3xl) * 1.5) 0;
+    }
+
+    .tickets-header {
+      margin-bottom: calc(var(--spacing-3xl) * 1.5);
+    }
+
+    .tickets-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* Desktop */
+  @media (min-width: 1024px) {
+    .tickets-section {
+      padding: calc(var(--spacing-3xl) * 2) 0;
+    }
+
+    .tickets-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--spacing-md);
+      padding: 0 var(--spacing-md);
+    }
+  }
+
+  /* Large Desktop */
+  @media (min-width: 1280px) {
+    .tickets-grid {
+      padding: 0;
+      gap: var(--spacing-md);
+    }
+  }
+
+  /* Mobile small */
+  @media (max-width: 480px) {
+    .tickets-section {
+      padding: var(--spacing-2xl) 0;
+    }
+
+    .tickets-header {
+      margin-bottom: var(--spacing-2xl);
+    }
+
+    .tickets-grid {
+      gap: var(--spacing-xl);
+      padding: 0 var(--spacing-md);
+    }
+  }
+
+  /* ========== ACESSIBILIDADE ========== */
+  @media (prefers-reduced-motion: reduce) {
+    .tickets-section * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* High contrast mode */
+  @media (prefers-contrast: high) {
+    .tickets-title {
+      color: var(--color-black);
+    }
+
+    .tickets-subtitle {
+      color: var(--color-black);
+    }
+  }
+</style>

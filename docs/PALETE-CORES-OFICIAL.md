@@ -222,7 +222,11 @@
 ### Hero Section (Dramático)
 
 ```css
-background: linear-gradient(135deg, #1e1876 0%, /* Índigo */ #2d2499 100% /* Índigo light */);
+background: linear-gradient(
+  135deg,
+  #1e1876 0%,
+  /* Índigo */ #2d2499 100% /* Índigo light */
+);
 ```
 
 ### Multicolor Vibrante (Opcional)
@@ -243,7 +247,11 @@ animation: gradientShift 10s ease infinite;
 ### Sunset (Quente)
 
 ```css
-background: linear-gradient(180deg, #ff9d28 0%, /* Laranja */ #ff4d2d 100% /* Vermelho */);
+background: linear-gradient(
+  180deg,
+  #ff9d28 0%,
+  /* Laranja */ #ff4d2d 100% /* Vermelho */
+);
 ```
 
 ---
@@ -390,7 +398,7 @@ module.exports = {
       },
     },
   },
-}
+};
 ```
 
 ### JSON (Para Design Tools)

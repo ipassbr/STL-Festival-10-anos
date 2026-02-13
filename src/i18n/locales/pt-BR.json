@@ -55,5 +55,51 @@
       "en": "English",
       "es": "Español"
     }
+  },
+  "lineup": {
+    "title": "Line-up",
+    "subtitle": "Artistas Confirmados",
+    "sectionLabel": "Seção de artistas do festival",
+    "artistLabel": "Artista: {name}",
+    "scrollHint": "Role para ver mais artistas",
+    "genreLabel": "Gênero: {genre}",
+    "videoPlaceholder": "Vídeo será disponibilizado em breve",
+    "loading": "Carregando artistas..."
+  },
+  "tickets": {
+    "title": "Ingressos",
+    "subtitle": "Garanta seu lugar no STL Festival 2026",
+    "sectionLabel": "Seção de ingressos do festival",
+    "soldOut": "Esgotado",
+    "buyNow": "Comprar Agora",
+    "pista": {
+      "name": "Pista",
+      "ariaLabel": "Pista",
+      "features": [
+        "Praça de alimentação completa",
+        "Acesso parcial à frente do palco"
+      ]
+    },
+    "camarote": {
+      "name": "Camarote",
+      "ariaLabel": "Camarote",
+      "features": [
+        "Acesso a frente do palco",
+        "Banheiros exclusivos",
+        "Area de descanso exclusiva"
+      ]
+    },
+    "camarotePremium": {
+      "name": "Camarote Premium",
+      "ariaLabel": "Camarote Premium - Esgotado",
+      "features": [
+        "Camarote elevado",
+        "Visao priveligiada do palco e de todo o evento",
+        "Entrada exclusiva",
+        "Area de descanso exclusiva",
+        "Banheiros premium exclusivos",
+        "Praça de alimentação com transmissão ao vivo de shows"
+      ]
+    }
   }
 }

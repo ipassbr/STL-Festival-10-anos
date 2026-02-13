@@ -1,6 +1,7 @@
 # Diagramas Arquiteturais - STL Festival Landing Page
 
 ## Informações do Documento
+
 - **Data de Criação:** 28 de Janeiro de 2026
 - **Versão:** 1.0
 - **Fonte:** Briefing (02), PRD (03), Tech Stack (04), Design System (05), i18n (07)
@@ -10,14 +11,14 @@
 
 ## Diagramas Identificados
 
-| # | Diagrama | Tipo | Objetivo |
-|---|----------|------|----------|
-| 1 | Arquitetura do Sistema | C4 Container | Stack completo e integrações |
-| 2 | Fluxo do Usuário (Conversão) | Flowchart | Jornada até o clique no iPass |
-| 3 | Estrutura de Componentes | Component Diagram | Astro (estático) vs React Islands (interativo) |
-| 4 | Fluxo de i18n | Sequence Diagram | Detecção e troca de idioma |
-| 5 | Estados dos Setores/Tickets | State Diagram | Escolha de sector e modalidade |
-| 6 | Pipeline de Deploy | Flowchart | Código até produção no Vercel |
+| #   | Diagrama                     | Tipo              | Objetivo                                       |
+| --- | ---------------------------- | ----------------- | ---------------------------------------------- |
+| 1   | Arquitetura do Sistema       | C4 Container      | Stack completo e integrações                   |
+| 2   | Fluxo do Usuário (Conversão) | Flowchart         | Jornada até o clique no iPass                  |
+| 3   | Estrutura de Componentes     | Component Diagram | Astro (estático) vs React Islands (interativo) |
+| 4   | Fluxo de i18n                | Sequence Diagram  | Detecção e troca de idioma                     |
+| 5   | Estados dos Setores/Tickets  | State Diagram     | Escolha de sector e modalidade                 |
+| 6   | Pipeline de Deploy           | Flowchart         | Código até produção no Vercel                  |
 
 ---
 
@@ -398,7 +399,7 @@ stateDiagram-v2
 
 ### Descrição Conceitual
 
-Flowchart que mapeia o pipeline de desenvolvimento e deploy do projeto. Segue a estrutura de branches proposta (main + feature/section-*), passa pelo CI com type-check e build do Astro, e culmina no deploy automático no Vercel. Inclui os pontos de feedback (erros de tipo, erros de build, code review) que impedem o progresso até serem resolvidos.
+Flowchart que mapeia o pipeline de desenvolvimento e deploy do projeto. Segue a estrutura de branches proposta (main + feature/section-\*), passa pelo CI com type-check e build do Astro, e culmina no deploy automático no Vercel. Inclui os pontos de feedback (erros de tipo, erros de build, code review) que impedem o progresso até serem resolvidos.
 
 ### Elementos Principais
 

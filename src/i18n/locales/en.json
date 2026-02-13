@@ -55,5 +55,48 @@
       "en": "English",
       "es": "Español"
     }
+  },
+  "lineup": {
+    "title": "Line-up",
+    "subtitle": "Confirmed Artists",
+    "sectionLabel": "Festival artists section",
+    "artistLabel": "Artist: {name}",
+    "scrollHint": "Scroll to see more artists",
+    "genreLabel": "Genre: {genre}",
+    "videoPlaceholder": "Video will be available soon",
+    "loading": "Loading artists..."
+  },
+  "tickets": {
+    "title": "Tickets",
+    "subtitle": "Secure your spot at STL Festival 2026",
+    "sectionLabel": "Festival tickets section",
+    "soldOut": "Sold Out",
+    "buyNow": "Buy Now",
+    "pista": {
+      "name": "General Admission",
+      "ariaLabel": "General Admission",
+      "features": ["Complete food court", "Partial access to front stage"]
+    },
+    "camarote": {
+      "name": "VIP Box",
+      "ariaLabel": "VIP Box",
+      "features": [
+        "Front stage access",
+        "Exclusive restrooms",
+        "Exclusive lounge area"
+      ]
+    },
+    "camarotePremium": {
+      "name": "Premium VIP Box",
+      "ariaLabel": "Premium VIP Box - Sold Out",
+      "features": [
+        "Elevated VIP box",
+        "Privileged view of stage and entire event",
+        "Exclusive entrance",
+        "Exclusive lounge area",
+        "Premium exclusive restrooms",
+        "Food court with live show broadcast"
+      ]
+    }
   }
 }
