@@ -103,14 +103,16 @@ const artists: Artist[] = [
               d="M39.8 71.5309C39.8 61.7384 47.7385 53.8 57.531 53.8H399.318C409.11 53.8 417.049 61.7384 417.049 71.5309V119.776H39.8V71.5309Z"
               fill="white"></path>
 
-            <!-- Logo do perfil com pattern -->
-            <rect
+            <!-- Logo do perfil circular -->
+            <image
+              href="/assets/img/logo-stl.png"
               x="56.8"
               y="64.8"
               width="41.8407"
               height="41.8407"
-              rx="20.9203"
-              fill="url(#pattern0_left)"></rect>
+              clip-path="url(#circleClip_left)"
+              preserveAspectRatio="xMidYMid slice"
+            />
 
             <!-- Texto "stlfestival" vetorizado -->
             <path
@@ -200,23 +202,9 @@ const artists: Artist[] = [
                 in2="effect1_dropShadow"
                 result="shape"></feBlend>
             </filter>
-            <pattern
-              id="pattern0_left"
-              patternContentUnits="objectBoundingBox"
-              width="1"
-              height="1"
-            >
-              <use
-                xlink:href="#image0_left"
-                transform="matrix(0.00191936 0 0 0.00136528 -0.182811 0.00680237)"
-              ></use>
-            </pattern>
-            <image
-              id="image0_left"
-              width="755"
-              height="708"
-              xlink:href="https://res.cloudinary.com/dazkdemvu/image/upload/v1769618833/stl-festival/logos/logo-stl_ydnwga.svg"
-            />
+            <clipPath id="circleClip_left">
+              <circle cx="77.7203" cy="85.7203" r="20.9203"></circle>
+            </clipPath>
           </defs>
         </svg>
       </div>
@@ -307,7 +295,6 @@ const artists: Artist[] = [
           viewBox="0 0 484 698"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
           class="lineup-mockup__svg"
         >
           <g filter="url(#filter0_d_right)">
@@ -316,14 +303,16 @@ const artists: Artist[] = [
               d="M39.8 71.5309C39.8 61.7384 47.7385 53.8 57.531 53.8H399.318C409.11 53.8 417.049 61.7384 417.049 71.5309V119.776H39.8V71.5309Z"
               fill="white"></path>
 
-            <!-- Logo do perfil com pattern -->
-            <rect
+            <!-- Logo do perfil circular -->
+            <image
+              href="/assets/img/logo-stl.png"
               x="56.8"
               y="64.8"
               width="41.8407"
               height="41.8407"
-              rx="20.9203"
-              fill="url(#pattern0_right)"></rect>
+              clip-path="url(#circleClip_right)"
+              preserveAspectRatio="xMidYMid slice"
+            />
 
             <!-- Texto "stlfestival" vetorizado -->
             <path
@@ -413,23 +402,9 @@ const artists: Artist[] = [
                 in2="effect1_dropShadow"
                 result="shape"></feBlend>
             </filter>
-            <pattern
-              id="pattern0_right"
-              patternContentUnits="objectBoundingBox"
-              width="1"
-              height="1"
-            >
-              <use
-                xlink:href="#image0_right"
-                transform="matrix(0.00191936 0 0 0.00136528 -0.182811 0.00680237)"
-              ></use>
-            </pattern>
-            <image
-              id="image0_right"
-              width="755"
-              height="708"
-              xlink:href="https://res.cloudinary.com/dazkdemvu/image/upload/v1769618833/stl-festival/logos/logo-stl_ydnwga.svg"
-            />
+            <clipPath id="circleClip_right">
+              <circle cx="77.7203" cy="85.7203" r="20.9203"></circle>
+            </clipPath>
           </defs>
         </svg>
       </div>
