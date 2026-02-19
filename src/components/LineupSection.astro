@@ -594,7 +594,8 @@ const artists: Artist[] = [
   /* Grid dos mockups */
   .lineup-mockups-grid {
     display: grid;
-    gap: var(--spacing-md); /* Reduzido para deixar mais próximos */
+    grid-template-columns: 1fr 1.2fr 1fr;
+    gap: var(--spacing-md);
     align-items: center;
     justify-items: center;
     margin-top: 8rem; /* 128px - Espaço grande para título e subtítulo */
@@ -653,96 +654,112 @@ const artists: Artist[] = [
 
   /* ========== RESPONSIVIDADE ========== */
 
-  /* Mobile (< 768px) - Stack vertical */
+  /* Mobile (< 768px) - Posts sobrepostos ao iPhone */
   @media (max-width: 767px) {
     .lineup-section {
-      min-height: 250vh;
-      padding: var(--spacing-xl) var(--spacing-md);
+      min-height: 180vh;
+      padding: var(--spacing-xl) var(--spacing-sm);
     }
 
-    .lineup-mockups-grid {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto auto auto;
-      gap: var(--spacing-2xl);
-    }
-
-    /* iPhone no topo, menor */
-    .lineup-mockup--center {
-      order: 1;
-      max-width: 240px; /* Reduzido para mobile */
-    }
-
-    /* Posts em grid 2 colunas abaixo */
-    .lineup-mockup--left {
-      order: 2;
-      max-width: 180px;
-    }
-
-    .lineup-mockup--right {
-      order: 3;
-      max-width: 180px;
-    }
-
-    /* Grid 2 colunas para os posts */
     .lineup-mockups-grid {
       display: flex;
-      flex-wrap: wrap;
+      align-items: center;
       justify-content: center;
+      gap: 0;
+      margin-top: 2rem;
     }
 
-    .lineup-mockup--left,
+    .lineup-mockup--left {
+      order: unset;
+      flex: 0 0 38vw;
+      max-width: 160px;
+      margin-right: -14vw; /* ~metade da largura do post — sobrepõe iPhone */
+      z-index: 2;
+    }
+
+    .lineup-mockup--center {
+      order: unset;
+      flex: 0 0 48vw;
+      max-width: 220px;
+      z-index: 1;
+    }
+
     .lineup-mockup--right {
-      flex: 0 0 45%;
+      order: unset;
+      flex: 0 0 38vw;
+      max-width: 160px;
+      margin-left: -14vw; /* ~metade da largura do post — sobrepõe iPhone */
+      z-index: 2;
     }
   }
 
-  /* Tablet (768px - 1023px) */
+  /* Tablet (768px - 1023px) - Posts sobrepostos ao iPhone */
   @media (min-width: 768px) and (max-width: 1023px) {
     .lineup-section {
       min-height: 180vh;
     }
 
     .lineup-mockups-grid {
-      grid-template-columns: auto auto auto;
-      gap: var(--spacing-sm); /* Reduzido para proximidade */
+      display: flex;
+      align-items: center;
       justify-content: center;
+      gap: 0;
     }
 
     .lineup-mockup--left,
     .lineup-mockup--right {
-      max-width: 200px;
+      flex: 0 0 260px;
+      max-width: 260px;
+      z-index: 2;
+    }
+
+    .lineup-mockup--left {
+      margin-right: -120px;
+    } /* ~metade de 260px */
+    .lineup-mockup--right {
+      margin-left: -120px;
     }
 
     .lineup-mockup--center {
-      max-width: 280px; /* Reduzido para melhor proporção */
+      flex: 0 0 340px;
+      max-width: 340px;
+      z-index: 1;
     }
   }
 
-  /* Desktop (>= 1024px) */
+  /* Desktop (>= 1024px) - Layout limpo sem sobreposição */
   @media (min-width: 1024px) {
     .lineup-section {
       min-height: 150vh;
     }
 
     .lineup-mockups-grid {
-      grid-template-columns: auto auto auto;
-      gap: var(--spacing-md); /* Próximos conforme referência */
-      align-items: center; /* CRÍTICO: centraliza Posts verticalmente */
-      justify-content: center;
-      margin-top: 10rem; /* 160px - Ainda mais espaço em desktop */
+      display: grid;
+      grid-template-columns: 1fr 1.2fr 1fr;
+      max-width: 820px;
+      margin-inline: auto;
+      gap: var(--spacing-md);
+      align-items: center;
+      justify-items: center;
+      margin-top: 10rem;
     }
 
     .lineup-mockup--left,
     .lineup-mockup--right {
-      max-width: 260px; /* Reduzido para proporção com iPhone */
+      max-width: unset;
+      width: 100%;
       position: sticky;
-      top: 20vh; /* Mais abaixo para não sobrepor */
+      top: 20vh;
+      z-index: unset;
+      margin: 0; /* reset das margins negativas de breakpoints menores */
     }
 
     .lineup-mockup--center {
-      max-width: 240px; /* Proporcional aos Posts */
+      max-width: unset;
+      width: 100%;
       position: sticky;
-      top: 15vh; /* Mais abaixo para não sobrepor */
+      top: 15vh;
+      z-index: unset;
     }
 
     /* Hover effect em desktop */
@@ -754,16 +771,8 @@ const artists: Artist[] = [
   /* Large desktop (>= 1440px) */
   @media (min-width: 1440px) {
     .lineup-mockups-grid {
-      gap: var(--spacing-lg); /* Proximidade mantida */
-    }
-
-    .lineup-mockup--center {
-      max-width: 280px; /* Proporcional */
-    }
-
-    .lineup-mockup--left,
-    .lineup-mockup--right {
-      max-width: 300px; /* Reduzidos para não sobrepor título */
+      max-width: 960px;
+      gap: var(--spacing-lg);
     }
   }
 
