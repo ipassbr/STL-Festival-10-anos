@@ -63,7 +63,7 @@
     "artistLabel": "Artist: {name}",
     "scrollHint": "Scroll to see more artists",
     "genreLabel": "Genre: {genre}",
-    "videoPlaceholder": "Video will be available soon",
+    "videoPlaceholder": "Video coming soon",
     "loading": "Loading artists..."
   },
   "tickets": {

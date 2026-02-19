@@ -63,7 +63,7 @@
     "artistLabel": "Artista: {name}",
     "scrollHint": "Desplázate para ver más artistas",
     "genreLabel": "Género: {genre}",
-    "videoPlaceholder": "El vídeo estará disponible pronto",
+    "videoPlaceholder": "Video disponible pronto",
     "loading": "Cargando artistas..."
   },
   "tickets": {
