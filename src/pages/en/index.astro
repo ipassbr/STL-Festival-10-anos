@@ -3,6 +3,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import Preloader from '@/components/Preloader.astro';
 import HeroSection from '@/components/HeroSection.astro';
 import LineupSection from '@/components/LineupSection.astro';
+import TicketsSection from '@/components/TicketsSection.astro';
 import { getLangFromUrl, useTranslations } from '@/i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
@@ -21,4 +22,5 @@ const fallbackImage =
   <Preloader videoUrl={videoUrl} fallbackImage={fallbackImage} />
   <HeroSection videoUrl={videoUrl} fallbackImage={fallbackImage} />
   <LineupSection />
+  <TicketsSection />
 </BaseLayout>

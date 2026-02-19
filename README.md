@@ -59,16 +59,16 @@ Acesse: [http://localhost:4321](http://localhost:4321)
 
 ## 📦 Stack Tecnológico
 
-| Tecnologia | Versão | Uso |
-|-----------|--------|-----|
-| **Astro** | 5.x | Framework principal (Islands Architecture) |
-| **React** | 18.3+ | Componentes interativos |
-| **TypeScript** | 5.7 | Type safety |
-| **Tailwind CSS** | 3.4+ | Estilização |
-| **Framer Motion** | 11.x | Animações |
-| **ESLint** | 9.x | Qualidade de código |
-| **Prettier** | 3.x | Formatação |
-| **Husky** | 9.x | Git hooks |
+| Tecnologia        | Versão | Uso                                        |
+| ----------------- | ------ | ------------------------------------------ |
+| **Astro**         | 5.x    | Framework principal (Islands Architecture) |
+| **React**         | 18.3+  | Componentes interativos                    |
+| **TypeScript**    | 5.7    | Type safety                                |
+| **Tailwind CSS**  | 3.4+   | Estilização                                |
+| **Framer Motion** | 11.x   | Animações                                  |
+| **ESLint**        | 9.x    | Qualidade de código                        |
+| **Prettier**      | 3.x    | Formatação                                 |
+| **Husky**         | 9.x    | Git hooks                                  |
 
 ---
 
@@ -98,6 +98,7 @@ npm run format:check # Verificar formatação (sem modificar)
 ### ESLint
 
 Configurado para:
+
 - ✅ TypeScript
 - ✅ React + React Hooks
 - ✅ Astro
@@ -106,6 +107,7 @@ Configurado para:
 ### Prettier
 
 Formatação automática com:
+
 - ✅ Plugin para Astro
 - ✅ Plugin para Tailwind CSS
 - ✅ Single quotes, 2 spaces, trailing commas
@@ -113,16 +115,19 @@ Formatação automática com:
 ### Husky (Git Hooks)
 
 **Pre-commit:**
+
 - Executa ESLint + Prettier nos arquivos modificados
 - Bloqueia commit se houver erros
 
 **Pre-push:**
+
 - Executa type checking de todo o projeto
 - Bloqueia push se houver erros de tipo
 
 ### VS Code (Recomendado)
 
 Extensões recomendadas:
+
 - ESLint
 - Prettier
 - Astro
@@ -211,15 +216,15 @@ stl-festival-10-anos/
 
 ### Métricas Alvo
 
-| Métrica | Target |
-|---------|--------|
-| Lighthouse Performance | 90+ |
-| Lighthouse Accessibility | 100 |
-| Lighthouse Best Practices | 95+ |
-| Lighthouse SEO | 100 |
-| LCP (Largest Contentful Paint) | < 2.5s |
-| FID (First Input Delay) | < 100ms |
-| CLS (Cumulative Layout Shift) | < 0.1 |
+| Métrica                        | Target  |
+| ------------------------------ | ------- |
+| Lighthouse Performance         | 90+     |
+| Lighthouse Accessibility       | 100     |
+| Lighthouse Best Practices      | 95+     |
+| Lighthouse SEO                 | 100     |
+| LCP (Largest Contentful Paint) | < 2.5s  |
+| FID (First Input Delay)        | < 100ms |
+| CLS (Cumulative Layout Shift)  | < 0.1   |
 
 ### Code Quality
 
@@ -270,6 +275,7 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](./LICENSE) para 
 ## 📞 Contato
 
 **STL Festival**
+
 - Website: [em breve]
 - Instagram: [@stlfestival](https://instagram.com/stlfestival)
 - Email: contato@stlfestival.com.br

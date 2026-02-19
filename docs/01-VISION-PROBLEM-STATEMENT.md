@@ -1,6 +1,7 @@
 # Vision & Problem Statement - STL Festival
 
 ## 📅 Informações do Documento
+
 - **Data de Criação:** 26 de Janeiro de 2026
 - **Versão:** 1.0
 - **Autor:** Equipe de Desenvolvimento
@@ -11,9 +12,11 @@
 ## 🎯 Vision Statement
 
 ### Visão Geral
+
 Criar uma landing page excepcional que represente a essência e energia do **STL Festival** em sua **10ª edição**, celebrando uma década de música, cultura e comunidade através dos gêneros Reggae, Trap e Rap.
 
 ### Propósito
+
 A página web do STL Festival será o **ponto único de informação e engajamento** do evento, funcionando como uma ponte digital entre o público e a experiência que os aguarda. Mais do que uma simples página informativa, será uma **experiência digital imersiva** que:
 
 - **Celebra** a história de 10 edições do festival
@@ -24,6 +27,7 @@ A página web do STL Festival será o **ponto único de informação e engajamen
 - **Inspira** o público a participar dessa experiência única
 
 ### Impacto Esperado
+
 - **Para o Público:** Uma jornada informativa completa e envolvente que gera expectativa e facilita a tomada de decisão
 - **Para o Evento:** Aumentar as conversões de ingressos através de informação clara e direcionamento eficaz
 - **Para a Marca STL:** Consolidar a identidade visual e valores do festival no ambiente digital
@@ -33,6 +37,7 @@ A página web do STL Festival será o **ponto único de informação e engajamen
 ## ❓ Problem Statement
 
 ### O Problema
+
 Atualmente, o STL Festival não possui uma presença digital dedicada que:
 
 1. **Centralize todas as informações do evento** em um único lugar acessível
@@ -42,6 +47,7 @@ Atualmente, o STL Festival não possui uma presença digital dedicada que:
 5. **Destaque os diferenciais** como acessibilidade, sustentabilidade e experiências exclusivas (tirolesa, translado) e ate mesmo o próprio STL Valley (hospedagem para quer tiver o ingresso do STL festival e queria participar e se acomodar dentro do evento dentro de um espaço determinado de dias que no caso desse ediçao seria do dia 03/06 ao dia 07/06)
 
 ### Consequências da Falta de Solução
+
 - Informações fragmentadas em múltiplas plataformas (Instagram, WhatsApp, etc.)
 - Dificuldade do público em acessar informações completas sobre setores, lineup e serviços
 - Perda potencial de conversões por falta de clareza no funil de venda
@@ -51,6 +57,7 @@ Atualmente, o STL Festival não possui uma presença digital dedicada que:
 ### Público Afetado
 
 #### Perfil Demográfico Principal
+
 - **Faixa Etária Predominante:** 23 a 33 anos
 - **Média de Idade:** 31 anos
 - **Gênero:** Maioria feminina (com pequena diferença)
@@ -58,6 +65,7 @@ Atualmente, o STL Festival não possui uma presença digital dedicada que:
 - **Comportamento:** Público engajado, muitos já participaram de edições anteriores
 
 #### Segmentos de Público
+
 - **Público Principal:** Pessoas de 16+ anos que apreciam Reggae, Trap e Rap e público que já foi no evento em edições anteriores
 - **Público Recorrente (Alta Prioridade):** Participantes de edições anteriores buscando informações da 10ª edição
 - **Novos Participantes:** Pessoas descobrindo o festival pela primeira vez
@@ -72,11 +80,13 @@ Atualmente, o STL Festival não possui uma presença digital dedicada que:
 ## ✅ Solução Proposta
 
 ### O Que Vamos Construir
+
 Uma **landing page de alta performance e design excepcional** que funcione como o hub digital oficial do STL Festival.
 
 ### Características Principais
 
 #### 1. **Estrutura Informativa Clara**
+
 - **Preloader customizado** criando expectativa antes da experiência principal
 - Hero section impactante com contagem regressiva
 - Seção de lineup com destaque visual dos artistas
@@ -87,6 +97,7 @@ Uma **landing page de alta performance e design excepcional** que funcione como 
 - Informações sobre STL Valley (hospedagem de 03/06 a 07/06 para quem tem ingresso)
 
 #### 2. **Design Vibrante e Responsivo**
+
 - Paleta de cores característica do festival (verde, laranja, amarelo, azul, roxo)
 - Tipografia customizada (Jairo e Superbusy Activity)
 - Animações e transições que transmitem energia
@@ -95,22 +106,26 @@ Uma **landing page de alta performance e design excepcional** que funcione como 
 - TypeScript para type safety e melhor experiência de desenvolvimento
 
 #### 3. **Conversão Estratégica**
+
 - CTAs (Call-to-Actions) estrategicamente posicionados
 - Direcionamento claro para iPass em múltiplos pontos
 - Informações que antecipam dúvidas e facilitam decisão de compra
 - Fluxo de navegação intuitivo
 
 #### 4. **Escalabilidade e Evolução**
+
 - Arquitetura preparada para inclusão de novas seções
 - Possibilidade de expansão para incluir integrações futuras
 - Fácil atualização de conteúdo
 
 #### 5. **Integração com Ecossistema STL**
+
 - Link para STL Valley (projeto relacionado)
 - Direcionamento para redes sociais (@STLFestival)
 - Preparado para conectar com iPass
 
 #### 6. **Acessibilidade Global e Diversidade**
+
 - **Site multilíngue:** Português (PT-BR), Inglês (EN) e Espanhol (ES)
 - Reflete o pilar de diversidade do festival
 - Atende público internacional e turistas
@@ -122,6 +137,7 @@ Uma **landing page de alta performance e design excepcional** que funcione como 
 ## 🎨 Diferenciais da Solução
 
 ### Por Que Isso Importa
+
 1. **Experiência de Usuário Premium:** Design que reflete a qualidade do evento, começando com preloader envolvente
 2. **Conversão Otimizada:** Cada elemento guia o usuário para o iPass
 3. **Informação Completa:** Reduz fricção e dúvidas no processo de decisão
@@ -138,6 +154,7 @@ Uma **landing page de alta performance e design excepcional** que funcione como 
 ### Como Saberemos que Tivemos Sucesso?
 
 #### Métricas Quantitativas
+
 - Taxa de conversão (visitantes → cliques no iPass)
 - Tempo médio na página
 - Core Web Vitals (LCP < 2.5s, FID < 100ms, CLS < 0.1)
@@ -145,12 +162,14 @@ Uma **landing page de alta performance e design excepcional** que funcione como 
 - Dispositivos mobile (esperado: 70%+ do tráfego)
 
 #### Métricas Qualitativas
+
 - Feedback do público nas redes sociais
 - Redução de perguntas repetitivas sobre informações básicas
 - Reconhecimento da identidade visual do festival
 - Facilidade de navegação (testes de usabilidade)
 
 #### Objetivos de Negócio
+
 - Aumento nas vendas de ingressos comparado à edição anterior
 - Redução do tempo entre interesse e compra
 - Maior distribuição entre diferentes setores (Pista, Camarote, Premium)
@@ -171,6 +190,7 @@ Uma **landing page de alta performance e design excepcional** que funcione como 
 ## 📝 Notas Importantes
 
 ### Contexto do Evento
+
 - **Data do Festival:** 06 de junho de 2026, 20:00h
 - **Ocasião:** Feriado prolongado de Corpus Christi
 - **Edição:** 10ª edição (marco importante!)
@@ -178,6 +198,7 @@ Uma **landing page de alta performance e design excepcional** que funcione como 
 - **STL Valley (Hospedagem):** 03/06 a 07/06 para quem possui ingresso do festival
 
 ### Perfil do Público
+
 - **Faixa Etária Principal:** 23 a 33 anos
 - **Média de Idade:** 31 anos
 - **Gênero:** Maioria feminina
@@ -185,6 +206,7 @@ Uma **landing page de alta performance e design excepcional** que funcione como 
 - **Alcance:** Nacional e internacional (necessidade de multilíngue)
 
 ### Lineup Confirmado
+
 - Edson Gomes
 - Matuê
 - Marcelo D2
@@ -195,6 +217,7 @@ Uma **landing page de alta performance e design excepcional** que funcione como 
 - Rael convida Cynthia Luz
 
 ### Stakeholders
+
 - **Organizadores do STL Festival**
 - **iPass** (parceiro tecnológico para vendas)
 - **Público do festival** (usuários finais)

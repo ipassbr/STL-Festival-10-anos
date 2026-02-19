@@ -1,6 +1,7 @@
 # Design System - STL Festival
 
 ## 📅 Informações do Documento
+
 - **Data de Criação:** 26 de Janeiro de 2026
 - **Versão:** 1.0
 - **Baseado em:** Identidade visual existente do STL Festival
@@ -13,6 +14,7 @@
 O Design System do STL Festival é construído sobre a identidade vibrante e energética do festival, refletindo a fusão de Reggae, Trap e Rap através de cores ousadas, tipografia expressiva e elementos visuais impactantes.
 
 ### Princípios de Design
+
 1. **Vibrante e Energético** - Cores vivas que transmitem a energia do festival
 2. **Acessível** - Contraste adequado, legibilidade garantida
 3. **Moderno** - Design contemporâneo alinhado com o público
@@ -26,70 +28,83 @@ O Design System do STL Festival é construído sobre a identidade vibrante e ene
 ### Paleta Principal
 
 #### Verde Profundo (Primary)
+
 ```css
---stl-green: #006a47;           /* Verde profundo - Cor oficial */
---stl-green-light: #009966;     /* Variação mais clara */
---stl-green-dark: #004d33;      /* Variação mais escura */
+--stl-green: #006a47; /* Verde profundo - Cor oficial */
+--stl-green-light: #009966; /* Variação mais clara */
+--stl-green-dark: #004d33; /* Variação mais escura */
 ```
+
 **Uso:** Elementos de natureza, CTAs secundários, backgrounds de destaque
 **Descrição:** Verde profundo que representa a conexão com a natureza
 
 #### Vermelho-Alaranjado (Accent)
+
 ```css
---stl-red: #ff4d2d;             /* Vermelho-alaranjado vibrante - Cor oficial */
---stl-red-light: #ff7052;       /* Variação mais clara */
---stl-red-dark: #e63d1f;        /* Variação mais escura */
+--stl-red: #ff4d2d; /* Vermelho-alaranjado vibrante - Cor oficial */
+--stl-red-light: #ff7052; /* Variação mais clara */
+--stl-red-dark: #e63d1f; /* Variação mais escura */
 ```
+
 **Uso:** CTAs principais, destaques importantes, elementos de ação
 **Descrição:** Cor de energia e urgência
 
 #### Laranja Intenso (Accent)
+
 ```css
---stl-orange: #ff9d28;          /* Laranja intenso - Cor oficial */
---stl-orange-light: #ffb34d;    /* Variação mais clara */
---stl-orange-dark: #e68a1f;     /* Variação mais escura */
+--stl-orange: #ff9d28; /* Laranja intenso - Cor oficial */
+--stl-orange-light: #ffb34d; /* Variação mais clara */
+--stl-orange-dark: #e68a1f; /* Variação mais escura */
 ```
+
 **Uso:** Acentos, badges, elementos decorativos, hover states
 **Descrição:** Laranja vibrante que transmite energia
 
 #### Azul Teal (Secondary)
+
 ```css
---stl-teal: #007b9a;            /* Azul-verde (teal) - Cor oficial */
---stl-teal-light: #009bb8;      /* Variação mais clara */
---stl-teal-dark: #005f77;       /* Variação mais escura */
+--stl-teal: #007b9a; /* Azul-verde (teal) - Cor oficial */
+--stl-teal-light: #009bb8; /* Variação mais clara */
+--stl-teal-dark: #005f77; /* Variação mais escura */
 ```
+
 **Uso:** Links, elementos informativos, backgrounds alternativos
 **Descrição:** Azul-verde que adiciona sofisticação
 
 #### Creme Claro (Neutral Light)
+
 ```css
---stl-cream: #fefbdf;           /* Creme claro - Cor oficial */
---stl-cream-light: #fffef0;     /* Variação mais clara */
---stl-cream-dark: #f5f2c8;      /* Variação mais escura */
+--stl-cream: #fefbdf; /* Creme claro - Cor oficial */
+--stl-cream-light: #fffef0; /* Variação mais clara */
+--stl-cream-dark: #f5f2c8; /* Variação mais escura */
 ```
+
 **Uso:** Backgrounds claros, cards, seções alternadas
 **Descrição:** Creme suave para contraste suave
 
 #### Azul Índigo (Dark)
+
 ```css
---stl-indigo: #1e1876;          /* Azul-índigo escuro - Cor oficial */
---stl-indigo-light: #2d2499;    /* Variação mais clara */
---stl-indigo-dark: #15115a;     /* Variação mais escura */
+--stl-indigo: #1e1876; /* Azul-índigo escuro - Cor oficial */
+--stl-indigo-light: #2d2499; /* Variação mais clara */
+--stl-indigo-dark: #15115a; /* Variação mais escura */
 ```
+
 **Uso:** Backgrounds escuros, footers, textos sobre cores claras, hero sections
 **Descrição:** Índigo profundo que transmite sofisticação
 
 ### Cores Neutras
 
 #### Grayscale
+
 ```css
---stl-white: #FFFFFF;
---stl-gray-50: #FAFAFA;
---stl-gray-100: #F5F5F5;
---stl-gray-200: #EEEEEE;
---stl-gray-300: #E0E0E0;
---stl-gray-400: #BDBDBD;
---stl-gray-500: #9E9E9E;
+--stl-white: #ffffff;
+--stl-gray-50: #fafafa;
+--stl-gray-100: #f5f5f5;
+--stl-gray-200: #eeeeee;
+--stl-gray-300: #e0e0e0;
+--stl-gray-400: #bdbdbd;
+--stl-gray-500: #9e9e9e;
 --stl-gray-600: #757575;
 --stl-gray-700: #616161;
 --stl-gray-800: #424242;
@@ -100,6 +115,7 @@ O Design System do STL Festival é construído sobre a identidade vibrante e ene
 ### Cores Semânticas
 
 #### Success
+
 ```css
 --stl-success: var(--stl-green);
 --stl-success-light: var(--stl-green-light);
@@ -107,6 +123,7 @@ O Design System do STL Festival é construído sobre a identidade vibrante e ene
 ```
 
 #### Warning
+
 ```css
 --stl-warning: var(--stl-orange);
 --stl-warning-light: var(--stl-orange-light);
@@ -114,6 +131,7 @@ O Design System do STL Festival é construído sobre a identidade vibrante e ene
 ```
 
 #### Error
+
 ```css
 --stl-error: var(--stl-red);
 --stl-error-light: var(--stl-red-light);
@@ -121,6 +139,7 @@ O Design System do STL Festival é construído sobre a identidade vibrante e ene
 ```
 
 #### Info
+
 ```css
 --stl-info: var(--stl-teal);
 --stl-info-light: var(--stl-teal-light);
@@ -130,6 +149,7 @@ O Design System do STL Festival é construído sobre a identidade vibrante e ene
 ### Contextos de Uso
 
 #### Backgrounds
+
 ```css
 --bg-primary: var(--stl-white);
 --bg-secondary: var(--stl-cream);
@@ -139,6 +159,7 @@ O Design System do STL Festival é construído sobre a identidade vibrante e ene
 ```
 
 #### Textos
+
 ```css
 --text-primary: var(--stl-gray-900);
 --text-secondary: var(--stl-gray-700);
@@ -149,6 +170,7 @@ O Design System do STL Festival é construído sobre a identidade vibrante e ene
 ```
 
 #### Bordas
+
 ```css
 --border-light: var(--stl-gray-200);
 --border-medium: var(--stl-gray-300);
@@ -162,14 +184,16 @@ O Design System do STL Festival é construído sobre a identidade vibrante e ene
 ### Fontes
 
 #### Jairo (Display / Headings)
+
 **Arquivo:** `/assets/fonts/jairo-condensed-rounded-font/`
 
 ```css
 @font-face {
   font-family: 'Jairo';
-  src: url('/fonts/Jairo.woff2') format('woff2'),
-       url('/fonts/Jairo.woff') format('woff'),
-       url('/fonts/Jairo.ttf') format('truetype');
+  src:
+    url('/fonts/Jairo.woff2') format('woff2'),
+    url('/fonts/Jairo.woff') format('woff'),
+    url('/fonts/Jairo.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -177,25 +201,29 @@ O Design System do STL Festival é construído sobre a identidade vibrante e ene
 ```
 
 **Características:**
+
 - Condensed Rounded
 - Impactante e moderna
 - Ideal para títulos grandes
 
 **Uso:**
+
 - Hero headings
 - Títulos de seção (H1, H2)
 - Números grandes (contagem regressiva)
 - Logo type treatments
 
 #### Superbusy Activity (Decorativo)
+
 **Arquivo:** `/assets/fonts/superbusy-activity-fun-pairing-font/`
 
 ```css
 @font-face {
   font-family: 'Superbusy Activity';
-  src: url('/fonts/SuperbusyActivity.woff2') format('woff2'),
-       url('/fonts/SuperbusyActivity.woff') format('woff'),
-       url('/fonts/SuperbusyActivity.ttf') format('truetype');
+  src:
+    url('/fonts/SuperbusyActivity.woff2') format('woff2'),
+    url('/fonts/SuperbusyActivity.woff') format('woff'),
+    url('/fonts/SuperbusyActivity.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -203,26 +231,30 @@ O Design System do STL Festival é construído sobre a identidade vibrante e ene
 ```
 
 **Características:**
+
 - Fun e expressiva
 - Activity-themed
 - Ideal para chamadas especiais
 
 **Uso:**
+
 - Badges e labels especiais
 - Chamadas de destaque
 - Elementos decorativos
 - Acentos visuais
 
 #### Sistema (Body Text)
+
 **Fallback:** System fonts para performance
 
 ```css
---font-system: -apple-system, BlinkMacSystemFont,
-               'Segoe UI', Roboto, Oxygen-Sans, Ubuntu,
-               Cantarell, 'Helvetica Neue', sans-serif;
+--font-system:
+  -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu,
+  Cantarell, 'Helvetica Neue', sans-serif;
 ```
 
 **Uso:**
+
 - Corpo de texto
 - Parágrafos
 - Listas
@@ -234,52 +266,52 @@ O Design System do STL Festival é construído sobre a identidade vibrante e ene
 
 ```css
 /* Display - Hero */
---font-size-display: 6rem;      /* 96px */
+--font-size-display: 6rem; /* 96px */
 --line-height-display: 1.1;
 --font-weight-display: 700;
 --font-family-display: 'Jairo', var(--font-system);
 
 /* Heading 1 */
---font-size-h1: 4rem;           /* 64px */
+--font-size-h1: 4rem; /* 64px */
 --line-height-h1: 1.2;
 --font-weight-h1: 700;
 --font-family-h1: 'Jairo', var(--font-system);
 
 /* Heading 2 */
---font-size-h2: 3rem;           /* 48px */
+--font-size-h2: 3rem; /* 48px */
 --line-height-h2: 1.25;
 --font-weight-h2: 700;
 --font-family-h2: 'Jairo', var(--font-system);
 
 /* Heading 3 */
---font-size-h3: 2rem;           /* 32px */
+--font-size-h3: 2rem; /* 32px */
 --line-height-h3: 1.3;
 --font-weight-h3: 600;
 --font-family-h3: var(--font-system);
 
 /* Heading 4 */
---font-size-h4: 1.5rem;         /* 24px */
+--font-size-h4: 1.5rem; /* 24px */
 --line-height-h4: 1.4;
 --font-weight-h4: 600;
 --font-family-h4: var(--font-system);
 
 /* Body Large */
---font-size-lg: 1.25rem;        /* 20px */
+--font-size-lg: 1.25rem; /* 20px */
 --line-height-lg: 1.6;
 --font-weight-lg: 400;
 
 /* Body Regular */
---font-size-base: 1rem;         /* 16px */
+--font-size-base: 1rem; /* 16px */
 --line-height-base: 1.6;
 --font-weight-base: 400;
 
 /* Body Small */
---font-size-sm: 0.875rem;       /* 14px */
+--font-size-sm: 0.875rem; /* 14px */
 --line-height-sm: 1.5;
 --font-weight-sm: 400;
 
 /* Body XSmall */
---font-size-xs: 0.75rem;        /* 12px */
+--font-size-xs: 0.75rem; /* 12px */
 --line-height-xs: 1.4;
 --font-weight-xs: 400;
 ```
@@ -314,22 +346,22 @@ O Design System do STL Festival é construído sobre a identidade vibrante e ene
 ```css
 /* Base: 8px */
 --spacing-0: 0;
---spacing-1: 0.25rem;   /* 4px */
---spacing-2: 0.5rem;    /* 8px */
---spacing-3: 0.75rem;   /* 12px */
---spacing-4: 1rem;      /* 16px */
---spacing-5: 1.25rem;   /* 20px */
---spacing-6: 1.5rem;    /* 24px */
---spacing-8: 2rem;      /* 32px */
---spacing-10: 2.5rem;   /* 40px */
---spacing-12: 3rem;     /* 48px */
---spacing-16: 4rem;     /* 64px */
---spacing-20: 5rem;     /* 80px */
---spacing-24: 6rem;     /* 96px */
---spacing-32: 8rem;     /* 128px */
---spacing-40: 10rem;    /* 160px */
---spacing-48: 12rem;    /* 192px */
---spacing-64: 16rem;    /* 256px */
+--spacing-1: 0.25rem; /* 4px */
+--spacing-2: 0.5rem; /* 8px */
+--spacing-3: 0.75rem; /* 12px */
+--spacing-4: 1rem; /* 16px */
+--spacing-5: 1.25rem; /* 20px */
+--spacing-6: 1.5rem; /* 24px */
+--spacing-8: 2rem; /* 32px */
+--spacing-10: 2.5rem; /* 40px */
+--spacing-12: 3rem; /* 48px */
+--spacing-16: 4rem; /* 64px */
+--spacing-20: 5rem; /* 80px */
+--spacing-24: 6rem; /* 96px */
+--spacing-32: 8rem; /* 128px */
+--spacing-40: 10rem; /* 160px */
+--spacing-48: 12rem; /* 192px */
+--spacing-64: 16rem; /* 256px */
 ```
 
 ### Uso por Contexto
@@ -428,14 +460,11 @@ O Design System do STL Festival é construído sobre a identidade vibrante e ene
 
 ```css
 --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
---shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1),
-             0 1px 2px -1px rgb(0 0 0 / 0.1);
---shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1),
-             0 2px 4px -2px rgb(0 0 0 / 0.1);
---shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1),
-             0 4px 6px -4px rgb(0 0 0 / 0.1);
---shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1),
-             0 8px 10px -6px rgb(0 0 0 / 0.1);
+--shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+--shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+--shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+--shadow-xl:
+  0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
 
 /* Sombras Coloridas para CTAs */
@@ -450,13 +479,13 @@ O Design System do STL Festival é construído sobre a identidade vibrante e ene
 
 ```css
 --radius-none: 0;
---radius-sm: 0.25rem;   /* 4px */
---radius-md: 0.5rem;    /* 8px */
---radius-lg: 0.75rem;   /* 12px */
---radius-xl: 1rem;      /* 16px */
---radius-2xl: 1.5rem;   /* 24px */
---radius-3xl: 2rem;     /* 32px */
---radius-full: 9999px;  /* Circular */
+--radius-sm: 0.25rem; /* 4px */
+--radius-md: 0.5rem; /* 8px */
+--radius-lg: 0.75rem; /* 12px */
+--radius-xl: 1rem; /* 16px */
+--radius-2xl: 1.5rem; /* 24px */
+--radius-3xl: 2rem; /* 32px */
+--radius-full: 9999px; /* Circular */
 ```
 
 ---
@@ -487,9 +516,10 @@ O Design System do STL Festival é construído sobre a identidade vibrante e ene
 
 ```css
 --transition-all: all var(--duration-normal) var(--ease-out);
---transition-colors: color var(--duration-normal) var(--ease-out),
-                     background-color var(--duration-normal) var(--ease-out),
-                     border-color var(--duration-normal) var(--ease-out);
+--transition-colors:
+  color var(--duration-normal) var(--ease-out),
+  background-color var(--duration-normal) var(--ease-out),
+  border-color var(--duration-normal) var(--ease-out);
 --transition-transform: transform var(--duration-normal) var(--ease-out);
 --transition-opacity: opacity var(--duration-normal) var(--ease-out);
 ```
@@ -533,7 +563,8 @@ O Design System do STL Festival é construído sobre a identidade vibrante e ene
 
 /* Pulse */
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -549,6 +580,7 @@ O Design System do STL Festival é construído sobre a identidade vibrante e ene
 ### Botões
 
 #### Primário (CTA Principal)
+
 ```css
 .btn-primary {
   background: var(--stl-red);
@@ -576,6 +608,7 @@ O Design System do STL Festival é construído sobre a identidade vibrante e ene
 ```
 
 #### Secundário
+
 ```css
 .btn-secondary {
   background: var(--stl-green);
@@ -598,6 +631,7 @@ O Design System do STL Festival é construído sobre a identidade vibrante e ene
 ```
 
 #### Outline
+
 ```css
 .btn-outline {
   background: transparent;
@@ -716,7 +750,7 @@ O Design System do STL Festival é construído sobre a identidade vibrante e ene
 
 /* Badge Spotify */
 .badge-spotify {
-  background: #1DB954; /* Spotify Green */
+  background: #1db954; /* Spotify Green */
   color: var(--stl-white);
   box-shadow: var(--shadow-sm);
 }
@@ -753,6 +787,7 @@ O Design System do STL Festival é construído sobre a identidade vibrante e ene
 ```
 
 **Exemplo de Uso:**
+
 ```html
 <!-- Badge Spotify -->
 <a
@@ -859,6 +894,7 @@ O Design System do STL Festival é construído sobre a identidade vibrante e ene
 ### Contraste de Cores
 
 **Validado segundo WCAG 2.1 AA:**
+
 - Texto normal (16px+): 4.5:1 mínimo
 - Texto grande (24px+): 3:1 mínimo
 - Elementos UI: 3:1 mínimo
@@ -904,9 +940,9 @@ O Design System do STL Festival é construído sobre a identidade vibrante e ene
   --stl-indigo-dark: #15115a;
 
   /* Grayscale */
-  --stl-white: #FFFFFF;
-  --stl-gray-50: #FAFAFA;
-  --stl-gray-100: #F5F5F5;
+  --stl-white: #ffffff;
+  --stl-gray-50: #fafafa;
+  --stl-gray-100: #f5f5f5;
   --stl-gray-900: #212121;
   --stl-black: #000000;
 
@@ -1016,29 +1052,34 @@ O Design System do STL Festival é construído sobre a identidade vibrante e ene
 ## 📝 Checklist de Implementação
 
 ### Fase 1: Setup
+
 - [ ] Instalar fontes (Jairo, Superbusy Activity)
 - [ ] Criar arquivo `tokens.css` com variáveis
 - [ ] Configurar Tailwind (ou CSS puro) com tokens
 - [ ] Testar fontes carregam corretamente
 
 ### Fase 2: Componentes Base
+
 - [ ] Botões (primary, secondary, outline)
 - [ ] Cards
 - [ ] Badges
 - [ ] Inputs (se houver formulário)
 
 ### Fase 3: Seções
+
 - [ ] Hero com animações
 - [ ] Lineup grid
 - [ ] Setores comparativos
 - [ ] Footer
 
 ### Fase 4: Responsividade
+
 - [ ] Testar em 320px, 768px, 1024px, 1440px
 - [ ] Ajustar tipografia fluida
 - [ ] Validar touch targets (44x44px)
 
 ### Fase 5: Acessibilidade
+
 - [ ] Contraste de cores validado
 - [ ] Focus states visíveis
 - [ ] Skip links implementados

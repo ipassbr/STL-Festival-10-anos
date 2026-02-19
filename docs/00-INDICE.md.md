@@ -11,9 +11,11 @@ Este índice centraliza toda a documentação criada para o desenvolvimento da l
 ## 📚 Documentos Criados
 
 ### 1. Vision & Problem Statement
+
 **Arquivo:** [`01-VISION-PROBLEM-STATEMENT.md`](./01-VISION-PROBLEM-STATEMENT.md)
 
 **O que contém:**
+
 - Visão geral do projeto
 - Definição do problema que estamos resolvendo
 - Solução proposta
@@ -26,9 +28,11 @@ Define o "norte" do projeto - O QUE estamos construindo e POR QUÊ.
 ---
 
 ### 2. Briefing
+
 **Arquivo:** [`02-BRIEFING.md`](./02-BRIEFING.md)
 
 **O que contém:**
+
 - Contexto completo do evento
 - Público-alvo detalhado
 - Objetivos de negócio e comunicação
@@ -43,9 +47,11 @@ Documento mais completo - TODAS as informações do projeto em um lugar.
 ---
 
 ### 3. PRD (Product Requirements Document)
+
 **Arquivo:** [`03-PRD.md`](./03-PRD.md)
 
 **O que contém:**
+
 - **21 Features detalhadas** com:
   - User Stories
   - Requisitos funcionais (RF)
@@ -63,9 +69,11 @@ Especificação técnica completa - COMO vamos construir cada feature.
 ---
 
 ### 4. Análise de Stack Técnico
+
 **Arquivo:** [`04-TECH-STACK-ANALYSIS.md`](./04-TECH-STACK-ANALYSIS.md)
 
 **O que contém:**
+
 - Comparação detalhada: **Astro vs Next.js vs Vite+React**
 - Análise em 8 critérios (Performance, SEO, DX, etc.)
 - Tabela comparativa com scores
@@ -79,9 +87,11 @@ Decisão técnica fundamentada com dados - QUAL tecnologia usar.
 ---
 
 ### 5. Design System
+
 **Arquivo:** [`05-DESIGN-SYSTEM.md`](./05-DESIGN-SYSTEM.md)
 
 **O que contém:**
+
 - **Paleta de cores completa** (6 cores principais OFICIAIS + neutras)
 - **Tipografia** (Jairo, Superbusy Activity, Sistema)
 - **Espaçamento** (sistema de 8px)
@@ -99,9 +109,11 @@ Guia visual e técnico - COMO vai ficar visualmente e comportamentalmente.
 ---
 
 ### 6. Preloader Customizado ✨ CÓDIGO EXISTENTE
+
 **Status:** Código já disponível em outro projeto - Migração direta
 
 **O que será feito:**
+
 - Migração do código existente para o projeto STL Festival
 - Adaptação para Astro (se necessário)
 - Integração com design system (cores, animações)
@@ -117,9 +129,11 @@ Não há documento de especificação separado pois o código já existe e será
 ---
 
 ### 7. Internacionalização (i18n) ✨ NOVO
+
 **Arquivo:** [`07-INTERNATIONALIZATION.md`](./07-INTERNATIONALIZATION.md)
 
 **O que contém:**
+
 - Suporte a 3 idiomas: PT-BR, EN, ES
 - Implementação técnica de i18n em Astro
 - Estrutura de traduções (JSON)
@@ -134,9 +148,11 @@ Reflete o pilar de diversidade do festival e amplia alcance para público intern
 ---
 
 ### 8. Correções de Gaps ✅
+
 **Arquivo:** [`GAPS-CORRIGIDOS.md`](./GAPS-CORRIGIDOS.md)
 
 **O que contém:**
+
 - Registro completo de todas as correções aplicadas após auditoria
 - Gaps identificados e resolvidos:
   - Paleta de cores no Briefing (cores oficiais)
@@ -154,9 +170,11 @@ Garante que toda a documentação está consistente, completa e atualizada. Rast
 ---
 
 ### 9. Cursor Rules Analysis ⭐ NOVO
+
 **Arquivo:** [`09-CURSOR-RULES-ANALYSIS.md`](./09-CURSOR-RULES-ANALYSIS.md)
 
 **O que contém:**
+
 - Análise completa da documentação para criação de Cursor Rules
 - 6 rules criadas para enforcement automático:
   1. `stl-festival-architecture.md` - Arquitetura Astro + Islands
@@ -175,9 +193,11 @@ Garante que TODOS os padrões documentados sejam automaticamente seguidos durant
 ---
 
 ### 10. Development Setup 🛠️ NOVO
+
 **Arquivo:** [`DEVELOPMENT-SETUP.md`](./DEVELOPMENT-SETUP.md)
 
 **O que contém:**
+
 - Guia completo de configuração do ambiente de desenvolvimento
 - Setup de **ESLint** (TypeScript, React, Astro, Acessibilidade)
 - Setup de **Prettier** (formatação automática com plugins)
@@ -192,6 +212,7 @@ Garante que TODOS os padrões documentados sejam automaticamente seguidos durant
 Garante que todos os desenvolvedores tenham o mesmo ambiente configurado, com qualidade de código garantida automaticamente. Pre-commit hooks impedem commits com erros, mantendo a qualidade do código desde o início.
 
 **Ferramentas Configuradas:**
+
 - ✅ ESLint 9+ (flat config) com suporte a Astro, TypeScript e React
 - ✅ Prettier 3+ com plugins para Astro e Tailwind CSS
 - ✅ Husky 9+ com hooks de pre-commit e pre-push
@@ -224,20 +245,24 @@ Analytics: Google Analytics 4
 ### Novidades Incorporadas ✨
 
 **Perfil do Público (Dados Reais):**
+
 - Faixa etária: 23-33 anos (média 31)
 - Maioria feminina
 - Público engajado e recorrente
 
 **Multilíngue:**
+
 - Português (PT-BR) - principal
 - Inglês (EN) - internacional
 - Espanhol (ES) - América Latina
 
 **Experiência de Entrada:**
+
 - Preloader customizado (código já existente)
 - Animações que criam expectativa
 
 **STL Valley:**
+
 - Hospedagem de 03/06 a 07/06
 - Para quem tem ingresso do festival
 
@@ -262,17 +287,20 @@ Analytics: Google Analytics 4
 ## 📊 Métricas Alvo
 
 ### Performance
+
 - Lighthouse Score: **90+**
 - LCP: **< 2.5s**
 - FID: **< 100ms**
 - CLS: **< 0.1**
 
 ### Conversão
+
 - Taxa de conversão: **> 15%** (visitantes → iPass)
 - Cliques CTAs: **> 1000/semana**
 - Taxa de rejeição: **< 40%**
 
 ### Acessibilidade
+
 - WCAG 2.1: **Level AA**
 - Lighthouse A11y: **100**
 
@@ -283,27 +311,32 @@ Analytics: Google Analytics 4
 ### Sugestões de Revisão
 
 #### 1. Conteúdo
+
 - [ ] Textos estão alinhados com o tom do STL Festival?
 - [ ] Informações dos setores estão completas e corretas?
 - [ ] Lineup está atualizado?
 - [ ] Faltam informações importantes?
 
 #### 2. Estrutura
+
 - [ ] A ordem das seções faz sentido?
 - [ ] Alguma seção deveria ser removida/adicionada?
 - [ ] A jornada do usuário está clara?
 
 #### 3. Design
+
 - [ ] Paleta de cores representa bem o festival?
 - [ ] Fontes estão adequadas?
 - [ ] Componentes cobrem todas as necessidades?
 
 #### 4. Técnico
+
 - [ ] Stack escolhido (Astro) faz sentido para o projeto?
 - [ ] Requisitos de performance são realistas?
 - [ ] Integrações estão bem definidas?
 
 #### 5. Negócio
+
 - [ ] KPIs são mensuráveis e relevantes?
 - [ ] Objetivos estão claros?
 - [ ] Prazos são viáveis?
@@ -470,6 +503,7 @@ docs/development-plans/
 ## 📞 Contato para Dúvidas
 
 Estou à disposição para:
+
 - Esclarecer qualquer ponto da documentação
 - Fazer ajustes e revisões
 - Adicionar informações faltantes

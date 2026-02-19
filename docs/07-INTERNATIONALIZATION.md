@@ -1,6 +1,7 @@
 # Internacionalização (i18n) - STL Festival
 
 ## 📅 Informações do Documento
+
 - **Data de Criação:** 26 de Janeiro de 2026
 - **Versão:** 1.0
 - **Status:** Especificação técnica
@@ -11,6 +12,7 @@
 ## 🎯 Objetivo
 
 Implementar **site multilíngue completo** para:
+
 1. Refletir o pilar de **diversidade** do STL Festival
 2. Atender público **internacional** e turistas
 3. Ampliar **alcance** e **conversões**
@@ -22,28 +24,34 @@ Implementar **site multilíngue completo** para:
 ## 🌍 Idiomas Suportados
 
 ### 1. Português (PT-BR) - Padrão
+
 **Público:** Brasil (maioria do público)
 **Prioridade:** 🔴 **CRÍTICA**
 
 ### 2. Inglês (EN) - Internacional
+
 **Público:**
+
 - Turistas internacionais
 - Público de países de língua inglesa
 - Língua franca global
-**Prioridade:** 🟡 **ALTA**
+  **Prioridade:** 🟡 **ALTA**
 
 ### 3. Espanhol (ES) - América Latina
+
 **Público:**
+
 - Turistas da América Latina
 - Argentina, Chile, Uruguai (países próximos)
 - Segunda língua mais falada nas Américas
-**Prioridade:** 🟢 **MÉDIA-ALTA**
+  **Prioridade:** 🟢 **MÉDIA-ALTA**
 
 ---
 
 ## 🎨 Design do Seletor de Idioma
 
 ### Posicionamento
+
 **Localização:** Header (canto superior direito)
 
 ```
@@ -53,11 +61,10 @@ Logo STL               🌐 PT-BR | EN | ES     [COMPRAR INGRESSO]
 ### Variações de Design
 
 #### Opção 1: Dropdown Simples
+
 ```astro
 <div class="language-selector">
-  <button class="language-selector__trigger">
-    🌐 PT-BR ▾
-  </button>
+  <button class="language-selector__trigger"> 🌐 PT-BR ▾ </button>
   <ul class="language-selector__dropdown">
     <li><a href="/" hreflang="pt-BR">🇧🇷 Português</a></li>
     <li><a href="/en" hreflang="en">🇺🇸 English</a></li>
@@ -67,6 +74,7 @@ Logo STL               🌐 PT-BR | EN | ES     [COMPRAR INGRESSO]
 ```
 
 #### Opção 2: Tabs/Pills (Recomendado)
+
 ```astro
 <div class="language-tabs">
   <a href="/" class="lang-tab active" hreflang="pt-BR">PT</a>
@@ -76,6 +84,7 @@ Logo STL               🌐 PT-BR | EN | ES     [COMPRAR INGRESSO]
 ```
 
 #### Opção 3: Bandeiras (Visual)
+
 ```astro
 <div class="language-flags">
   <a href="/" class="flag-btn active" aria-label="Português">🇧🇷</a>
@@ -89,6 +98,7 @@ Logo STL               🌐 PT-BR | EN | ES     [COMPRAR INGRESSO]
 ## 🏗️ Estrutura de URLs
 
 ### Opção 1: Subdiretórios (Recomendado para SEO)
+
 ```
 stlfestival.com.br/          → PT-BR (padrão)
 stlfestival.com.br/en/       → EN
@@ -96,12 +106,14 @@ stlfestival.com.br/es/       → ES
 ```
 
 **Vantagens:**
+
 - ✅ Melhor para SEO
 - ✅ URLs semânticas
 - ✅ Fácil de entender
 - ✅ Fácil de implementar em Astro
 
 ### Opção 2: Subdomínios
+
 ```
 stlfestival.com.br           → PT-BR
 en.stlfestival.com.br        → EN
@@ -109,11 +121,13 @@ es.stlfestival.com.br        → ES
 ```
 
 **Vantagens:**
+
 - ✅ Separação clara
 - ❌ Mais complexo de configurar
 - ❌ Requer DNS setup
 
 ### Opção 3: Query Parameters
+
 ```
 stlfestival.com.br/?lang=pt-BR
 stlfestival.com.br/?lang=en
@@ -121,6 +135,7 @@ stlfestival.com.br/?lang=es
 ```
 
 **Desvantagens:**
+
 - ❌ Ruim para SEO
 - ❌ Não recomendado
 
@@ -157,8 +172,8 @@ src/
 // src/i18n/config.ts
 export const languages = {
   'pt-BR': 'Português',
-  'en': 'English',
-  'es': 'Español'
+  en: 'English',
+  es: 'Español',
 };
 
 export const defaultLang = 'pt-BR';
@@ -174,7 +189,7 @@ export const ui = {
     'hero.cta': 'Comprar Ingresso',
     // ... mais traduções
   },
-  'en': {
+  en: {
     'nav.home': 'Home',
     'nav.lineup': 'Lineup',
     'nav.tickets': 'Tickets',
@@ -184,7 +199,7 @@ export const ui = {
     'hero.cta': 'Buy Tickets',
     // ... mais traduções
   },
-  'es': {
+  es: {
     'nav.home': 'Inicio',
     'nav.lineup': 'Lineup',
     'nav.tickets': 'Entradas',
@@ -193,7 +208,7 @@ export const ui = {
     'hero.date': '6 de Junio de 2026',
     'hero.cta': 'Comprar Entradas',
     // ... mais traduções
-  }
+  },
 } as const;
 ```
 
@@ -210,9 +225,9 @@ export function getLangFromUrl(url: URL) {
 }
 
 export function useTranslations(lang: keyof typeof ui) {
-  return function t(key: keyof typeof ui[typeof defaultLang]) {
+  return function t(key: keyof (typeof ui)[typeof defaultLang]) {
     return ui[lang][key] || ui[defaultLang][key];
-  }
+  };
 }
 
 export function getLocalizedUrl(url: string, lang: string) {
@@ -254,15 +269,17 @@ const currentLang = getLangFromUrl(Astro.url);
 ---
 
 <div class="language-selector">
-  {Object.entries(languages).map(([lang, name]) => (
-    <a
-      href={lang === 'pt-BR' ? '/' : `/${lang}`}
-      class:list={['lang-btn', { active: currentLang === lang }]}
-      hreflang={lang}
-    >
-      {lang.split('-')[0].toUpperCase()}
-    </a>
-  ))}
+  {
+    Object.entries(languages).map(([lang, name]) => (
+      <a
+        href={lang === 'pt-BR' ? '/' : `/${lang}`}
+        class:list={['lang-btn', { active: currentLang === lang }]}
+        hreflang={lang}
+      >
+        {lang.split('-')[0].toUpperCase()}
+      </a>
+    ))
+  }
 </div>
 
 <style>
@@ -307,10 +324,26 @@ const currentPath = Astro.url.pathname;
 
 <head>
   <!-- Hreflang tags -->
-  <link rel="alternate" hreflang="pt-BR" href={`https://stlfestival.com.br${currentPath}`} />
-  <link rel="alternate" hreflang="en" href={`https://stlfestival.com.br/en${currentPath}`} />
-  <link rel="alternate" hreflang="es" href={`https://stlfestival.com.br/es${currentPath}`} />
-  <link rel="alternate" hreflang="x-default" href={`https://stlfestival.com.br${currentPath}`} />
+  <link
+    rel="alternate"
+    hreflang="pt-BR"
+    href={`https://stlfestival.com.br${currentPath}`}
+  />
+  <link
+    rel="alternate"
+    hreflang="en"
+    href={`https://stlfestival.com.br/en${currentPath}`}
+  />
+  <link
+    rel="alternate"
+    hreflang="es"
+    href={`https://stlfestival.com.br/es${currentPath}`}
+  />
+  <link
+    rel="alternate"
+    hreflang="x-default"
+    href={`https://stlfestival.com.br${currentPath}`}
+  />
 
   <!-- Language meta -->
   <meta property="og:locale" content={currentLang} />
@@ -467,6 +500,7 @@ const currentPath = Astro.url.pathname;
 ```
 
 ### Traduções EN e ES
+
 - Criar arquivos `en.json` e `es.json` com mesma estrutura
 - Contratar tradutor profissional ou usar IA + revisão humana
 - Manter tom e energia do festival nas traduções
@@ -476,21 +510,21 @@ const currentPath = Astro.url.pathname;
 ## ♿ Acessibilidade i18n
 
 ### ARIA Labels Traduzidos
+
 ```astro
-<button
-  aria-label={t('languageSelector.ariaLabel')}
-  aria-expanded={isOpen}
->
+<button aria-label={t('languageSelector.ariaLabel')} aria-expanded={isOpen}>
   {currentLang}
 </button>
 ```
 
 ### HTML Lang Attribute
+
 ```astro
-<html lang={currentLang}>
+<html lang={currentLang}></html>
 ```
 
 ### Screen Reader Support
+
 ```astro
 <span class="sr-only">
   {t('a11y.currentLanguage')}: {languages[currentLang]}
@@ -502,23 +536,25 @@ const currentPath = Astro.url.pathname;
 ## 🎯 Analytics por Idioma
 
 ### Google Analytics 4
+
 ```javascript
 // Rastrear visualizações por idioma
 gtag('event', 'page_view', {
-  'language': currentLang,
-  'page_location': window.location.href
+  language: currentLang,
+  page_location: window.location.href,
 });
 
 // Rastrear troca de idioma
 function trackLanguageChange(newLang) {
   gtag('event', 'language_change', {
-    'old_language': currentLang,
-    'new_language': newLang
+    old_language: currentLang,
+    new_language: newLang,
   });
 }
 ```
 
 ### Métricas a Monitorar
+
 - % de usuários por idioma
 - Taxa de conversão por idioma
 - Bounce rate por idioma
@@ -530,6 +566,7 @@ function trackLanguageChange(newLang) {
 ## 📊 Priorização de Conteúdo
 
 ### Fase 1 (MVP): Conteúdo Essencial
+
 - [ ] Meta tags (title, description)
 - [ ] Navegação
 - [ ] Hero section
@@ -538,12 +575,14 @@ function trackLanguageChange(newLang) {
 - [ ] Informações de contato
 
 ### Fase 2: Conteúdo Completo
+
 - [ ] Lineup (nomes de artistas não mudam, mas descrições sim)
 - [ ] Sobre o festival
 - [ ] FAQ
 - [ ] Termos e condições
 
 ### Fase 3: Conteúdo Avançado
+
 - [ ] Blog/Notícias (se houver)
 - [ ] Testemunhos
 - [ ] Galeria de fotos com legendas
@@ -553,6 +592,7 @@ function trackLanguageChange(newLang) {
 ## 🔄 Manutenção e Atualização
 
 ### Processo de Adição de Novos Textos
+
 1. Adicionar chave em `pt-BR.json`
 2. Traduzir para `en.json` e `es.json`
 3. Atualizar componentes
@@ -560,6 +600,7 @@ function trackLanguageChange(newLang) {
 5. Deploy
 
 ### Ferramentas Úteis
+
 - **DeepL** - Traduções de alta qualidade
 - **Google Translate** - Backup/referência
 - **i18n Ally (VS Code)** - Extensão para gerenciar traduções
@@ -570,29 +611,34 @@ function trackLanguageChange(newLang) {
 ## ✅ Checklist de Implementação
 
 ### Setup Inicial
+
 - [ ] Criar estrutura de pastas i18n
 - [ ] Configurar idiomas suportados
 - [ ] Criar arquivos de tradução (pt-BR, en, es)
 - [ ] Implementar helper functions
 
 ### Componentes
+
 - [ ] Seletor de idioma no header
 - [ ] BaseLayout com suporte a i18n
 - [ ] Páginas principais traduzidas
 
 ### SEO
+
 - [ ] Hreflang tags configuradas
 - [ ] Sitemap multilíngue
 - [ ] Meta tags por idioma
 - [ ] URLs canônicas
 
 ### Conteúdo
+
 - [ ] Todas as strings extraídas para JSON
 - [ ] Traduções completas (EN, ES)
 - [ ] Revisão por nativos (idealmente)
 - [ ] Tom e voz mantidos
 
 ### Testes
+
 - [ ] Troca de idioma funciona
 - [ ] URLs corretas por idioma
 - [ ] SEO validado (Google Search Console)
@@ -604,16 +650,19 @@ function trackLanguageChange(newLang) {
 ## 🚀 Lançamento Faseado
 
 ### Fase 1: PT-BR Only (Lançamento Inicial)
+
 - Lançar site em português primeiro
 - Coletar feedback e métricas
 - Ajustar conteúdo
 
 ### Fase 2: + English (1-2 semanas depois)
+
 - Adicionar versão em inglês
 - Monitorar acesso de IPs internacionais
 - Ajustar traduções conforme feedback
 
 ### Fase 3: + Español (2-4 semanas depois)
+
 - Adicionar versão em espanhol
 - Marketing direcionado para América Latina
 - Análise de conversão por idioma
@@ -623,16 +672,19 @@ function trackLanguageChange(newLang) {
 ## 💡 Recomendações Finais
 
 ### Prioridades
+
 1. **PT-BR perfeito primeiro** - Maioria do público
 2. **EN funcional** - Turistas internacionais
 3. **ES bom** - América Latina
 
 ### Qualidade vs Velocidade
+
 - Melhor ter PT-BR excelente + EN/ES básicos
 - Do que ter 3 idiomas medianos
 - Tradução profissional pelo menos para EN
 
 ### Manutenção
+
 - Nomear responsável por cada idioma
 - Processo claro para atualizar traduções
 - Monitorar feedback de usuários internacionais

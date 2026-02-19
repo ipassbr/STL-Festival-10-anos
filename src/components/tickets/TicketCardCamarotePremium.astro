@@ -1,0 +1,219 @@
+---
+/**
+ * TicketCardCamarotePremium - Card Camarote Premium (esgotado) com imagem
+ * Mesmo padrao dos cards Pista e Camarote, com ticker "Esgotado" acima do card
+ */
+
+export interface Props {
+  ariaLabel: string;
+  soldOutLabel: string;
+  imageUrl: string;
+}
+
+const { ariaLabel, soldOutLabel, imageUrl } = Astro.props;
+---
+
+<div class="ticket-card-premium-wrapper">
+  <article class="ticket-card-premium" aria-label={ariaLabel}>
+    <!-- Furo circular do ticket -->
+    <div class="ticket-card-premium__hole" aria-hidden="true"></div>
+
+    <!-- Linha tracejada -->
+    <div class="ticket-card-premium__perforation" aria-hidden="true"></div>
+
+    <!-- Imagem com botao esgotado -->
+    <div class="ticket-card-premium__image-wrap">
+      <img
+        src={imageUrl}
+        alt={ariaLabel}
+        class="ticket-card-premium__image"
+        loading="lazy"
+        width="1200"
+        height="1350"
+        decoding="async"
+      />
+      <div class="ticket-card-premium__action">
+        <span
+          class="ticket-card-premium__button ticket-card-premium__button--disabled"
+          aria-disabled="true"
+        >
+          {soldOutLabel}
+        </span>
+      </div>
+    </div>
+  </article>
+</div>
+
+<style>
+  .ticket-card-premium-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 360px;
+    margin-inline: auto;
+  }
+
+  .ticket-card-premium {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-top: 52px;
+    overflow: hidden;
+    background-color: var(--color-indigo);
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-lg);
+    transition:
+      transform var(--duration-normal) var(--ease-out),
+      box-shadow var(--duration-normal) var(--ease-out);
+    opacity: 0.9;
+  }
+
+  .ticket-card-premium:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-xl);
+  }
+
+  /* Furo circular */
+  .ticket-card-premium__hole {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 32px;
+    height: 32px;
+    background-color: var(--color-cream);
+    border-radius: var(--radius-full);
+    box-shadow:
+      inset 0 2px 4px rgba(0, 0, 0, 0.2),
+      0 1px 2px rgba(0, 0, 0, 0.1);
+    z-index: 5;
+  }
+
+  /* Linha tracejada */
+  .ticket-card-premium__perforation {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-image: repeating-linear-gradient(
+      to right,
+      var(--color-cream) 0,
+      var(--color-cream) 8px,
+      transparent 8px,
+      transparent 16px
+    );
+    opacity: 0.3;
+    z-index: 5;
+  }
+
+  /* Area da imagem */
+  .ticket-card-premium__image-wrap {
+    position: relative;
+    width: 100%;
+    margin-top: -52px;
+    aspect-ratio: 1200 / 1750;
+    overflow: visible;
+  }
+
+  .ticket-card-premium__image {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center 42%;
+    transform: translateY(-6px) scale(1.03);
+  }
+
+  /* Botao esgotado */
+  .ticket-card-premium__action {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    display: flex;
+    z-index: 5;
+  }
+
+  .ticket-card-premium__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 0 var(--spacing-md);
+    border: none;
+    border-radius: 0 0 var(--radius-2xl) var(--radius-2xl);
+    font-family: var(--font-heading);
+    font-size: 30px;
+    font-weight: 600;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background-color: var(--color-gray-600);
+    color: var(--color-cream);
+    cursor: not-allowed;
+  }
+
+  .ticket-card-premium__button--disabled {
+    opacity: 0.85;
+  }
+
+  /* Desktop */
+  @media (min-width: 768px) {
+    .ticket-card-premium-wrapper {
+      max-width: none;
+    }
+
+    .ticket-card-premium__image-wrap {
+      aspect-ratio: 1200 / 1700;
+    }
+
+    .ticket-card-premium__image {
+      object-position: center 40%;
+    }
+  }
+
+  /* Responsivo */
+  @media (max-width: 768px) {
+    .ticket-card-premium__hole {
+      width: 28px;
+      height: 28px;
+      top: 16px;
+    }
+
+    .ticket-card-premium__perforation {
+      top: 52px;
+    }
+
+    .ticket-card-premium__button {
+      font-size: 30px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .ticket-card-premium__hole {
+      width: 24px;
+      height: 24px;
+      top: 14px;
+    }
+
+    .ticket-card-premium__perforation {
+      top: 46px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ticket-card-premium {
+      transition: none;
+    }
+
+    .ticket-card-premium:hover {
+      transform: none;
+    }
+  }
+</style>

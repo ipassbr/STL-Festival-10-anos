@@ -5,6 +5,7 @@
 Esta pasta contém os **planos de desenvolvimento detalhados** para cada seção da landing page do STL Festival.
 
 Cada plano documenta:
+
 - Objetivos e requisitos
 - Componentes necessários
 - Assets e dependências
@@ -46,6 +47,7 @@ development-plans/
 ⚠️ **Criar o plano ANTES de iniciar o desenvolvimento da seção.**
 
 **Momento ideal:**
+
 - Após conclusão da seção anterior (aprendizados aplicados)
 - Quando assets/informações necessárias estiverem disponíveis
 - Antes de criar a branch `feature/section-[nome]`
@@ -53,6 +55,7 @@ development-plans/
 ### 2. Como Criar um Plano?
 
 #### Passo 1: Copiar o Template
+
 ```bash
 cp TEMPLATE-SECTION-PLAN.md 03-hero-section.md
 ```
@@ -60,6 +63,7 @@ cp TEMPLATE-SECTION-PLAN.md 03-hero-section.md
 #### Passo 2: Preencher Todas as Seções
 
 **Seções Obrigatórias:**
+
 - ✅ Informações Básicas (nome, prioridade, branch, tempo)
 - ✅ Objetivo da Seção (propósito, problema resolvido)
 - ✅ Requisitos Funcionais (RF-01, RF-02, etc.)
@@ -70,6 +74,7 @@ cp TEMPLATE-SECTION-PLAN.md 03-hero-section.md
 - ✅ Critérios de Aceitação (checklist detalhado)
 
 **Seções Opcionais (mas recomendadas):**
+
 - Animações e Interações
 - Notas de Implementação
 - Estimativas e Tracking
@@ -77,6 +82,7 @@ cp TEMPLATE-SECTION-PLAN.md 03-hero-section.md
 #### Passo 3: Validar com Stakeholders (se necessário)
 
 Se a seção é crítica ou tem decisões de negócio:
+
 - Revisar plano com stakeholders
 - Ajustar conforme feedback
 - Aprovar antes de iniciar
@@ -84,6 +90,7 @@ Se a seção é crítica ou tem decisões de negócio:
 #### Passo 4: Criar Issues no GitHub
 
 Baseado no plano, criar todos os issues listados:
+
 ```
 Issue #1: [Hero] Setup e Estrutura Base
 Issue #2: [Hero] Implementar Countdown Timer
@@ -112,71 +119,81 @@ Usar template do plano para criar PR estruturado.
 ## 🎯 Ordem Recomendada de Desenvolvimento
 
 ### Fase 1: Base e Infraestrutura (Semana 1-2)
-| # | Seção | Prioridade | Status |
-|---|-------|------------|--------|
-| 01 | Setup Base | 🔴 Crítica | ⏸️ Pendente |
-| - | Componentes Base | 🔴 Crítica | ⏸️ Pendente |
+
+| #   | Seção            | Prioridade | Status      |
+| --- | ---------------- | ---------- | ----------- |
+| 01  | Setup Base       | 🔴 Crítica | ⏸️ Pendente |
+| -   | Componentes Base | 🔴 Crítica | ⏸️ Pendente |
 
 ### Fase 2: Seções Críticas (Semana 2-4)
-| # | Seção | Prioridade | Status |
-|---|-------|------------|--------|
-| 02 | Preloader | 🔴 Crítica | ⏸️ Pendente |
-| 03 | Hero Section | 🔴 Crítica | ⏸️ Pendente |
-| 04 | Navigation | 🔴 Crítica | ⏸️ Pendente |
-| 05 | Lineup | 🟡 Alta | ⏸️ Pendente |
-| 06 | Setores | 🟡 Alta | ⏸️ Pendente |
+
+| #   | Seção        | Prioridade | Status      |
+| --- | ------------ | ---------- | ----------- |
+| 02  | Preloader    | 🔴 Crítica | ⏸️ Pendente |
+| 03  | Hero Section | 🔴 Crítica | ⏸️ Pendente |
+| 04  | Navigation   | 🔴 Crítica | ⏸️ Pendente |
+| 05  | Lineup       | 🟡 Alta    | ⏸️ Pendente |
+| 06  | Setores      | 🟡 Alta    | ⏸️ Pendente |
 
 ### Fase 3: Conteúdo Informativo (Semana 4-5)
-| # | Seção | Prioridade | Status |
-|---|-------|------------|--------|
-| 07 | Sobre Festival | 🟢 Média | ⏸️ Pendente |
-| 08 | Acessibilidade | 🟢 Média | ⏸️ Pendente |
-| 09 | Sustentabilidade | 🟢 Média | ⏸️ Pendente |
-| 10 | Diversidade | 🟢 Média | ⏸️ Pendente |
-| 11 | Experiências Exclusivas | 🟢 Média | ⏸️ Pendente |
-| 12 | STL Valley | 🟢 Média | ⏸️ Pendente |
+
+| #   | Seção                   | Prioridade | Status      |
+| --- | ----------------------- | ---------- | ----------- |
+| 07  | Sobre Festival          | 🟢 Média   | ⏸️ Pendente |
+| 08  | Acessibilidade          | 🟢 Média   | ⏸️ Pendente |
+| 09  | Sustentabilidade        | 🟢 Média   | ⏸️ Pendente |
+| 10  | Diversidade             | 🟢 Média   | ⏸️ Pendente |
+| 11  | Experiências Exclusivas | 🟢 Média   | ⏸️ Pendente |
+| 12  | STL Valley              | 🟢 Média   | ⏸️ Pendente |
 
 ### Fase 4: Conversão e Suporte (Semana 5-6)
-| # | Seção | Prioridade | Status |
-|---|-------|------------|--------|
-| 13 | iPass Info | 🟡 Alta | ⏸️ Pendente |
-| 14 | FAQ | 🟡 Alta | ⏸️ Pendente |
-| 15 | Footer | 🔴 Crítica | ⏸️ Pendente |
+
+| #   | Seção      | Prioridade | Status      |
+| --- | ---------- | ---------- | ----------- |
+| 13  | iPass Info | 🟡 Alta    | ⏸️ Pendente |
+| 14  | FAQ        | 🟡 Alta    | ⏸️ Pendente |
+| 15  | Footer     | 🔴 Crítica | ⏸️ Pendente |
 
 ---
 
 ## 📝 Convenções de Nomenclatura
 
 ### Branches
+
 ```
 feature/section-[nome-da-seção]
 feature/component-[nome-do-componente]
 ```
 
 **Exemplos:**
+
 - `feature/section-hero`
 - `feature/section-lineup`
 - `feature/component-preloader`
 - `feature/component-countdown-timer`
 
 ### Issues
+
 ```
 [SEÇÃO] Título descritivo
 [COMPONENT] Título descritivo
 ```
 
 **Exemplos:**
+
 - `[Hero] Setup e Estrutura Base`
 - `[Hero] Implementar Countdown Timer`
 - `[Component] Criar Accordion para FAQ`
 
 ### Pull Requests
+
 ```
 [SECTION] Nome da Seção - Descrição breve
 [COMPONENT] Nome do Componente - Descrição breve
 ```
 
 **Exemplos:**
+
 - `[SECTION] Hero - Implementação completa com countdown e animações`
 - `[COMPONENT] Preloader - Migração e integração do código existente`
 
@@ -187,6 +204,7 @@ feature/component-[nome-do-componente]
 Antes de considerar um plano completo, validar:
 
 ### Planejamento
+
 - [ ] Objetivo da seção está claro
 - [ ] Requisitos funcionais documentados (mínimo 3)
 - [ ] Requisitos não-funcionais definidos
@@ -195,12 +213,14 @@ Antes de considerar um plano completo, validar:
 - [ ] Dependências mapeadas
 
 ### Issues
+
 - [ ] Mínimo 5 issues criados
 - [ ] Cada issue tem descrição clara
 - [ ] Cada issue tem tempo estimado
 - [ ] Issues cobrem: setup, features, responsividade, animações, testes
 
 ### Critérios de Aceitação
+
 - [ ] Funcionalidade definida
 - [ ] Design especificado
 - [ ] Performance (metas Lighthouse)
@@ -209,6 +229,7 @@ Antes de considerar um plano completo, validar:
 - [ ] i18n (3 idiomas)
 
 ### Git Flow
+
 - [ ] Nome da branch definido
 - [ ] Template de PR preparado
 - [ ] Reviewers identificados
@@ -220,11 +241,13 @@ Antes de considerar um plano completo, validar:
 ### Para Criar Seu Primeiro Plano
 
 1. **Leia o template completo:**
+
    ```bash
    cat TEMPLATE-SECTION-PLAN.md
    ```
 
 2. **Copie e renomeie:**
+
    ```bash
    cp TEMPLATE-SECTION-PLAN.md 03-hero-section.md
    ```
@@ -246,25 +269,26 @@ Antes de considerar um plano completo, validar:
 
 Atualizar o README conforme seções forem concluídas:
 
-| Seção | Plano Criado | Issues Criados | Branch | PR | Status |
-|-------|--------------|----------------|--------|----|--------|
-| Setup Base | ⏸️ | ⏸️ | - | - | ⏸️ Pendente |
-| Preloader | ⏸️ | ⏸️ | - | - | ⏸️ Pendente |
-| Hero | ⏸️ | ⏸️ | - | - | ⏸️ Pendente |
-| Navigation | ⏸️ | ⏸️ | - | - | ⏸️ Pendente |
-| Lineup | ⏸️ | ⏸️ | - | - | ⏸️ Pendente |
-| Setores | ⏸️ | ⏸️ | - | - | ⏸️ Pendente |
-| Sobre Festival | ⏸️ | ⏸️ | - | - | ⏸️ Pendente |
-| Acessibilidade | ⏸️ | ⏸️ | - | - | ⏸️ Pendente |
-| Sustentabilidade | ⏸️ | ⏸️ | - | - | ⏸️ Pendente |
-| Diversidade | ⏸️ | ⏸️ | - | - | ⏸️ Pendente |
-| Exp. Exclusivas | ⏸️ | ⏸️ | - | - | ⏸️ Pendente |
-| STL Valley | ⏸️ | ⏸️ | - | - | ⏸️ Pendente |
-| iPass Info | ⏸️ | ⏸️ | - | - | ⏸️ Pendente |
-| FAQ | ⏸️ | ⏸️ | - | - | ⏸️ Pendente |
-| Footer | ⏸️ | ⏸️ | - | - | ⏸️ Pendente |
+| Seção            | Plano Criado | Issues Criados | Branch | PR  | Status      |
+| ---------------- | ------------ | -------------- | ------ | --- | ----------- |
+| Setup Base       | ⏸️           | ⏸️             | -      | -   | ⏸️ Pendente |
+| Preloader        | ⏸️           | ⏸️             | -      | -   | ⏸️ Pendente |
+| Hero             | ⏸️           | ⏸️             | -      | -   | ⏸️ Pendente |
+| Navigation       | ⏸️           | ⏸️             | -      | -   | ⏸️ Pendente |
+| Lineup           | ⏸️           | ⏸️             | -      | -   | ⏸️ Pendente |
+| Setores          | ⏸️           | ⏸️             | -      | -   | ⏸️ Pendente |
+| Sobre Festival   | ⏸️           | ⏸️             | -      | -   | ⏸️ Pendente |
+| Acessibilidade   | ⏸️           | ⏸️             | -      | -   | ⏸️ Pendente |
+| Sustentabilidade | ⏸️           | ⏸️             | -      | -   | ⏸️ Pendente |
+| Diversidade      | ⏸️           | ⏸️             | -      | -   | ⏸️ Pendente |
+| Exp. Exclusivas  | ⏸️           | ⏸️             | -      | -   | ⏸️ Pendente |
+| STL Valley       | ⏸️           | ⏸️             | -      | -   | ⏸️ Pendente |
+| iPass Info       | ⏸️           | ⏸️             | -      | -   | ⏸️ Pendente |
+| FAQ              | ⏸️           | ⏸️             | -      | -   | ⏸️ Pendente |
+| Footer           | ⏸️           | ⏸️             | -      | -   | ⏸️ Pendente |
 
 **Legenda:**
+
 - ⏸️ Pendente
 - 🟡 Em Progresso
 - ✅ Concluído

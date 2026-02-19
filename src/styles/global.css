@@ -50,6 +50,10 @@
     --color-orange-light: #ffb34d;
     --color-orange-dark: #e68a1f;
 
+    /* Laranja Pista (Card de ingresso) */
+    --color-orange-pista: #fa9327;
+    --color-orange-pista-bg: #fd8d1f;
+
     /* Azul Teal (Secondary) */
     --color-blue: #007b9a;
     --color-blue-light: #009bb8;
@@ -64,6 +68,10 @@
     --color-indigo: #1e1876;
     --color-indigo-light: #2d2499;
     --color-indigo-dark: #15115a;
+
+    /* Cores de botões dos cards de ingresso */
+    --color-green-pista-button: #094931;
+    --color-indigo-button: #1a1179;
 
     /* Dourado/Gold (Accent) */
     --color-gold: #d2aa56;
