@@ -8,6 +8,7 @@
 import '@/styles/header.css';
 import { getLangFromUrl, useTranslations } from '@/i18n/utils';
 import LanguageSelector from './LanguageSelector.astro';
+import { ASSETS } from '@/utils/assets';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -16,15 +17,13 @@ const t = useTranslations(lang);
 const ipassUrl =
   'https://ipass.com.br/stlfestival?utm_source=stl-festival&utm_medium=header&utm_campaign=cta';
 
-// Logo URL (mesma do SpotifyBadge)
-const logoUrl =
-  'https://res.cloudinary.com/dazkdemvu/image/upload/v1769622514/stl-festival/logos/logo-stl_ydnwga.svg';
+const logoUrl = ASSETS.logo;
 
 // Links de navegação do MVP
 const navLinks = [
   { href: '#lineup', label: t('nav.menu.lineup') },
   { href: '#sobre', label: t('nav.menu.about') },
-  { href: '#setores', label: t('nav.menu.sectors') },
+  { href: '#tickets', label: t('nav.menu.sectors') },
 ];
 ---
 

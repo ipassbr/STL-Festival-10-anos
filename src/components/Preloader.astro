@@ -5,6 +5,7 @@
  */
 import { getLangFromUrl, useTranslations } from '@/i18n/utils';
 import PreloaderReact from './preloader/PreloaderReact';
+import { ASSETS } from '@/utils/assets';
 
 interface Props {
   videoUrl?: string;
@@ -14,9 +15,7 @@ interface Props {
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-// Logo URL (mesma do HeroSection)
-const logoUrl =
-  'https://res.cloudinary.com/dazkdemvu/image/upload/v1769622514/stl-festival/logos/logo-stl_ydnwga.svg';
+const logoUrl = ASSETS.logo;
 ---
 
 <PreloaderReact

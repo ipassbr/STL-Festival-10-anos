@@ -7,6 +7,7 @@
 import { getLangFromUrl, useTranslations } from '@/i18n/utils';
 import SpotifyBadge from './SpotifyBadge.astro';
 import AccessibilityBadge from './AccessibilityBadge.astro';
+import { ASSETS } from '@/utils/assets';
 
 interface Props {
   videoUrl?: string;
@@ -17,12 +18,8 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 // URLs de mídia
-const {
-  videoUrl = import.meta.env.PUBLIC_CLOUDINARY_VIDEO_URL ||
-    'https://res.cloudinary.com/dazkdemvu/video/upload/v1768415565/stl-festival/videos/hero.mp4',
-  fallbackImage = import.meta.env.PUBLIC_FALLBACK_IMAGE_URL ||
-    'https://res.cloudinary.com/dazkdemvu/image/upload/v1769618833/stl-festival/fallback/hero-fallback.jpg',
-} = Astro.props;
+const { videoUrl = ASSETS.heroVideo, fallbackImage = ASSETS.heroFallback } =
+  Astro.props;
 
 // URL da playlist do Spotify
 const spotifyPlaylistUrl =

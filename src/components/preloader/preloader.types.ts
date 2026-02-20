@@ -8,7 +8,7 @@
  */
 
 export interface PreloaderProps {
-  /** Logo source (SVG path). Default: Cloudinary logo URL */
+  /** Logo source (SVG path). Default: S3 logo URL via ASSETS.logo */
   logoSrc?: string;
   /** Top phrase text. Default: "Faça parte da nossa história" */
   phraseTop?: string;
@@ -33,9 +33,10 @@ export interface PreloaderConfig {
  * Valores padrão para as props do Preloader
  * Usa cores e mensagens oficiais do STL Festival
  */
+import { ASSETS } from '@/utils/assets';
+
 export const PRELOADER_DEFAULTS: Required<PreloaderProps> = {
-  logoSrc:
-    'https://res.cloudinary.com/dazkdemvu/image/upload/v1769622514/stl-festival/logos/logo-stl_ydnwga.svg',
+  logoSrc: ASSETS.logo,
   phraseTop: 'Faça parte da nossa história',
   phraseBottom: 'conexão, música, natureza e sustentabilidade',
 };

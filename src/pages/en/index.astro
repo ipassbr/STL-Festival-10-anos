@@ -5,17 +5,13 @@ import HeroSection from '@/components/HeroSection.astro';
 import LineupSection from '@/components/LineupSection.astro';
 import TicketsSection from '@/components/TicketsSection.astro';
 import { getLangFromUrl, useTranslations } from '@/i18n/utils';
+import { ASSETS } from '@/utils/assets';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-// URLs de mídia (mesmas do HeroSection)
-const videoUrl =
-  import.meta.env.PUBLIC_CLOUDINARY_VIDEO_URL ||
-  'https://res.cloudinary.com/dazkdemvu/video/upload/v1768415565/stl-festival/videos/hero.mp4';
-const fallbackImage =
-  import.meta.env.PUBLIC_FALLBACK_IMAGE_URL ||
-  'https://res.cloudinary.com/dazkdemvu/image/upload/v1769618833/stl-festival/fallback/hero-fallback.jpg';
+const videoUrl = ASSETS.heroVideo;
+const fallbackImage = ASSETS.heroFallback;
 ---
 
 <BaseLayout title={t('meta.title')} description={t('meta.description')}>
